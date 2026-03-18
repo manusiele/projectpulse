@@ -173,24 +173,24 @@ def send_telegram(message: str):
     try:
         resp = requests.post(url, data=payload, timeout=15)
         if resp.status_code == 200:
-            print("✅ Ping sent to Telegram")
+            print(" Ping sent to Telegram")
         else:
-            print(f"⚠️ Telegram returned {resp.status_code}: {resp.text}")
+            print(f" Telegram returned {resp.status_code}: {resp.text}")
     except requests.exceptions.Timeout:
-        print("❌ Telegram timeout after 15s")
+        print(" Telegram timeout after 15s")
     except Exception as e:
-        print(f"❌ Telegram failed: {e}")
+        print(f" Telegram failed: {e}")
 
 if __name__ == "__main__":
     try:
-        print("🔥 FocusLock starting...")
+        print(" FocusLock starting...")
         idea = generate_idea()
         timestamp = datetime.now().strftime('%b %d • %H:%M') 
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         send_telegram(message)
         log_activity("Delivered project with Problem Statement + clean stack")
-        print("✅ FocusLock complete")
+        print(" FocusLock complete")
     except Exception as e:
         print(f"❌ FocusLock crashed: {e}")
         raise
