@@ -37,16 +37,16 @@ jobs:
     - name: Pull Phi-3 model
       run: |
         ollama pull phi3:mini
-        echo "✅ Model ready"
+        echo " Model ready"
     
     - name: Run FocusLock
       env:
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         CHAT_ID: ${{ secrets.CHAT_ID }}
       run: |
-        echo "🔥 Starting FocusLock..."
+        echo " Starting FocusLock..."
         python focuslock.py
-        echo "✅ FocusLock complete"
+        echo "FocusLock complete"
     
     - name: Commit updated history
       run: |
@@ -57,16 +57,16 @@ jobs:
           echo "ℹ️ No changes to commit"
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
-          git commit -m "📝 Daily spark delivered: $TIMESTAMP"
+          git commit -m " Daily spark delivered: $TIMESTAMP"
           git push
-          echo "✅ History updated"
+          echo " History updated"
         fi
       continue-on-error: true
     
     - name: Job Summary
       if: always()
       run: |
-        echo "## 🔥 FocusLock Daily Report" >> $GITHUB_STEP_SUMMARY
+        echo "##  FocusLock Daily Report" >> $GITHUB_STEP_SUMMARY
         echo "- **Time:** $(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
         echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Next run:** Tomorrow at 10:00 AM EAT" >> $GITHUB_STEP_SUMMARY
