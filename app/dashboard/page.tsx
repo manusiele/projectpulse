@@ -19,91 +19,118 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* ── Left Sidebar ─────────────────────────────────────────────── */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-12 space-y-8">
-              {/* Profile Card */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-12 h-12 text-white" />
-                </div>
-                <h2 className="text-xl font-bold text-white mb-1">FocusLock</h2>
-                <p className="text-sm text-slate-400 mb-6">AI Project Ideas</p>
-
-                {/* Stats */}
-                <div className="space-y-4 text-left text-sm">
-                  <div>
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">Total Ideas</p>
-                    <p className="text-slate-300 text-lg font-semibold">{ideas.length}</p>
-                  </div>
-                  <div>
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">This Month</p>
-                    <p className="text-slate-300 text-lg font-semibold">{thisMonth}</p>
-                  </div>
-                  <div>
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">Domains</p>
-                    <p className="text-slate-300 text-lg font-semibold">15</p>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <Link
-                  href="/"
-                  className="w-full mt-6 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors"
-                >
-                  Back Home
-                </Link>
-              </div>
+      {/* ── Navigation ─────────────────────────────────────────────────── */}
+      <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-white" />
             </div>
-          </div>
-
-          {/* ── Main Content ─────────────────────────────────────────────── */}
-          <div className="lg:col-span-3">
-            {ideas.length === 0 ? (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center">
-                <div className="w-16 h-16 rounded-xl bg-slate-800 flex items-center justify-center mx-auto mb-6">
-                  <Zap className="w-8 h-8 text-blue-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-3">No ideas yet</h2>
-                <p className="text-slate-400 max-w-md leading-relaxed mb-8 mx-auto">
-                  Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT.
-                </p>
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white transition-colors"
-                >
-                  Back to Home
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-8">
-                {/* ── Latest spark (featured) ────────────────────────────────── */}
-                {latest && (
-                  <section id="latest">
-                    <h2 className="text-2xl font-bold text-white mb-4 pb-2 border-b border-slate-800">Latest Spark</h2>
-                    <IdeaCard idea={latest} featured />
-                  </section>
-                )}
-
-                {/* ── All previous ideas grid ────────────────────────────────── */}
-                {rest.length > 0 && (
-                  <section id="ideas">
-                    <h2 className="text-2xl font-bold text-white mb-4 pb-2 border-b border-slate-800">Previous Ideas</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {rest.map((idea) => (
-                        <IdeaCard key={idea.id} idea={idea} />
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </div>
-            )}
+            <span className="font-bold text-lg text-white">FocusLock</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:block text-sm text-slate-400">
+              {ideas.length} idea{ideas.length !== 1 ? "s" : ""} generated
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium">
+              Daily @ 10 AM EAT
+            </span>
           </div>
         </div>
-      </div>
+      </nav>
+
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        {ideas.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-32 text-center">
+            <div className="w-16 h-16 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
+              <Zap className="w-8 h-8 text-blue-400" />
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-3">No ideas yet</h2>
+            <p className="text-slate-400 max-w-md leading-relaxed mb-8">
+              Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT. No action needed.
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white transition-colors"
+            >
+              Back to Home
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        ) : (
+          <>
+            {/* ── Hero section with stats ────────────────────────────────── */}
+            <div className="mb-16" id="stats">
+              <div className="mb-8">
+                <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">Project Ideas</h1>
+                <p className="text-slate-400 text-lg">Fresh ideas delivered daily. Real problems. Shippable solutions.</p>
+              </div>
+
+              {/* Stats grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {[
+                  { label: "Total Ideas", value: ideas.length },
+                  { label: "This Month", value: thisMonth },
+                  { label: "Problem Domains", value: 15 },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="p-6 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
+                  >
+                    <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
+                    <p className="text-sm text-slate-500">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Latest spark (featured) ────────────────────────────────── */}
+            {latest && (
+              <section className="mb-16" id="latest">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-blue-400" />
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-400">Latest Spark</h2>
+                </div>
+                <IdeaCard idea={latest} featured />
+              </section>
+            )}
+
+            {/* ── All previous ideas grid ────────────────────────────────── */}
+            {rest.length > 0 && (
+              <section id="ideas">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-slate-600" />
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500">Previous Ideas ({rest.length})</h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {rest.map((idea) => (
+                    <IdeaCard key={idea.id} idea={idea} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
+        )}
+      </main>
+
+      {/* ── Footer ──────────────────────────────────────────────────────── */}
+      <footer className="border-t border-slate-800 py-12 mt-16 bg-slate-900/50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <p className="text-sm text-slate-500 mb-4 sm:mb-0">
+              © 2026 FocusLock. Serverless. Open source. Daily ideas.
+            </p>
+            <div className="flex items-center gap-6">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+                GitHub
+              </a>
+              <a href="/" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+                Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
