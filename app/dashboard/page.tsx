@@ -1,10 +1,8 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
-import { AnimatedNav } from "@/components/AnimatedNav";
-import { Zap } from "lucide-react";
+import { Zap, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-// Revalidate the page at most once per hour on Vercel
 export const revalidate = 3600;
 
 export default async function DashboardPage() {
@@ -20,162 +18,91 @@ export default async function DashboardPage() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden font-mono" style={{
-      backgroundImage: `
-        radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%)
-      `
-    }}>
-      {/* CRT Scanlines */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-10" style={{
-        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px)',
-      }} />
-
-      {/* Animated grid background */}
-      <div className="fixed inset-0 -z-10 opacity-5" style={{
-        backgroundImage: `
-          linear-gradient(0deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent),
-          linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent)
-        `,
-        backgroundSize: '60px 60px'
-      }} />
-
-      <AnimatedNav />
-
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* ── Navigation ─────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-40 border-b border-cyan-500/30 bg-black/60 backdrop-blur-xl" style={{
-        boxShadow: '0 0 20px rgba(0, 255, 255, 0.2), inset 0 1px 0 rgba(0, 255, 255, 0.1)'
-      }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 flex items-center justify-center relative" style={{
-              background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 255, 0.1))',
-              border: '2px solid rgba(0, 255, 255, 0.6)',
-              boxShadow: '0 0 15px rgba(0, 255, 255, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.3)'
-            }}>
-              <Zap className="w-4 h-4 text-cyan-400" />
+      <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-lg tracking-widest text-cyan-400" style={{
-              textShadow: '0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4)'
-            }}>
-              FOCUSLOCK
-            </span>
+            <span className="font-bold text-lg text-white">FocusLock</span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-xs text-cyan-300/70 font-mono" style={{textShadow: '0 0 5px rgba(0, 255, 255, 0.5)'}}>
-              [{ideas.length}] IDEAS
+            <span className="hidden sm:block text-sm text-slate-400">
+              {ideas.length} idea{ideas.length !== 1 ? "s" : ""} generated
             </span>
-            <div style={{
-              border: '1px solid rgba(0, 255, 255, 0.4)',
-              padding: '4px 12px',
-              background: 'rgba(0, 255, 255, 0.05)',
-              boxShadow: '0 0 10px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)'
-            }} className="rounded-sm">
-              <span className="text-cyan-400 text-xs font-bold uppercase tracking-widest" style={{textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'}}>
-                ▸ 10 AM EAT
-              </span>
-            </div>
+            <span className="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium">
+              Daily @ 10 AM EAT
+            </span>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative z-10">
+      <main className="max-w-6xl mx-auto px-6 py-12">
         {ideas.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div style={{
-              width: '80px',
-              height: '80px',
-              border: '2px solid rgba(0, 255, 255, 0.6)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '24px',
-              background: 'rgba(0, 255, 255, 0.05)',
-              boxShadow: '0 0 20px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.1)'
-            }} className="rounded-sm">
-              <Zap className="w-10 h-10 text-cyan-400" style={{filter: 'drop-shadow(0 0 8px rgba(0, 255, 255, 0.8))'}} />
+            <div className="w-16 h-16 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-6">
+              <Zap className="w-8 h-8 text-blue-400" />
             </div>
-            <h2 className="text-2xl font-bold text-cyan-400 mb-3 tracking-widest uppercase" style={{textShadow: '0 0 10px rgba(0, 255, 255, 0.6)'}}>
-              NO IDEAS YET
-            </h2>
-            <p className="text-cyan-300/60 max-w-md leading-relaxed mb-8 font-mono text-sm">
-              &gt; Awaiting first idea from GitHub Actions workflow...
+            <h2 className="text-2xl font-bold text-white mb-3">No ideas yet</h2>
+            <p className="text-slate-400 max-w-md leading-relaxed mb-8">
+              Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT. No action needed.
             </p>
-            <Link href="/" className="px-4 py-2 text-cyan-400 font-bold uppercase tracking-widest text-sm" style={{
-              border: '1px solid rgba(0, 255, 255, 0.6)',
-              background: 'rgba(0, 255, 255, 0.05)',
-              boxShadow: '0 0 10px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)',
-              textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'
-            }} className="rounded-sm hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
-              ◀ BACK
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-white transition-colors"
+            >
+              Back to Home
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         ) : (
           <>
-            {/* ── Hero section ────────────────────────────────────────────── */}
+            {/* ── Hero section with stats ────────────────────────────────── */}
             <div className="mb-16" id="stats">
-              <div className="mb-12" style={{
-                borderLeft: '3px solid rgba(0, 255, 255, 0.6)',
-                paddingLeft: '20px'
-              }}>
-                <h1 className="text-6xl sm:text-7xl font-bold text-cyan-400 mb-2 tracking-widest uppercase" style={{
-                  textShadow: '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4)'
-                }}>
-                  PROJECT IDEAS
-                </h1>
-                <p className="text-cyan-300/70 text-sm font-mono">
-                  &gt; Real problems. Shippable solutions. Daily delivery.
-                </p>
+              <div className="mb-8">
+                <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">Project Ideas</h1>
+                <p className="text-slate-400 text-lg">Fresh ideas delivered daily. Real problems. Shippable solutions.</p>
               </div>
 
               {/* Stats grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
                   { label: "Total Ideas", value: ideas.length },
                   { label: "This Month", value: thisMonth },
-                  { label: "Domains", value: 15 },
+                  { label: "Problem Domains", value: 15 },
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    style={{
-                      border: '2px solid rgba(0, 255, 255, 0.4)',
-                      background: 'rgba(0, 255, 255, 0.03)',
-                      boxShadow: '0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.05)'
-                    }}
-                    className="p-6 rounded-sm hover:shadow-lg hover:shadow-cyan-500/40 transition-all group cursor-pointer"
+                    className="p-6 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <p className="text-4xl font-bold text-cyan-400 mb-2 font-mono group-hover:scale-110 transition-transform" style={{textShadow: '0 0 10px rgba(0, 255, 255, 0.8)'}}>
-                      {stat.value}
-                    </p>
-                    <p className="text-xs text-cyan-300/60 font-mono uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
+                    <p className="text-sm text-slate-500">{stat.label}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* ── Latest spark ────────────────────────────────────────────── */}
+            {/* ── Latest spark (featured) ────────────────────────────────── */}
             {latest && (
               <section className="mb-16" id="latest">
-                <div className="flex items-center gap-3 mb-6" style={{borderLeft: '3px solid rgba(255, 0, 255, 0.6)', paddingLeft: '20px'}}>
-                  <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" style={{boxShadow: '0 0 8px rgba(255, 0, 255, 0.8)'}} />
-                  <h2 className="text-xs font-bold uppercase tracking-widest text-pink-400" style={{textShadow: '0 0 8px rgba(255, 0, 255, 0.6)'}}>
-                    ▸ LATEST SPARK
-                  </h2>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-blue-400" />
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-400">Latest Spark</h2>
                 </div>
                 <IdeaCard idea={latest} featured />
               </section>
             )}
 
-            {/* ── Archive ────────────────────────────────────────────────── */}
+            {/* ── All previous ideas grid ────────────────────────────────── */}
             {rest.length > 0 && (
               <section id="ideas">
-                <div className="flex items-center gap-3 mb-6" style={{borderLeft: '3px solid rgba(168, 85, 247, 0.6)', paddingLeft: '20px'}}>
-                  <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  <h2 className="text-xs font-bold uppercase tracking-widest text-purple-400" style={{textShadow: '0 0 8px rgba(168, 85, 247, 0.6)'}}>
-                    ▸ ARCHIVE ({rest.length})
-                  </h2>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-slate-600" />
+                  <h2 className="text-sm font-semibold uppercase tracking-widest text-slate-500">Previous Ideas ({rest.length})</h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {rest.map((idea) => (
                     <IdeaCard key={idea.id} idea={idea} />
                   ))}
@@ -187,20 +114,18 @@ export default async function DashboardPage() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-cyan-500/30 py-8 mt-16 relative z-10 bg-black/40" style={{
-        boxShadow: 'inset 0 1px 0 rgba(0, 255, 255, 0.1)'
-      }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between font-mono text-xs">
-            <p className="text-cyan-300/50 mb-4 sm:mb-0">
-              &copy; 2026 FOCUSLOCK | SERVERLESS | OPEN SOURCE
+      <footer className="border-t border-slate-800 py-12 mt-16 bg-slate-900/50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <p className="text-sm text-slate-500 mb-4 sm:mb-0">
+              © 2026 FocusLock. Serverless. Open source. Daily ideas.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-cyan-300/50 hover:text-cyan-400 transition-colors">
-                [GITHUB]
+            <div className="flex items-center gap-6">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+                GitHub
               </a>
-              <a href="/" className="text-cyan-300/50 hover:text-cyan-400 transition-colors">
-                [HOME]
+              <a href="/" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+                Home
               </a>
             </div>
           </div>

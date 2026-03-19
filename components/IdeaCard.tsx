@@ -24,82 +24,52 @@ export function IdeaCard({ idea, featured = false }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-black font-mono overflow-hidden group" style={{
-        border: '2px solid rgba(255, 0, 255, 0.5)',
-        boxShadow: '0 0 30px rgba(255, 0, 255, 0.3), inset 0 0 20px rgba(255, 0, 255, 0.05)',
-        background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(255, 0, 255, 0.02) 100%)'
-      }}>
-        {/* Animated top bar */}
-        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 animate-pulse" style={{boxShadow: '0 0 10px rgba(255, 0, 255, 0.8)'}} />
+      <div className="relative bg-slate-900 border border-blue-500/30 rounded-xl overflow-hidden shadow-xl hover:shadow-lg hover:border-blue-500/50 transition-all">
+        {/* Gradient top bar */}
+        <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
 
         <div className="p-6 sm:p-8">
           {/* Badge */}
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-sm mb-5" style={{
-            border: '1px solid rgba(255, 0, 255, 0.6)',
-            background: 'rgba(255, 0, 255, 0.05)',
-            boxShadow: '0 0 10px rgba(255, 0, 255, 0.3), inset 0 0 5px rgba(255, 0, 255, 0.1)'
-          }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
-            <span className="text-pink-400 text-xs font-bold uppercase tracking-widest" style={{textShadow: '0 0 8px rgba(255, 0, 255, 0.6)'}}>
-              TODAY'S SPARK
-            </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            Today's Spark
           </span>
 
           {/* Project name */}
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-6 leading-tight uppercase tracking-widest group-hover:text-cyan-300 transition-all" style={{textShadow: '0 0 15px rgba(0, 255, 255, 0.8)'}}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 leading-tight">
             {displayName}
           </h2>
 
           {/* Problem statement */}
-          <div className="space-y-4 mb-6" style={{borderLeft: '2px solid rgba(0, 255, 255, 0.4)', paddingLeft: '16px'}}>
+          <div className="space-y-4 mb-6">
             {idea.who && (
               <div>
-                <span className="text-xs font-bold text-cyan-400/70 uppercase tracking-wider">
-                  &gt; WHO
-                </span>
-                <p className="text-cyan-200/80 mt-1 text-sm leading-relaxed">
-                  {idea.who}
-                </p>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Who</span>
+                <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.who}</p>
               </div>
             )}
             {idea.pain && (
               <div>
-                <span className="text-xs font-bold text-pink-400/70 uppercase tracking-wider">
-                  &gt; PAIN
-                </span>
-                <p className="text-cyan-200/80 mt-1 text-sm leading-relaxed">
-                  {idea.pain}
-                </p>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pain</span>
+                <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.pain}</p>
               </div>
             )}
             {idea.gap && (
               <div>
-                <span className="text-xs font-bold text-purple-400/70 uppercase tracking-wider">
-                  &gt; GAP
-                </span>
-                <p className="text-cyan-200/80 mt-1 text-sm leading-relaxed">
-                  {idea.gap}
-                </p>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gap</span>
+                <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.gap}</p>
               </div>
             )}
             {idea.whyNow && (
               <div>
-                <span className="text-xs font-bold text-cyan-400/70 uppercase tracking-wider">
-                  &gt; WHY NOW
-                </span>
-                <p className="text-cyan-200/80 mt-1 text-sm leading-relaxed">
-                  {idea.whyNow}
-                </p>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Why Now</span>
+                <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.whyNow}</p>
               </div>
             )}
             {idea.potential && (
               <div>
-                <span className="text-xs font-bold text-pink-400/70 uppercase tracking-wider">
-                  &gt; POTENTIAL
-                </span>
-                <p className="text-cyan-200/80 mt-1 text-sm leading-relaxed">
-                  {idea.potential}
-                </p>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Potential</span>
+                <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.potential}</p>
               </div>
             )}
           </div>
@@ -110,32 +80,21 @@ export function IdeaCard({ idea, featured = false }: Props) {
               {stackItems.map((item) => (
                 <span
                   key={item}
-                  className="px-3 py-1 rounded-sm font-bold uppercase tracking-widest text-xs hover:shadow-lg transition-all"
-                  style={{
-                    border: '1px solid rgba(0, 255, 255, 0.4)',
-                    background: 'rgba(0, 255, 255, 0.05)',
-                    color: 'rgba(0, 255, 255, 0.9)',
-                    boxShadow: '0 0 8px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)',
-                    textShadow: '0 0 5px rgba(0, 255, 255, 0.5)'
-                  }}
+                  className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm rounded-lg"
                 >
-                  [{item}]
+                  {item}
                 </span>
               ))}
             </div>
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4" style={{borderTop: '1px solid rgba(0, 255, 255, 0.3)'}}>
-            <div className="flex items-center gap-2 text-cyan-300/60 text-xs font-mono">
-              <span>◆</span>
+          <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+            <div className="flex items-center gap-2 text-slate-500 text-sm">
+              <Calendar className="w-4 h-4" />
               <span>{formattedDate}</span>
               {idea.deploy && (
-                <span className="ml-2 px-2 py-0.5 rounded-sm text-xs text-cyan-300/70 font-bold" style={{
-                  border: '1px solid rgba(0, 255, 255, 0.3)',
-                  background: 'rgba(0, 255, 255, 0.05)',
-                  boxShadow: '0 0 5px rgba(0, 255, 255, 0.2)'
-                }}>
+                <span className="ml-2 px-2 py-0.5 bg-slate-800 rounded text-xs text-slate-400">
                   {idea.deploy}
                 </span>
               )}
@@ -152,25 +111,17 @@ export function IdeaCard({ idea, featured = false }: Props) {
 
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
-    <div className="group bg-black font-mono rounded-sm overflow-hidden hover:shadow-lg transition-all" style={{
-      border: '2px solid rgba(0, 255, 255, 0.4)',
-      boxShadow: '0 0 15px rgba(0, 255, 255, 0.15), inset 0 0 10px rgba(0, 255, 255, 0.03)',
-      background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.02) 0%, rgba(0, 255, 255, 0.01) 100%)'
-    }}>
+    <div className="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-all hover:shadow-lg">
       {/* Thin gradient bar */}
-      <div className="h-0.5 bg-gradient-to-r from-cyan-500/60 to-pink-500/60" />
+      <div className="h-0.5 bg-gradient-to-r from-blue-500/60 to-cyan-500/60" />
 
       <div className="p-5">
         {/* Project name */}
-        <h3 className="text-base font-bold text-cyan-400 mb-2 line-clamp-1 uppercase tracking-widest group-hover:text-cyan-300 transition-all" style={{textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'}}>
-          {displayName}
-        </h3>
+        <h3 className="text-base font-semibold text-white mb-2 line-clamp-1">{displayName}</h3>
 
         {/* Pain snippet */}
         {idea.pain && (
-          <p className="text-cyan-200/70 text-sm mb-4 line-clamp-3 leading-relaxed">
-            {idea.pain}
-          </p>
+          <p className="text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed">{idea.pain}</p>
         )}
 
         {/* Stack badges (max 3 + overflow count) */}
@@ -179,21 +130,13 @@ export function IdeaCard({ idea, featured = false }: Props) {
             {stackItems.slice(0, 3).map((item) => (
               <span
                 key={item}
-                className="px-2 py-0.5 rounded-sm text-cyan-300 text-xs rounded-sm font-bold uppercase tracking-widest"
-                style={{
-                  border: '1px solid rgba(0, 255, 255, 0.3)',
-                  background: 'rgba(0, 255, 255, 0.05)',
-                  boxShadow: '0 0 5px rgba(0, 255, 255, 0.2)'
-                }}
+                className="px-2 py-0.5 bg-slate-800 text-slate-300 text-xs rounded-md"
               >
                 {item}
               </span>
             ))}
             {stackItems.length > 3 && (
-              <span className="px-2 py-0.5 rounded-sm text-cyan-400/60 text-xs font-bold" style={{
-                border: '1px solid rgba(0, 255, 255, 0.2)',
-                background: 'rgba(0, 255, 255, 0.03)'
-              }}>
+              <span className="px-2 py-0.5 bg-slate-800 text-slate-500 text-xs rounded-md">
                 +{stackItems.length - 3}
               </span>
             )}
@@ -201,8 +144,8 @@ export function IdeaCard({ idea, featured = false }: Props) {
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3" style={{borderTop: '1px solid rgba(0, 255, 255, 0.2)'}}>
-          <span className="text-xs text-cyan-300/50 font-mono">◆ {formattedDate}</span>
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800/50">
+          <span className="text-xs text-slate-600">{formattedDate}</span>
           <div className="flex items-center gap-1">
             <SaveButton idea={idea} />
             <ShareButton idea={idea} />
