@@ -1,7 +1,7 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
 import { AnimatedNav } from "@/components/AnimatedNav";
-import { Zap, ArrowRight } from "lucide-react";
+import { Zap } from "lucide-react";
 import Link from "next/link";
 
 // Revalidate the page at most once per hour on Vercel
@@ -20,118 +20,162 @@ export default async function DashboardPage() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden font-mono">
-      {/* Animated background with scanlines */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/5 via-black to-pink-900/5" />
-        {/* Scanlines effect */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px)',
-          pointerEvents: 'none'
-        }} />
-      </div>
+    <div className="min-h-screen bg-black relative overflow-hidden font-mono" style={{
+      backgroundImage: `
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%)
+      `
+    }}>
+      {/* CRT Scanlines */}
+      <div className="fixed inset-0 pointer-events-none z-50 opacity-10" style={{
+        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px)',
+      }} />
+
+      {/* Animated grid background */}
+      <div className="fixed inset-0 -z-10 opacity-5" style={{
+        backgroundImage: `
+          linear-gradient(0deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent),
+          linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent)
+        `,
+        backgroundSize: '60px 60px'
+      }} />
 
       <AnimatedNav />
 
       {/* ── Navigation ─────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 border-b-2 border-cyan-500/50 bg-black/80 backdrop-blur-xl shadow-lg shadow-cyan-500/20">
+      <nav className="sticky top-0 z-40 border-b border-cyan-500/30 bg-black/60 backdrop-blur-xl" style={{
+        boxShadow: '0 0 20px rgba(0, 255, 255, 0.2), inset 0 1px 0 rgba(0, 255, 255, 0.1)'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity group">
-            <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/80 border border-cyan-400/50 group-hover:shadow-cyan-400/100 transition-all">
-              <Zap className="w-4 h-4 text-black font-bold" />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 flex items-center justify-center relative" style={{
+              background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 255, 0.1))',
+              border: '2px solid rgba(0, 255, 255, 0.6)',
+              boxShadow: '0 0 15px rgba(0, 255, 255, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.3)'
+            }}>
+              <Zap className="w-4 h-4 text-cyan-400" />
             </div>
-            <span className="font-bold text-lg tracking-widest text-cyan-400 drop-shadow-lg" style={{textShadow: '0 0 10px rgba(34, 211, 238, 0.8)'}}>
+            <span className="font-bold text-lg tracking-widest text-cyan-400" style={{
+              textShadow: '0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4)'
+            }}>
               FOCUSLOCK
             </span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:block text-sm text-cyan-300/80 font-mono" style={{textShadow: '0 0 5px rgba(34, 211, 238, 0.5)'}}>
+            <span className="text-xs text-cyan-300/70 font-mono" style={{textShadow: '0 0 5px rgba(0, 255, 255, 0.5)'}}>
               [{ideas.length}] IDEAS
             </span>
-            <span className="px-3 py-1 rounded-sm bg-black border-2 border-cyan-500/60 text-cyan-400 text-xs font-bold uppercase tracking-widest shadow-lg shadow-cyan-500/30" style={{textShadow: '0 0 8px rgba(34, 211, 238, 0.6)'}}>
-              ▸ 10 AM EAT
-            </span>
+            <div style={{
+              border: '1px solid rgba(0, 255, 255, 0.4)',
+              padding: '4px 12px',
+              background: 'rgba(0, 255, 255, 0.05)',
+              boxShadow: '0 0 10px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)'
+            }} className="rounded-sm">
+              <span className="text-cyan-400 text-xs font-bold uppercase tracking-widest" style={{textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'}}>
+                ▸ 10 AM EAT
+              </span>
+            </div>
           </div>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative z-10">
         {ideas.length === 0 ? (
-          /* ── Empty state ─────────────────────────────────────────────── */
           <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div className="w-16 h-16 rounded-sm bg-black border-2 border-cyan-500/60 flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/40">
-              <Zap className="w-8 h-8 text-cyan-400" style={{filter: 'drop-shadow(0 0 8px rgba(34, 211, 238, 0.8))'}} />
+            <div style={{
+              width: '80px',
+              height: '80px',
+              border: '2px solid rgba(0, 255, 255, 0.6)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '24px',
+              background: 'rgba(0, 255, 255, 0.05)',
+              boxShadow: '0 0 20px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.1)'
+            }} className="rounded-sm">
+              <Zap className="w-10 h-10 text-cyan-400" style={{filter: 'drop-shadow(0 0 8px rgba(0, 255, 255, 0.8))'}} />
             </div>
-            <h2 className="text-2xl font-bold text-cyan-400 mb-3 tracking-widest" style={{textShadow: '0 0 10px rgba(34, 211, 238, 0.6)'}}>
+            <h2 className="text-2xl font-bold text-cyan-400 mb-3 tracking-widest uppercase" style={{textShadow: '0 0 10px rgba(0, 255, 255, 0.6)'}}>
               NO IDEAS YET
             </h2>
-            <p className="text-cyan-300/60 max-w-md leading-relaxed mb-8 font-mono">
+            <p className="text-cyan-300/60 max-w-md leading-relaxed mb-8 font-mono text-sm">
               &gt; Awaiting first idea from GitHub Actions workflow...
             </p>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-sm border-2 border-cyan-500/60 hover:border-cyan-400 text-cyan-400 hover:text-cyan-300 transition-all hover:shadow-lg hover:shadow-cyan-500/40 font-mono font-bold uppercase tracking-widest"
-            >
-              ◀ Back
-              <ArrowRight className="w-4 h-4" />
+            <Link href="/" className="px-4 py-2 text-cyan-400 font-bold uppercase tracking-widest text-sm" style={{
+              border: '1px solid rgba(0, 255, 255, 0.6)',
+              background: 'rgba(0, 255, 255, 0.05)',
+              boxShadow: '0 0 10px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)',
+              textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'
+            }} className="rounded-sm hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+              ◀ BACK
             </Link>
           </div>
         ) : (
           <>
-            {/* ── Hero section with stats ────────────────────────────────── */}
+            {/* ── Hero section ────────────────────────────────────────────── */}
             <div className="mb-16" id="stats">
-              <div className="mb-8 border-l-4 border-cyan-500 pl-4">
-                <h1 className="text-5xl sm:text-6xl font-bold text-cyan-400 mb-2 tracking-widest" style={{textShadow: '0 0 20px rgba(34, 211, 238, 0.8)'}}>
+              <div className="mb-12" style={{
+                borderLeft: '3px solid rgba(0, 255, 255, 0.6)',
+                paddingLeft: '20px'
+              }}>
+                <h1 className="text-6xl sm:text-7xl font-bold text-cyan-400 mb-2 tracking-widest uppercase" style={{
+                  textShadow: '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4)'
+                }}>
                   PROJECT IDEAS
                 </h1>
-                <p className="text-cyan-300/70 text-lg font-mono">
+                <p className="text-cyan-300/70 text-sm font-mono">
                   &gt; Real problems. Shippable solutions. Daily delivery.
                 </p>
               </div>
 
               {/* Stats grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {[
-                  { label: "Total Ideas", value: ideas.length, color: "cyan" },
-                  { label: "This Month", value: thisMonth, color: "pink" },
-                  { label: "Domains", value: 15, color: "purple" },
+                  { label: "Total Ideas", value: ideas.length },
+                  { label: "This Month", value: thisMonth },
+                  { label: "Domains", value: 15 },
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className={`p-6 rounded-sm bg-black border-2 border-${stat.color}-500/60 hover:border-${stat.color}-400 transition-all hover:shadow-lg hover:shadow-${stat.color}-500/40 group cursor-pointer`}
+                    style={{
+                      border: '2px solid rgba(0, 255, 255, 0.4)',
+                      background: 'rgba(0, 255, 255, 0.03)',
+                      boxShadow: '0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.05)'
+                    }}
+                    className="p-6 rounded-sm hover:shadow-lg hover:shadow-cyan-500/40 transition-all group cursor-pointer"
                   >
-                    <p className={`text-4xl font-bold text-${stat.color}-400 mb-1 font-mono group-hover:scale-110 transition-transform`} style={{textShadow: `0 0 10px rgba(${stat.color === 'cyan' ? '34, 211, 238' : stat.color === 'pink' ? '236, 72, 153' : '168, 85, 247'}, 0.8)`}}>
+                    <p className="text-4xl font-bold text-cyan-400 mb-2 font-mono group-hover:scale-110 transition-transform" style={{textShadow: '0 0 10px rgba(0, 255, 255, 0.8)'}}>
                       {stat.value}
                     </p>
-                    <p className={`text-sm text-${stat.color}-300/60 font-mono uppercase tracking-widest`}>{stat.label}</p>
+                    <p className="text-xs text-cyan-300/60 font-mono uppercase tracking-widest">{stat.label}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* ── Latest spark (featured) ────────────────────────────────── */}
+            {/* ── Latest spark ────────────────────────────────────────────── */}
             {latest && (
               <section className="mb-16" id="latest">
-                <div className="flex items-center gap-3 mb-6 border-l-4 border-pink-500 pl-4">
-                  <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" style={{boxShadow: '0 0 8px rgba(236, 72, 153, 0.8)'}} />
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-pink-400" style={{textShadow: '0 0 8px rgba(236, 72, 153, 0.6)'}}>
-                    ▸ Latest Spark
+                <div className="flex items-center gap-3 mb-6" style={{borderLeft: '3px solid rgba(255, 0, 255, 0.6)', paddingLeft: '20px'}}>
+                  <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" style={{boxShadow: '0 0 8px rgba(255, 0, 255, 0.8)'}} />
+                  <h2 className="text-xs font-bold uppercase tracking-widest text-pink-400" style={{textShadow: '0 0 8px rgba(255, 0, 255, 0.6)'}}>
+                    ▸ LATEST SPARK
                   </h2>
                 </div>
                 <IdeaCard idea={latest} featured />
               </section>
             )}
 
-            {/* ── All previous ideas grid ────────────────────────────────── */}
+            {/* ── Archive ────────────────────────────────────────────────── */}
             {rest.length > 0 && (
               <section id="ideas">
-                <div className="flex items-center gap-3 mb-6 border-l-4 border-purple-500 pl-4">
+                <div className="flex items-center gap-3 mb-6" style={{borderLeft: '3px solid rgba(168, 85, 247, 0.6)', paddingLeft: '20px'}}>
                   <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  <h2 className="text-sm font-bold uppercase tracking-widest text-purple-400" style={{textShadow: '0 0 8px rgba(168, 85, 247, 0.6)'}}>
-                    ▸ Archive ({rest.length})
+                  <h2 className="text-xs font-bold uppercase tracking-widest text-purple-400" style={{textShadow: '0 0 8px rgba(168, 85, 247, 0.6)'}}>
+                    ▸ ARCHIVE ({rest.length})
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {rest.map((idea) => (
                     <IdeaCard key={idea.id} idea={idea} />
                   ))}
@@ -143,25 +187,19 @@ export default async function DashboardPage() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t-2 border-cyan-500/50 py-12 mt-16 relative z-10 bg-black/50">
+      <footer className="border-t border-cyan-500/30 py-8 mt-16 relative z-10 bg-black/40" style={{
+        boxShadow: 'inset 0 1px 0 rgba(0, 255, 255, 0.1)'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-center justify-between font-mono text-xs">
             <p className="text-cyan-300/50 mb-4 sm:mb-0">
               &copy; 2026 FOCUSLOCK | SERVERLESS | OPEN SOURCE
             </p>
             <div className="flex items-center gap-4">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-300/50 hover:text-cyan-400 transition-colors"
-              >
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-cyan-300/50 hover:text-cyan-400 transition-colors">
                 [GITHUB]
               </a>
-              <a
-                href="/"
-                className="text-cyan-300/50 hover:text-cyan-400 transition-colors"
-              >
+              <a href="/" className="text-cyan-300/50 hover:text-cyan-400 transition-colors">
                 [HOME]
               </a>
             </div>

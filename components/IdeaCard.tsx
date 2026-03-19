@@ -24,24 +24,34 @@ export function IdeaCard({ idea, featured = false }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-black border-2 border-pink-500/60 rounded-sm overflow-hidden shadow-2xl shadow-pink-500/40 group hover:shadow-pink-500/60 transition-all hover:border-pink-400 font-mono">
+      <div className="relative bg-black font-mono overflow-hidden group" style={{
+        border: '2px solid rgba(255, 0, 255, 0.5)',
+        boxShadow: '0 0 30px rgba(255, 0, 255, 0.3), inset 0 0 20px rgba(255, 0, 255, 0.05)',
+        background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.03) 0%, rgba(255, 0, 255, 0.02) 100%)'
+      }}>
         {/* Animated top bar */}
-        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 animate-pulse" style={{boxShadow: '0 0 10px rgba(236, 72, 153, 0.8)'}} />
+        <div className="h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 animate-pulse" style={{boxShadow: '0 0 10px rgba(255, 0, 255, 0.8)'}} />
 
         <div className="p-6 sm:p-8">
           {/* Badge */}
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-black border border-pink-500/60 text-pink-400 text-xs font-bold uppercase tracking-widest mb-5" style={{textShadow: '0 0 8px rgba(236, 72, 153, 0.6)'}}>
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-sm mb-5" style={{
+            border: '1px solid rgba(255, 0, 255, 0.6)',
+            background: 'rgba(255, 0, 255, 0.05)',
+            boxShadow: '0 0 10px rgba(255, 0, 255, 0.3), inset 0 0 5px rgba(255, 0, 255, 0.1)'
+          }}>
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
-            TODAY'S SPARK
+            <span className="text-pink-400 text-xs font-bold uppercase tracking-widest" style={{textShadow: '0 0 8px rgba(255, 0, 255, 0.6)'}}>
+              TODAY'S SPARK
+            </span>
           </span>
 
           {/* Project name */}
-          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-6 leading-tight group-hover:text-cyan-300 transition-all uppercase tracking-widest" style={{textShadow: '0 0 15px rgba(34, 211, 238, 0.8)'}}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-6 leading-tight uppercase tracking-widest group-hover:text-cyan-300 transition-all" style={{textShadow: '0 0 15px rgba(0, 255, 255, 0.8)'}}>
             {displayName}
           </h2>
 
           {/* Problem statement */}
-          <div className="space-y-4 mb-6 border-l-2 border-cyan-500/40 pl-4">
+          <div className="space-y-4 mb-6" style={{borderLeft: '2px solid rgba(0, 255, 255, 0.4)', paddingLeft: '16px'}}>
             {idea.who && (
               <div>
                 <span className="text-xs font-bold text-cyan-400/70 uppercase tracking-wider">
@@ -100,8 +110,14 @@ export function IdeaCard({ idea, featured = false }: Props) {
               {stackItems.map((item) => (
                 <span
                   key={item}
-                  className="px-3 py-1 bg-black border border-cyan-500/40 text-cyan-400 text-xs rounded-sm font-bold uppercase tracking-widest hover:border-cyan-400 transition-all"
-                  style={{textShadow: '0 0 5px rgba(34, 211, 238, 0.5)'}}
+                  className="px-3 py-1 rounded-sm font-bold uppercase tracking-widest text-xs hover:shadow-lg transition-all"
+                  style={{
+                    border: '1px solid rgba(0, 255, 255, 0.4)',
+                    background: 'rgba(0, 255, 255, 0.05)',
+                    color: 'rgba(0, 255, 255, 0.9)',
+                    boxShadow: '0 0 8px rgba(0, 255, 255, 0.3), inset 0 0 5px rgba(0, 255, 255, 0.1)',
+                    textShadow: '0 0 5px rgba(0, 255, 255, 0.5)'
+                  }}
                 >
                   [{item}]
                 </span>
@@ -110,12 +126,16 @@ export function IdeaCard({ idea, featured = false }: Props) {
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t-2 border-cyan-500/30">
+          <div className="flex items-center justify-between pt-4" style={{borderTop: '1px solid rgba(0, 255, 255, 0.3)'}}>
             <div className="flex items-center gap-2 text-cyan-300/60 text-xs font-mono">
               <span>◆</span>
               <span>{formattedDate}</span>
               {idea.deploy && (
-                <span className="ml-2 px-2 py-0.5 bg-black border border-cyan-500/30 rounded-sm text-xs text-cyan-300/70 font-bold">
+                <span className="ml-2 px-2 py-0.5 rounded-sm text-xs text-cyan-300/70 font-bold" style={{
+                  border: '1px solid rgba(0, 255, 255, 0.3)',
+                  background: 'rgba(0, 255, 255, 0.05)',
+                  boxShadow: '0 0 5px rgba(0, 255, 255, 0.2)'
+                }}>
                   {idea.deploy}
                 </span>
               )}
@@ -132,13 +152,17 @@ export function IdeaCard({ idea, featured = false }: Props) {
 
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
-    <div className="group bg-black border-2 border-cyan-500/40 rounded-sm overflow-hidden hover:border-cyan-400 transition-all hover:shadow-lg hover:shadow-cyan-500/40 font-mono">
+    <div className="group bg-black font-mono rounded-sm overflow-hidden hover:shadow-lg transition-all" style={{
+      border: '2px solid rgba(0, 255, 255, 0.4)',
+      boxShadow: '0 0 15px rgba(0, 255, 255, 0.15), inset 0 0 10px rgba(0, 255, 255, 0.03)',
+      background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.02) 0%, rgba(0, 255, 255, 0.01) 100%)'
+    }}>
       {/* Thin gradient bar */}
       <div className="h-0.5 bg-gradient-to-r from-cyan-500/60 to-pink-500/60" />
 
       <div className="p-5">
         {/* Project name */}
-        <h3 className="text-base font-bold text-cyan-400 mb-2 line-clamp-1 uppercase tracking-widest" style={{textShadow: '0 0 8px rgba(34, 211, 238, 0.6)'}}>
+        <h3 className="text-base font-bold text-cyan-400 mb-2 line-clamp-1 uppercase tracking-widest group-hover:text-cyan-300 transition-all" style={{textShadow: '0 0 8px rgba(0, 255, 255, 0.6)'}}>
           {displayName}
         </h3>
 
@@ -155,13 +179,21 @@ export function IdeaCard({ idea, featured = false }: Props) {
             {stackItems.slice(0, 3).map((item) => (
               <span
                 key={item}
-                className="px-2 py-0.5 bg-black border border-cyan-500/30 text-cyan-300 text-xs rounded-sm font-bold uppercase tracking-widest"
+                className="px-2 py-0.5 rounded-sm text-cyan-300 text-xs rounded-sm font-bold uppercase tracking-widest"
+                style={{
+                  border: '1px solid rgba(0, 255, 255, 0.3)',
+                  background: 'rgba(0, 255, 255, 0.05)',
+                  boxShadow: '0 0 5px rgba(0, 255, 255, 0.2)'
+                }}
               >
                 {item}
               </span>
             ))}
             {stackItems.length > 3 && (
-              <span className="px-2 py-0.5 bg-black border border-cyan-500/20 text-cyan-400/60 text-xs rounded-sm font-bold">
+              <span className="px-2 py-0.5 rounded-sm text-cyan-400/60 text-xs font-bold" style={{
+                border: '1px solid rgba(0, 255, 255, 0.2)',
+                background: 'rgba(0, 255, 255, 0.03)'
+              }}>
                 +{stackItems.length - 3}
               </span>
             )}
@@ -169,7 +201,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-cyan-500/20">
+        <div className="flex items-center justify-between pt-3" style={{borderTop: '1px solid rgba(0, 255, 255, 0.2)'}}>
           <span className="text-xs text-cyan-300/50 font-mono">◆ {formattedDate}</span>
           <div className="flex items-center gap-1">
             <SaveButton idea={idea} />
