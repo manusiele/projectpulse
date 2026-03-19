@@ -173,16 +173,20 @@ def parse_idea(raw: str) -> dict:
 
 def save_idea(raw: str):
     """Save a structured idea entry to ideas.json for the web dashboard."""
-    parsed = parse_idea(raw)
-    entry = {
-        "id": f"idea_{int(datetime.now().timestamp())}",
-        "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-        "raw": raw,
-        **parsed,
-    }
-    ideas_store.append(entry)
-    with open(IDEAS_FILE, "w") as f:
-        json.dump(ideas_store, f, indent=2)
+    try:
+        parsed = parse_idea(raw)
+        entry = {
+            "id": f"idea_{int(datetime.now().timestamp())}",
+            "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            "raw": raw,
+            **parsed,
+        }
+        ideas_store.append(entry)
+        with open(IDEAS_FILE, "w") as f:
+            json.dump(ideas_store, f, indent=2)
+        print(f"✓ Idea saved to {IDEAS_FILE}")
+    except Exception as e:
+        print(f"✗ Failed to save idea: {e}")
 
 def log_activity(text: str):
     entry = f"{text} — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
