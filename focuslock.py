@@ -15,6 +15,7 @@ MODEL = "phi3:mini"  # or "llama3.2", "gemma2", etc.
 # Persistent history
 os.makedirs("data", exist_ok=True)
 HISTORY_FILE = "data/history.json"
+IDEAS_FILE = "data/ideas.json"
 
 if os.path.exists(HISTORY_FILE):
     with open(HISTORY_FILE, "r") as f:
@@ -26,6 +27,12 @@ else:
         "Wants project name + exact stack + useful links only",
         "Every idea must start with a sharp Problem Statement"
     ]
+
+if os.path.exists(IDEAS_FILE):
+    with open(IDEAS_FILE, "r") as f:
+        ideas_store = json.load(f)
+else:
+    ideas_store = []
 
 # Universal problem domains
 PROBLEM_DOMAINS = [
@@ -121,6 +128,62 @@ PROBLEM_DOMAINS = [
     }
 ]
 
+def parse_idea(raw: str) -> dict:
+    """Extract structured fields from the LLM-generated idea text."""
+    result = {
+        "projectName": "",
+        "stack": "",
+        "deploy": "",
+        "who": "",
+        "pain": "",
+        "gap": "",
+        "impact": "",
+        "whyNow": "",
+        "potential": "",
+    }
+    for line in raw.split("\n"):
+        line = line.strip()
+        sep = "→" if "→" in line else ("->" if "->" in line else None)
+        if not sep:
+            continue
+        key, _, value = line.partition(sep)
+        key = key.strip().lower().rstrip(":")
+        value = value.strip()
+        if not value:
+            continue
+        if key == "project":
+            result["projectName"] = value
+        elif key == "stack":
+            result["stack"] = value
+        elif key == "deploy":
+            result["deploy"] = value
+        elif key == "who":
+            result["who"] = value
+        elif key == "pain":
+            result["pain"] = value
+        elif key == "gap":
+            result["gap"] = value
+        elif key in ("impact if unsolved", "impact"):
+            result["impact"] = value
+        elif key == "why now":
+            result["whyNow"] = value
+        elif key == "potential":
+            result["potential"] = value
+    return result
+
+def save_idea(raw: str):
+    """Save a structured idea entry to ideas.json for the web dashboard."""
+    parsed = parse_idea(raw)
+    entry = {
+        "id": f"idea_{int(datetime.now().timestamp())}",
+        "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "raw": raw,
+        **parsed,
+    }
+    ideas_store.append(entry)
+    with open(IDEAS_FILE, "w") as f:
+        json.dump(ideas_store, f, indent=2)
+
 def log_activity(text: str):
     entry = f"{text} — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     history.append(entry)
@@ -189,6 +252,7 @@ if __name__ == "__main__":
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         send_telegram(message)
+        save_idea(idea)
         log_activity("Delivered project with Problem Statement + clean stack")
         print(" FocusLock complete")
     except Exception as e:
