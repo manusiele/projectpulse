@@ -1,5 +1,6 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
+import { AnimatedNav } from "@/components/AnimatedNav";
 import { Zap, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -20,6 +21,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
+      <AnimatedNav />
       {/* ── Navigation ─────────────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 border-b border-gray-800/40 bg-[#0a0a0a]/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -64,7 +66,7 @@ export default async function DashboardPage() {
         ) : (
           <>
             {/* ── Hero section with stats ────────────────────────────────── */}
-            <div className="mb-16">
+            <div className="mb-16" id="stats">
               <div className="mb-8">
                 <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">
                   Project Ideas
@@ -97,7 +99,7 @@ export default async function DashboardPage() {
 
             {/* ── Latest spark (featured) ────────────────────────────────── */}
             {latest && (
-              <section className="mb-16">
+              <section className="mb-16" id="latest">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-purple-400" />
                   <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
@@ -110,7 +112,7 @@ export default async function DashboardPage() {
 
             {/* ── All previous ideas grid ────────────────────────────────── */}
             {rest.length > 0 && (
-              <section>
+              <section id="ideas">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-2 h-2 rounded-full bg-gray-600" />
                   <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-500">
