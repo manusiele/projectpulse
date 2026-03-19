@@ -52,7 +52,7 @@ jobs:
       run: |
         git config --local user.email "focuslock-bot@github.com"
         git config --local user.name "FocusLock Bot"
-        git add data/history.json
+        git add data/history.json data/ideas.json
         if git diff --staged --quiet; then
           echo "ℹ️ No changes to commit"
         else
