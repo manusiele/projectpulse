@@ -1,19 +1,19 @@
 "use client";
 
-import { Zap, Github, ArrowRight, Sparkles, Rocket, Brain } from "lucide-react";
+import { Github, ArrowRight, Sparkles, Rocket, Brain, Zap } from "lucide-react";
 import Link from "next/link";
+import { FocusLockLogo } from "@/components/FocusLockLogo";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-black text-slate-100">
       {/* ── Navigation ─────────────────────────────────────────────────── */}
       <nav className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-              <Zap className="w-5 h-5 text-white" />
+            <div className="w-40">
+              <FocusLockLogo className="w-full h-auto" />
             </div>
-            <span className="font-bold text-xl text-white">FocusLock</span>
           </Link>
           <div className="flex items-center gap-4">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">

@@ -1,7 +1,8 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
-import { Zap, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { FocusLockLogo } from "@/components/FocusLockLogo";
 
 export const revalidate = 3600;
 
@@ -26,10 +27,9 @@ export default async function DashboardPage() {
             <div className="sticky top-12 space-y-6">
               {/* Profile Card */}
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center">
-                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-10 h-10 text-white" />
+                <div className="w-32 mx-auto mb-4">
+                  <FocusLockLogo className="w-full h-auto" />
                 </div>
-                <h2 className="text-lg font-bold text-white mb-1">FocusLock</h2>
                 <p className="text-xs text-slate-400 mb-6">AI Project Ideas</p>
 
                 {/* Stats */}
@@ -76,9 +76,6 @@ export default async function DashboardPage() {
           <div className="lg:col-span-3">
             {ideas.length === 0 ? (
               <div className="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center">
-                <div className="w-16 h-16 rounded-lg bg-slate-800 flex items-center justify-center mx-auto mb-6">
-                  <Zap className="w-8 h-8 text-blue-400" />
-                </div>
                 <h2 className="text-2xl font-bold text-white mb-3">No ideas yet</h2>
                 <p className="text-slate-400 max-w-md leading-relaxed mb-8 mx-auto">
                   Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT.
