@@ -24,11 +24,11 @@ export function IdeaCard({ idea, featured = false }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-slate-900 border border-blue-500/30 rounded-xl overflow-hidden shadow-xl hover:shadow-lg hover:border-blue-500/50 transition-all">
+      <div className="bg-slate-900 border border-blue-500/30 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all">
         {/* Gradient top bar */}
         <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
 
-        <div className="p-6 sm:p-8">
+        <div className="p-8">
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
@@ -111,13 +111,13 @@ export function IdeaCard({ idea, featured = false }: Props) {
 
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
-    <div className="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-slate-700 transition-all hover:shadow-lg">
+    <div className="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all hover:shadow-lg">
       {/* Thin gradient bar */}
       <div className="h-0.5 bg-gradient-to-r from-blue-500/60 to-cyan-500/60" />
 
-      <div className="p-5">
+      <div className="p-6">
         {/* Project name */}
-        <h3 className="text-base font-semibold text-white mb-2 line-clamp-1">{displayName}</h3>
+        <h3 className="text-lg font-semibold text-white mb-2 line-clamp-1">{displayName}</h3>
 
         {/* Pain snippet */}
         {idea.pain && (
