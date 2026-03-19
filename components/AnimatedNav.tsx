@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 interface NavItem {
   id: string;
   label: string;
-  icon: string;
   color: string;
 }
 
 const navItems: NavItem[] = [
-  { id: "stats", label: "Stats", icon: "📊", color: "#a78bfa" },
-  { id: "latest", label: "Latest", icon: "✨", color: "#60a5fa" },
-  { id: "ideas", label: "Ideas", icon: "💡", color: "#34d399" },
+  { id: "stats", label: "Stats", color: "#a78bfa" },
+  { id: "latest", label: "Latest", color: "#60a5fa" },
+  { id: "ideas", label: "Ideas", color: "#34d399" },
 ];
 
 export function AnimatedNav() {
@@ -55,108 +54,97 @@ export function AnimatedNav() {
   };
 
   return (
-    <div className="fixed left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-8">
+    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6">
       {navItems.map((item, index) => {
         const isActive = activeSection === item.id;
         const isHovered = hoveredItem === item.id;
 
         return (
           <div key={item.id} className="relative group">
-            {/* Animated SVG background */}
-            <svg
-              className="absolute inset-0 w-16 h-16 -z-10"
-              viewBox="0 0 64 64"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Outer ring - animated */}
-              <circle
-                cx="32"
-                cy="32"
-                r="28"
-                stroke={item.color}
-                strokeWidth="1.5"
-                opacity={isActive ? 1 : 0.3}
-                className={`transition-all duration-300 ${
-                  isActive ? "animate-pulse" : ""
-                }`}
-                style={{
-                  filter: isActive ? `drop-shadow(0 0 8px ${item.color})` : "",
-                }}
-              />
-
-              {/* Inner animated hexagon */}
-              <g
-                className={`transition-all duration-300 ${
-                  isHovered ? "animate-spin" : ""
-                }`}
-                style={{
-                  animationDuration: isHovered ? "3s" : "0s",
-                  transformOrigin: "32px 32px",
-                }}
-              >
-                <path
-                  d="M 32 8 L 48 16 L 48 40 L 32 48 L 16 40 L 16 16 Z"
-                  stroke={item.color}
-                  strokeWidth="1.5"
-                  fill="none"
-                  opacity={isActive ? 0.8 : 0.4}
-                  className="transition-all duration-300"
-                />
-              </g>
-
-              {/* Center glow circle */}
-              <circle
-                cx="32"
-                cy="32"
-                r="12"
-                fill={item.color}
-                opacity={isActive ? 0.2 : 0.05}
-                className="transition-all duration-300"
-              />
-
-              {/* Animated dots */}
-              {[0, 120, 240].map((angle) => {
-                const rad = (angle * Math.PI) / 180;
-                const x = 32 + 20 * Math.cos(rad);
-                const y = 32 + 20 * Math.sin(rad);
-                return (
-                  <circle
-                    key={angle}
-                    cx={x}
-                    cy={y}
-                    r="1.5"
-                    fill={item.color}
-                    opacity={isActive ? 0.8 : 0.3}
-                    className={`transition-all duration-300 ${
-                      isActive ? "animate-pulse" : ""
-                    }`}
-                    style={{
-                      animationDelay: `${angle / 120 * 0.3}s`,
-                    }}
-                  />
-                );
-              })}
-            </svg>
-
-            {/* Button */}
+            {/* Animated SVG - smaller and cleaner */}
             <button
               onClick={() => scrollToSection(item.id)}
               onMouseEnter={() => setHoveredItem(item.id)}
               onMouseLeave={() => setHoveredItem(null)}
-              className={`relative w-16 h-16 rounded-2xl flex items-center justify-center text-2xl transition-all duration-300 ${
+              className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
                 isActive
                   ? "bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/50 shadow-lg shadow-purple-500/20"
                   : "bg-gray-900/40 border border-gray-800 hover:border-gray-700"
               }`}
               title={item.label}
             >
-              <span className="relative z-10 group-hover:scale-110 transition-transform duration-300">
-                {item.icon}
-              </span>
+              {/* Animated SVG inside button */}
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Outer rotating ring */}
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="16"
+                  stroke={item.color}
+                  strokeWidth="1"
+                  opacity={isActive ? 1 : 0.4}
+                  className={`transition-all duration-300 ${
+                    isActive ? "animate-spin" : ""
+                  }`}
+                  style={{
+                    animationDuration: "4s",
+                    transformOrigin: "20px 20px",
+                  }}
+                />
+
+                {/* Inner pulsing circle */}
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="8"
+                  stroke={item.color}
+                  strokeWidth="1"
+                  fill="none"
+                  opacity={isActive ? 0.8 : 0.3}
+                  className={`transition-all duration-300 ${
+                    isActive ? "animate-pulse" : ""
+                  }`}
+                />
+
+                {/* Center dot */}
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="2"
+                  fill={item.color}
+                  opacity={isActive ? 1 : 0.5}
+                  className="transition-all duration-300"
+                />
+
+                {/* Animated orbiting dots */}
+                {isActive &&
+                  [0, 120, 240].map((angle) => {
+                    const rad = (angle * Math.PI) / 180;
+                    const x = 20 + 10 * Math.cos(rad);
+                    const y = 20 + 10 * Math.sin(rad);
+                    return (
+                      <circle
+                        key={angle}
+                        cx={x}
+                        cy={y}
+                        r="1"
+                        fill={item.color}
+                        className="animate-pulse"
+                        style={{
+                          animationDelay: `${(angle / 120) * 0.3}s`,
+                        }}
+                      />
+                    );
+                  })}
+              </svg>
 
               {/* Tooltip */}
-              <div className="absolute left-full ml-4 px-3 py-2 rounded-lg bg-gray-900 border border-gray-800 text-sm text-gray-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              <div className="absolute left-full ml-3 px-2 py-1 rounded-lg bg-gray-900 border border-gray-800 text-xs text-gray-300 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                 {item.label}
               </div>
             </button>
@@ -167,7 +155,7 @@ export function AnimatedNav() {
                 className="absolute left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b transition-all duration-300"
                 style={{
                   top: "100%",
-                  height: index < navItems.length - 1 ? "32px" : "0px",
+                  height: index < navItems.length - 1 ? "24px" : "0px",
                   background: `linear-gradient(to bottom, ${item.color}, transparent)`,
                 }}
               />
