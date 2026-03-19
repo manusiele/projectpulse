@@ -20,46 +20,59 @@ export default async function DashboardPage() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-black relative overflow-hidden font-mono">
+      {/* Animated background with scanlines */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/5 via-black to-pink-900/5" />
+        {/* Scanlines effect */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px)',
+          pointerEvents: 'none'
+        }} />
+      </div>
+
       <AnimatedNav />
+
       {/* ── Navigation ─────────────────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 border-b border-gray-800/40 bg-[#0a0a0a]/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b-2 border-cyan-500/50 bg-black/80 backdrop-blur-xl shadow-lg shadow-cyan-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/25">
-              <Zap className="w-4 h-4 text-white" />
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity group">
+            <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/80 border border-cyan-400/50 group-hover:shadow-cyan-400/100 transition-all">
+              <Zap className="w-4 h-4 text-black font-bold" />
             </div>
-            <span className="font-bold text-lg tracking-tight text-white">FocusLock</span>
+            <span className="font-bold text-lg tracking-widest text-cyan-400 drop-shadow-lg" style={{textShadow: '0 0 10px rgba(34, 211, 238, 0.8)'}}>
+              FOCUSLOCK
+            </span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="hidden sm:block text-sm text-gray-400">
-              {ideas.length} idea{ideas.length !== 1 ? "s" : ""} generated
+            <span className="hidden sm:block text-sm text-cyan-300/80 font-mono" style={{textShadow: '0 0 5px rgba(34, 211, 238, 0.5)'}}>
+              [{ideas.length}] IDEAS
             </span>
-            <span className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-medium">
-              Daily @ 10 AM EAT
+            <span className="px-3 py-1 rounded-sm bg-black border-2 border-cyan-500/60 text-cyan-400 text-xs font-bold uppercase tracking-widest shadow-lg shadow-cyan-500/30" style={{textShadow: '0 0 8px rgba(34, 211, 238, 0.6)'}}>
+              ▸ 10 AM EAT
             </span>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 relative z-10">
         {ideas.length === 0 ? (
           /* ── Empty state ─────────────────────────────────────────────── */
           <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/20 flex items-center justify-center mb-6">
-              <Zap className="w-8 h-8 text-purple-400" />
+            <div className="w-16 h-16 rounded-sm bg-black border-2 border-cyan-500/60 flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/40">
+              <Zap className="w-8 h-8 text-cyan-400" style={{filter: 'drop-shadow(0 0 8px rgba(34, 211, 238, 0.8))'}} />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3">
-              No ideas yet
+            <h2 className="text-2xl font-bold text-cyan-400 mb-3 tracking-widest" style={{textShadow: '0 0 10px rgba(34, 211, 238, 0.6)'}}>
+              NO IDEAS YET
             </h2>
-            <p className="text-gray-400 max-w-md leading-relaxed mb-8">
-              Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT. No action needed.
+            <p className="text-cyan-300/60 max-w-md leading-relaxed mb-8 font-mono">
+              &gt; Awaiting first idea from GitHub Actions workflow...
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-sm border-2 border-cyan-500/60 hover:border-cyan-400 text-cyan-400 hover:text-cyan-300 transition-all hover:shadow-lg hover:shadow-cyan-500/40 font-mono font-bold uppercase tracking-widest"
             >
-              Back to Home
+              ◀ Back
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -67,31 +80,30 @@ export default async function DashboardPage() {
           <>
             {/* ── Hero section with stats ────────────────────────────────── */}
             <div className="mb-16" id="stats">
-              <div className="mb-8">
-                <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">
-                  Project Ideas
+              <div className="mb-8 border-l-4 border-cyan-500 pl-4">
+                <h1 className="text-5xl sm:text-6xl font-bold text-cyan-400 mb-2 tracking-widest" style={{textShadow: '0 0 20px rgba(34, 211, 238, 0.8)'}}>
+                  PROJECT IDEAS
                 </h1>
-                <p className="text-gray-400 text-lg">
-                  Fresh ideas delivered daily. Real problems. Shippable solutions.
+                <p className="text-cyan-300/70 text-lg font-mono">
+                  &gt; Real problems. Shippable solutions. Daily delivery.
                 </p>
               </div>
 
               {/* Stats grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
-                  { label: "Total Ideas", value: ideas.length, icon: "📊" },
-                  { label: "This Month", value: thisMonth, icon: "📅" },
-                  { label: "Problem Domains", value: 15, icon: "🎯" },
+                  { label: "Total Ideas", value: ideas.length, color: "cyan" },
+                  { label: "This Month", value: thisMonth, color: "pink" },
+                  { label: "Domains", value: 15, color: "purple" },
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="p-6 rounded-xl bg-gray-900/40 border border-gray-800 hover:border-purple-500/40 transition-colors"
+                    className={`p-6 rounded-sm bg-black border-2 border-${stat.color}-500/60 hover:border-${stat.color}-400 transition-all hover:shadow-lg hover:shadow-${stat.color}-500/40 group cursor-pointer`}
                   >
-                    <div className="text-3xl mb-2">{stat.icon}</div>
-                    <p className="text-3xl font-bold text-white mb-1">
+                    <p className={`text-4xl font-bold text-${stat.color}-400 mb-1 font-mono group-hover:scale-110 transition-transform`} style={{textShadow: `0 0 10px rgba(${stat.color === 'cyan' ? '34, 211, 238' : stat.color === 'pink' ? '236, 72, 153' : '168, 85, 247'}, 0.8)`}}>
                       {stat.value}
                     </p>
-                    <p className="text-sm text-gray-500">{stat.label}</p>
+                    <p className={`text-sm text-${stat.color}-300/60 font-mono uppercase tracking-widest`}>{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -100,10 +112,10 @@ export default async function DashboardPage() {
             {/* ── Latest spark (featured) ────────────────────────────────── */}
             {latest && (
               <section className="mb-16" id="latest">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-purple-400" />
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-400">
-                    Latest Spark
+                <div className="flex items-center gap-3 mb-6 border-l-4 border-pink-500 pl-4">
+                  <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" style={{boxShadow: '0 0 8px rgba(236, 72, 153, 0.8)'}} />
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-pink-400" style={{textShadow: '0 0 8px rgba(236, 72, 153, 0.6)'}}>
+                    ▸ Latest Spark
                   </h2>
                 </div>
                 <IdeaCard idea={latest} featured />
@@ -113,10 +125,10 @@ export default async function DashboardPage() {
             {/* ── All previous ideas grid ────────────────────────────────── */}
             {rest.length > 0 && (
               <section id="ideas">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-2 h-2 rounded-full bg-gray-600" />
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-gray-500">
-                    Previous Ideas ({rest.length})
+                <div className="flex items-center gap-3 mb-6 border-l-4 border-purple-500 pl-4">
+                  <div className="w-2 h-2 rounded-full bg-purple-500" />
+                  <h2 className="text-sm font-bold uppercase tracking-widest text-purple-400" style={{textShadow: '0 0 8px rgba(168, 85, 247, 0.6)'}}>
+                    ▸ Archive ({rest.length})
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -131,26 +143,26 @@ export default async function DashboardPage() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-gray-800/40 py-12 mt-16">
+      <footer className="border-t-2 border-cyan-500/50 py-12 mt-16 relative z-10 bg-black/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between">
-            <p className="text-sm text-gray-500 mb-4 sm:mb-0">
-              © 2026 FocusLock. Serverless. Open source. Daily ideas.
+          <div className="flex flex-col sm:flex-row items-center justify-between font-mono text-xs">
+            <p className="text-cyan-300/50 mb-4 sm:mb-0">
+              &copy; 2026 FOCUSLOCK | SERVERLESS | OPEN SOURCE
             </p>
             <div className="flex items-center gap-4">
               <a
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-gray-300 transition-colors text-sm"
+                className="text-cyan-300/50 hover:text-cyan-400 transition-colors"
               >
-                GitHub
+                [GITHUB]
               </a>
               <a
                 href="/"
-                className="text-gray-500 hover:text-gray-300 transition-colors text-sm"
+                className="text-cyan-300/50 hover:text-cyan-400 transition-colors"
               >
-                Home
+                [HOME]
               </a>
             </div>
           </div>
