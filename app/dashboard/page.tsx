@@ -1,6 +1,6 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Home, Sparkles, TrendingUp, Calendar } from "lucide-react";
 import Link from "next/link";
 import { FocusLockLogo } from "@/components/FocusLockLogo";
 
@@ -24,51 +24,76 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* ── Left Sidebar ─────────────────────────────────────────────── */}
           <div className="lg:col-span-1">
-            <div className="sticky top-12 space-y-6">
-              {/* Profile Card */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center">
-                <div className="w-32 mx-auto mb-4">
+            <div className="sticky top-12 space-y-4">
+              {/* Logo Section */}
+              <div className="bg-gradient-to-br from-slate-900 to-slate-900/50 border border-slate-800/50 rounded-2xl p-6 backdrop-blur-sm">
+                <div className="w-36 mx-auto mb-3">
                   <FocusLockLogo className="w-full h-auto" />
                 </div>
-                <p className="text-xs text-slate-400 mb-6">AI Project Ideas</p>
-
-                {/* Stats */}
-                <div className="space-y-3 text-left text-sm mb-6">
-                  <div className="bg-slate-800/50 rounded-lg p-3">
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">Total</p>
-                    <p className="text-white font-bold text-lg">{ideas.length}</p>
-                  </div>
-                  <div className="bg-slate-800/50 rounded-lg p-3">
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">This Month</p>
-                    <p className="text-white font-bold text-lg">{thisMonth}</p>
-                  </div>
-                  <div className="bg-slate-800/50 rounded-lg p-3">
-                    <p className="text-slate-500 uppercase text-xs font-semibold mb-1">Domains</p>
-                    <p className="text-white font-bold text-lg">15</p>
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                <Link
-                  href="/"
-                  className="w-full px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors text-sm"
-                >
-                  Back Home
-                </Link>
+                <p className="text-center text-xs text-slate-500 font-medium">Daily AI Project Ideas</p>
               </div>
 
-              {/* Quick Links */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
-                <p className="text-xs font-semibold text-slate-400 uppercase mb-3">Navigate</p>
-                <div className="space-y-2">
-                  <a href="#latest" className="block px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
-                    Latest Spark
-                  </a>
-                  <a href="#ideas" className="block px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
-                    All Ideas
-                  </a>
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 gap-3">
+                <div className="bg-slate-900/80 border border-slate-800/50 rounded-xl p-4 hover:border-blue-500/30 transition-all group">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Ideas</span>
+                    <TrendingUp className="w-4 h-4 text-blue-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-2xl font-bold text-white">{ideas.length}</p>
+                </div>
+                
+                <div className="bg-slate-900/80 border border-slate-800/50 rounded-xl p-4 hover:border-cyan-500/30 transition-all group">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">This Month</span>
+                    <Calendar className="w-4 h-4 text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-2xl font-bold text-white">{thisMonth}</p>
+                </div>
+                
+                <div className="bg-slate-900/80 border border-slate-800/50 rounded-xl p-4 hover:border-purple-500/30 transition-all group">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Domains</span>
+                    <Sparkles className="w-4 h-4 text-purple-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-2xl font-bold text-white">15</p>
                 </div>
               </div>
+
+              {/* Navigation */}
+              <div className="bg-slate-900/80 border border-slate-800/50 rounded-xl p-3">
+                <div className="space-y-1">
+                  <a 
+                    href="#latest" 
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all group"
+                  >
+                    <Sparkles className="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-medium">Latest Spark</span>
+                  </a>
+                  <a 
+                    href="#ideas" 
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all group"
+                  >
+                    <TrendingUp className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-medium">All Ideas</span>
+                  </a>
+                  <Link 
+                    href="/" 
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all group"
+                  >
+                    <Home className="w-4 h-4 text-slate-400 group-hover:scale-110 transition-transform" />
+                    <span className="font-medium">Home</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Link
+                href="/"
+                className="block w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold transition-all text-sm text-center shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40"
+              >
+                ← Back to Home
+              </Link>
             </div>
           </div>
 
