@@ -1,4 +1,3 @@
-import { Calendar } from "lucide-react";
 import type { Idea } from "@/lib/ideas";
 import { SaveButton } from "./SaveButton";
 import { ShareButton } from "./ShareButton";
@@ -24,7 +23,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-slate-900/40 border border-slate-800/30 rounded-xl overflow-hidden backdrop-blur-sm">
+      <div className="relative bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden backdrop-blur-sm">
         {/* Gradient top bar */}
         <div className="h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
 
@@ -89,12 +88,17 @@ export function IdeaCard({ idea, featured = false }: Props) {
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-800/30">
+          <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
             <div className="flex items-center gap-2 text-slate-500 text-xs">
-              <Calendar className="w-3.5 h-3.5" />
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
               <span>{formattedDate}</span>
               {idea.deploy && (
-                <span className="ml-2 px-2 py-0.5 bg-slate-800/50 rounded text-xs text-slate-400">
+                <span className="ml-2 px-2 py-0.5 bg-[#252525] rounded text-xs text-slate-400">
                   {idea.deploy}
                 </span>
               )}
@@ -111,7 +115,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
 
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
-    <div className="group bg-slate-900/40 border border-slate-800/30 rounded-xl overflow-hidden hover:border-slate-700/50 transition-all backdrop-blur-sm">
+    <div className="group bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden hover:border-[#3a3a3a] transition-all backdrop-blur-sm">
       {/* Thin gradient bar */}
       <div className="h-0.5 bg-gradient-to-r from-blue-500/40 to-cyan-500/40" />
 
@@ -130,13 +134,13 @@ export function IdeaCard({ idea, featured = false }: Props) {
             {stackItems.slice(0, 3).map((item) => (
               <span
                 key={item}
-                className="px-2 py-0.5 bg-slate-800/50 text-slate-300 text-xs rounded-md"
+                className="px-2 py-0.5 bg-[#252525] text-slate-300 text-xs rounded-md"
               >
                 {item}
               </span>
             ))}
             {stackItems.length > 3 && (
-              <span className="px-2 py-0.5 bg-slate-800/50 text-slate-500 text-xs rounded-md">
+              <span className="px-2 py-0.5 bg-[#252525] text-slate-500 text-xs rounded-md">
                 +{stackItems.length - 3}
               </span>
             )}
@@ -144,7 +148,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-slate-800/30">
+        <div className="flex items-center justify-between pt-3 border-t border-[#2a2a2a]">
           <span className="text-xs text-slate-600">{formattedDate}</span>
           <div className="flex items-center gap-1">
             <SaveButton idea={idea} />
