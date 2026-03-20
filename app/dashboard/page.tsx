@@ -10,6 +10,7 @@ interface Idea {
   id: string;
   date: string;
   raw: string;
+  domain?: string;
   projectName?: string;
   stack?: string;
   deploy?: string;
@@ -27,6 +28,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas' | 'thisMonth'>('ideas');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
   // Tech stack URL mapping
   const getTechUrl = (tech: string): string => {
@@ -319,30 +321,68 @@ export default function DashboardPage() {
                   <p className="text-sm text-slate-400">25 problem spaces the AI generates ideas from</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {domains.map((domain, index) => (
-                    <div 
-                      key={index}
-                      className="p-5 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl hover:border-[#3a3a3a] transition-all hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-1"
-                    >
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                          <span className="text-sm font-bold text-purple-400">{index + 1}</span>
+                  {domains.map((domain, index) => {
+                    const domainIdeas = ideas.filter(idea => idea.domain === domain.name);
+                    return (
+                      <div 
+                        key={index}
+                        onClick={() => {
+                          setSelectedDomain(domain.name);
+                          setActiveView('allIdeas');
+                        }}
+                        className="p-5 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl hover:border-[#3a3a3a] transition-all hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-1 cursor-pointer"
+                      >
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-bold text-purple-400">{index + 1}</span>
+                          </div>
+                          <h3 className="text-base font-semibold text-white leading-tight">{domain.name}</h3>
                         </div>
-                        <h3 className="text-base font-semibold text-white leading-tight">{domain.name}</h3>
+                        <p className="text-sm text-slate-400 leading-relaxed mb-3">{domain.description}</p>
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                          </svg>
+                          <span>{domainIdeas.length} {domainIdeas.length === 1 ? 'idea' : 'ideas'}</span>
+                        </div>
                       </div>
-                      <p className="text-sm text-slate-400 leading-relaxed">{domain.description}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ) : activeView === 'allIdeas' ? (
               <div className="space-y-6">
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-white mb-2">All Ideas</h2>
-                  <p className="text-sm text-slate-400">{ideas.length} total project ideas</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-2">
+                        {selectedDomain ? `${selectedDomain} Ideas` : 'All Ideas'}
+                      </h2>
+                      <p className="text-sm text-slate-400">
+                        {selectedDomain 
+                          ? `${ideas.filter(i => i.domain === selectedDomain).length} ideas in this domain`
+                          : `${ideas.length} total project ideas`
+                        }
+                      </p>
+                    </div>
+                    {selectedDomain && (
+                      <button
+                        onClick={() => setSelectedDomain(null)}
+                        className="px-4 py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] text-slate-400 hover:text-white text-sm transition-all flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                        Clear Filter
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {ideas.map((idea, index) => (
+                  {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea, index) => (
                     <div 
                       key={idea.id}
                       className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
