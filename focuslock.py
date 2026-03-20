@@ -185,8 +185,11 @@ def save_idea(raw: str):
         with open(IDEAS_FILE, "w") as f:
             json.dump(ideas_store, f, indent=2)
         print(f"✓ Idea saved to {IDEAS_FILE}")
+        print(f"✓ Parsed project name: {parsed.get('projectName', 'N/A')}")
     except Exception as e:
         print(f"✗ Failed to save idea: {e}")
+        import traceback
+        traceback.print_exc()
 
 def log_activity(text: str):
     entry = f"{text} — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
