@@ -9,6 +9,7 @@ import { Loader } from "@/components/Loader";
 interface Idea {
   id: string;
   date: string;
+  raw: string;
   projectName?: string;
   stack?: string;
   deploy?: string;
@@ -18,7 +19,6 @@ interface Idea {
   impact?: string;
   whyNow?: string;
   potential?: string;
-  raw?: string;
 }
 
 export default function DashboardPage() {
@@ -72,6 +72,16 @@ export default function DashboardPage() {
     { name: "Personal Finance", description: "Finance enthusiasts achieving financial independence" },
     { name: "Agriculture Tech", description: "Agritech innovators and smallholder farmers" },
     { name: "Mental Health", description: "Mental health professionals managing practices" },
+    { name: "Podcast Production", description: "Podcast creators and audio content producers" },
+    { name: "Game Development", description: "Independent game developers and small studios" },
+    { name: "Legal Services", description: "Legal professionals and small law firms" },
+    { name: "Real Estate", description: "Real estate agents managing listings and clients" },
+    { name: "Restaurant Operations", description: "Restaurant owners and food service managers" },
+    { name: "Fitness Training", description: "Fitness trainers and gym owners" },
+    { name: "Photography & Video", description: "Photographers and videographers" },
+    { name: "Music Education", description: "Music teachers and performing arts instructors" },
+    { name: "Consulting & Coaching", description: "Consultants and coaches delivering services" },
+    { name: "Pet Care Services", description: "Pet care providers including groomers and sitters" },
   ];
 
   return (
@@ -195,7 +205,7 @@ export default function DashboardPage() {
                         </svg>
                       </div>
                       <span className="text-sm text-slate-300 flex-1">Domains</span>
-                      <span className="text-sm font-bold text-white">15</span>
+                      <span className="text-sm font-bold text-white">25</span>
                     </button>
                   </div>
                 </div>
@@ -240,7 +250,7 @@ export default function DashboardPage() {
               <div className="space-y-6">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-white mb-2">Problem Domains</h2>
-                  <p className="text-sm text-slate-400">15 problem spaces the AI generates ideas from</p>
+                  <p className="text-sm text-slate-400">25 problem spaces the AI generates ideas from</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {domains.map((domain, index) => (
