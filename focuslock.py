@@ -304,20 +304,31 @@ Recent vibe:
 Generate exactly ONE focused project idea with this EXACT format (no extra text, no greetings):
 
 PROBLEM STATEMENT
-Who → {problem['who']}
-Pain → {problem['pain']}
-Gap → {problem['gap']}
-Impact if unsolved → {problem['impact']}
+{problem['pain']} {problem['gap']} {problem['impact']}
 
-Project → [badass, memorable name - make it unique and catchy]
-Stack → [exact tools only, e.g. Next.js + Supabase + Vercel]
-Deploy → [one platform: Vercel / Railway / Render / Fly.io / Northflank]
-Docs & Links →
-• [Tool] → [url]
-• [Tool] → [url]
-• [Tool] → [url]
-Why now → [one brutal truth sentence about market timing]
-Potential → [realistic revenue, users, or portfolio power in 6-12 months]"""
+Project
+"[Memorable Project Name]" — A comprehensive [brief description of what the platform/app does, its unique value proposition, and how it serves the target users]. Make this 2-3 sentences that capture the essence and innovation of the solution.
+
+Stack
+[List all technologies with detailed descriptions in brackets, e.g., Next.js + Supabase (for backend and database management) + Tailwind CSS (for styling)] & [any additional frameworks or tools with their purposes]. Be specific about what each technology does in the stack.
+
+Deploy
+[Platform name] / [Alternative platform] (explain why these platforms - e.g., "for optimized build times and easy deployment")
+
+Docs & Links
+• [Technology Name] Documentation - [2-3 sentences explaining what developers will learn from this documentation, why it's essential for this project, and what specific features or capabilities it enables]
+• [Technology Name] Documentation - [2-3 sentences explaining the value and specific use case for this project]
+• [Technology Name] Guide - [2-3 sentences about implementation details and why this matters for the project]
+• [Technology Name] Documentation - [2-3 sentences covering integration steps and benefits]
+
+Why now
+[Write 2-4 sentences explaining the market timing, current trends, technological readiness, user behavior shifts, competitive landscape, and why this exact moment is critical for launching this solution. Make it compelling and data-driven where possible.]
+
+Potential
+[Write 2-4 sentences covering realistic revenue projections for year 1, user growth targets, market size, monetization strategy (commission, subscriptions, ads, etc.), and long-term vision for community building or market impact. Include specific numbers like "$10M revenue" or "100k users".]
+
+Target audience: {problem['who']}
+Make every section detailed, actionable, and inspiring. Use natural language, not bullet points except in Docs & Links."""
 
     response = ollama.generate(model=MODEL, prompt=prompt)
     return response["response"]
