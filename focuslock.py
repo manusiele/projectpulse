@@ -264,15 +264,16 @@ def send_telegram(message: str):
 
 if __name__ == "__main__":
     try:
-        print(" FocusLock starting...")
+        print("🚀 FocusLock starting...")
         idea = generate_idea()
         timestamp = datetime.now().strftime('%b %d • %H:%M') 
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
-        send_telegram(message)
+        # Save idea FIRST before sending to Telegram
         save_idea(idea)
+        send_telegram(message)
         log_activity("Delivered project with Problem Statement + clean stack")
-        print(" FocusLock complete")
+        print("✅ FocusLock complete")
     except Exception as e:
         print(f"❌ FocusLock crashed: {e}")
         raise
