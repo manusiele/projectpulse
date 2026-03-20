@@ -25,9 +25,6 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
   if (featured) {
     return (
       <div className="relative bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl overflow-hidden backdrop-blur-2xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
-        {/* Gradient top bar */}
-        <div className="h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
-
         <div className="p-6">
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wide mb-4">
