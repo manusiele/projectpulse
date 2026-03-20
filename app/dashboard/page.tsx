@@ -32,9 +32,6 @@ export default async function DashboardPage() {
                     <FocusLockLogo className="w-full h-auto" />
                   </div>
                 </div>
-
-                {/* Title */}
-                <h2 className="text-xl font-bold text-white text-center mb-1">FocusLock</h2>
                 
                 {/* Subtitle */}
                 <div className="flex justify-center mb-6">
