@@ -23,7 +23,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden backdrop-blur-sm">
+      <div className="relative bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden backdrop-blur-xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
         {/* Gradient top bar */}
         <div className="h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
 
@@ -115,7 +115,7 @@ export function IdeaCard({ idea, featured = false }: Props) {
 
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
-    <div className="group bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl overflow-hidden hover:border-[#3a3a3a] transition-all backdrop-blur-sm">
+    <div className="group bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden hover:border-[#3a3a3a] backdrop-blur-xl transition-all hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1">
       {/* Thin gradient bar */}
       <div className="h-0.5 bg-gradient-to-r from-blue-500/40 to-cyan-500/40" />
 

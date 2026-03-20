@@ -6,9 +6,16 @@ import { FocusLockLogo } from "@/components/FocusLockLogo";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-slate-100">
+    <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
+      {/* Animated background gradients */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-40 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
       {/* ── Navigation ─────────────────────────────────────────────────── */}
-      <nav className="border-b border-[#2a2a2a] bg-[#1a1a1a]/50 backdrop-blur-sm sticky top-0 z-40">
+      <nav className="border-b border-[#2a2a2a]/50 bg-[#1a1a1a]/30 backdrop-blur-xl sticky top-0 z-40 relative">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-40">
@@ -26,10 +33,10 @@ export default function Home() {
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-6 py-20">
+      <main className="max-w-6xl mx-auto px-6 py-20 relative z-10">
         {/* ── Hero Section ────────────────────────────────────────────────── */}
         <section className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#252525] border border-[#2a2a2a] mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#252525]/50 border border-[#2a2a2a]/50 backdrop-blur-xl mb-8 shadow-lg shadow-blue-500/5">
             <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="text-sm text-slate-400">AI-Powered Daily Ideas</span>
           </div>
@@ -49,7 +56,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/dashboard"
-              className="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors flex items-center gap-2"
+              className="px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 flex items-center gap-2"
             >
               <Rocket className="w-5 h-5" />
               Explore Ideas
@@ -58,7 +65,7 @@ export default function Home() {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 rounded-lg border border-[#2a2a2a] hover:border-slate-600 text-slate-300 hover:text-white font-semibold transition-colors flex items-center gap-2"
+              className="px-8 py-3 rounded-xl border border-[#2a2a2a]/50 hover:border-slate-600 bg-[#1a1a1a]/30 backdrop-blur-xl text-slate-300 hover:text-white font-semibold transition-all hover:shadow-lg flex items-center gap-2"
             >
               <Github className="w-5 h-5" />
               View on GitHub
@@ -103,8 +110,8 @@ export default function Home() {
             ].map((feature) => {
               const Icon = feature.icon;
               return (
-                <div key={feature.title} className="p-8 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#3a3a3a] transition-colors">
-                  <div className="w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
+                <div key={feature.title} className="p-8 rounded-2xl bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 hover:border-[#3a3a3a] backdrop-blur-xl transition-all hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 group">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Icon className="w-6 h-6 text-blue-400" />
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
@@ -126,7 +133,7 @@ export default function Home() {
               { step: "4", title: "Archive", desc: "Saved to git history" },
             ].map((item) => (
               <div key={item.step} className="relative">
-                <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] text-center">
+                <div className="p-6 rounded-2xl bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 backdrop-blur-xl text-center hover:shadow-lg hover:shadow-blue-500/5 transition-all">
                   <div className="w-10 h-10 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
                     {item.step}
                   </div>

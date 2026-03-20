@@ -18,14 +18,21 @@ export default async function DashboardPage() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-slate-100">
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
+      {/* Animated background gradients */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* ── Left Sidebar ─────────────────────────────────────────────── */}
           <div className="lg:col-span-1">
             <div className="sticky top-8">
               {/* Single Unified Sidebar */}
-              <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-3xl overflow-hidden backdrop-blur-sm">
+              <div className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-3xl overflow-hidden backdrop-blur-xl shadow-2xl shadow-blue-500/5">
                 
                 {/* Header with Logo */}
                 <div className="p-6 pb-4">
