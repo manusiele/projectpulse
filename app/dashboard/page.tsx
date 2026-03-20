@@ -28,7 +28,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchIdeas() {
       try {
-        const response = await fetch('/data/ideas.json');
+        const response = await fetch('/ideas.json');
         const data = await response.json();
         setIdeas(data);
       } catch (error) {

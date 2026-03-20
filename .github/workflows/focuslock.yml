@@ -65,7 +65,10 @@ jobs:
         git config --local user.email "focuslock-bot@github.com"
         git config --local user.name "FocusLock Bot"
         git pull --rebase origin main
-        git add data/history.json data/ideas.json
+        # Copy to public folder for Next.js
+        cp data/ideas.json public/ideas.json
+        cp data/history.json public/history.json
+        git add data/history.json data/ideas.json public/ideas.json public/history.json
         if git diff --staged --quiet; then
           echo "ℹ️ No changes to commit"
         else
