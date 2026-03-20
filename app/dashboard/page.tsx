@@ -40,14 +40,14 @@ export default async function DashboardPage() {
                     <div className="w-12 h-12 rounded-xl bg-[#0f0f0f] border border-[#252525] overflow-hidden flex items-center justify-center flex-shrink-0">
                       <Image 
                         src="/logo.webp" 
-                        alt="FocusLock" 
+                        alt="Nexus" 
                         width={48} 
                         height={48}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div>
-                      <h2 className="text-base font-bold text-white">FocusLock</h2>
+                      <h2 className="text-base font-bold text-white">Nexus</h2>
                       <p className="text-xs text-slate-500">AI Project Ideas</p>
                     </div>
                   </div>
