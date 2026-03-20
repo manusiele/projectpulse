@@ -91,13 +91,12 @@ jobs:
       run: |
         git config --local user.email "manusiele254@gmail.com"
         git config --local user.name "manusiele"
-        # Add any changes from BOM cleanup
-        git add data/ideas.json data/history.json || true
-        git pull --rebase origin main || true
         # Copy to public folder for Next.js
         cp data/ideas.json public/ideas.json
         cp data/history.json public/history.json
+        # Stage all changes
         git add data/history.json data/ideas.json public/ideas.json public/history.json
+        # Check if there are changes to commit
         if git diff --staged --quiet; then
           echo "ℹ️ No changes to commit"
         else
