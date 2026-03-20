@@ -338,7 +338,7 @@ export default function DashboardPage() {
                   <h2 className="text-2xl font-bold text-white mb-2">All Ideas</h2>
                   <p className="text-sm text-slate-400">{ideas.length} total project ideas</p>
                 </div>
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {ideas.map((idea, index) => (
                     <div 
                       key={idea.id}
