@@ -5,6 +5,7 @@ import requests
 import ollama
 from dotenv import load_dotenv
 import random
+import re
 
 load_dotenv()
 
@@ -200,14 +201,34 @@ def parse_idea(raw: str) -> dict:
         "impact": "",
         "whyNow": "",
         "potential": "",
+        "docs": "",
     }
     
     print(f"DEBUG: Parsing idea with {len(raw)} characters")
     
+    # Extract project name from various formats
+    project_patterns = [
+        r'Project:\s*["\u201c]?([^"\u201d\n]+)["\u201d]?',
+        r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
+        r'Project\s*\u2192\s*(.+?)(?:\n|$)',
+    ]
+    for pattern in project_patterns:
+        match = re.search(pattern, raw, re.IGNORECASE)
+        if match:
+            result["projectName"] = match.group(1).strip()
+            print(f"DEBUG: Found project name: '{result['projectName']}'")
+            break
+    
+    # Extract docs section
+    docs_match = re.search(r'Docs & Links:\s*\n((?:\u2022.+\n?)+)', raw, re.IGNORECASE)
+    if docs_match:
+        result["docs"] = docs_match.group(1).strip()
+        print(f"DEBUG: Found docs section")
+    
     for line in raw.split("\n"):
         line = line.strip()
         # Support both → and -> separators
-        sep = "→" if "→" in line else ("->" if "->" in line else None)
+        sep = "\u2192" if "\u2192" in line else ("->" if "->" in line else None)
         if not sep:
             continue
         
@@ -220,9 +241,7 @@ def parse_idea(raw: str) -> dict:
             
         print(f"DEBUG: Found key='{key}', value='{value[:50]}...'")
         
-        if key == "project":
-            result["projectName"] = value
-        elif key == "stack":
+        if key == "stack":
             result["stack"] = value
         elif key == "deploy":
             result["deploy"] = value
