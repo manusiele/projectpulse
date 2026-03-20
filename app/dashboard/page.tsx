@@ -276,156 +276,68 @@ export default function DashboardPage() {
                   <h2 className="text-2xl font-bold text-white mb-2">All Ideas</h2>
                   <p className="text-sm text-slate-400">{ideas.length} total project ideas</p>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {ideas.map((idea, index) => (
                     <div 
                       key={idea.id}
-                      className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden backdrop-blur-xl hover:border-[#3a3a3a] transition-all hover:shadow-xl hover:shadow-blue-500/5"
+                      className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
                     >
-                      {/* Gradient top bar */}
-                      <div className="h-1 bg-gradient-to-r from-blue-500/60 via-cyan-500/60 to-blue-400/60" />
-                      
-                      <div className="p-6">
-                        {/* Header */}
-                        <div className="flex items-start justify-between mb-5">
-                          <div className="flex items-start gap-4 flex-1">
-                            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                              <span className="text-lg font-bold text-blue-400">{index + 1}</span>
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="text-xl font-bold text-white mb-2 leading-tight">
-                                {idea.projectName || "Daily Project Idea"}
-                              </h3>
-                              <div className="flex items-center gap-3 text-xs text-slate-500">
-                                <span className="flex items-center gap-1.5">
-                                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                    <line x1="16" y1="2" x2="16" y2="6" />
-                                    <line x1="8" y1="2" x2="8" y2="6" />
-                                    <line x1="3" y1="10" x2="21" y2="10" />
-                                  </svg>
-                                  {new Date(idea.date).toLocaleDateString("en-US", {
-                                    month: "short",
-                                    day: "numeric",
-                                    year: "numeric",
-                                  })}
-                                </span>
-                                {idea.deploy && (
-                                  <span className="px-2 py-1 bg-[#252525] rounded-md text-slate-400">
-                                    {idea.deploy}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
+                      {/* Project Title */}
+                      <h3 className="text-xl font-bold text-white mb-3">
+                        {idea.projectName || "Daily Project Idea"}
+                      </h3>
+
+                      {/* Pain/Description */}
+                      {idea.pain && (
+                        <p className="text-slate-400 text-sm mb-4 leading-relaxed">
+                          {idea.pain}
+                        </p>
+                      )}
+
+                      {/* Stack badges */}
+                      {idea.stack && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {idea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
+                            <span
+                              key={item}
+                              className="px-3 py-1.5 bg-[#252525] text-slate-300 text-sm rounded-lg"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Footer */}
+                      <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
+                        <span className="text-sm text-slate-500">
+                          {new Date(idea.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </span>
+                        <div className="flex items-center gap-2">
                           <button
                             onClick={() => setSelectedIdea(idea)}
-                            className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 text-blue-400 text-sm font-medium transition-all hover:scale-105 flex items-center gap-2 flex-shrink-0"
+                            className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
                           >
-                            <span>Expand</span>
-                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="15 3 21 3 21 9" />
-                              <polyline points="9 21 3 21 3 15" />
-                              <line x1="21" y1="3" x2="14" y2="10" />
-                              <line x1="3" y1="21" x2="10" y2="14" />
+                            View
+                          </button>
+                          <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                            <svg className="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                             </svg>
                           </button>
-                        </div>
-
-                        {/* Problem Statement Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-                          {idea.who && (
-                            <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                                  <svg className="w-3.5 h-3.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                  </svg>
-                                </div>
-                                <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Who</span>
-                              </div>
-                              <p className="text-slate-300 text-sm leading-relaxed line-clamp-2">{idea.who}</p>
-                            </div>
-                          )}
-                          {idea.pain && (
-                            <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-cyan-500/10 flex items-center justify-center">
-                                  <svg className="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="12" y1="8" x2="12" y2="12" />
-                                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                                  </svg>
-                                </div>
-                                <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wide">Pain</span>
-                              </div>
-                              <p className="text-slate-300 text-sm leading-relaxed line-clamp-2">{idea.pain}</p>
-                            </div>
-                          )}
-                          {idea.gap && (
-                            <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                                  <svg className="w-3.5 h-3.5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M12 2v20M2 12h20" />
-                                  </svg>
-                                </div>
-                                <span className="text-xs font-semibold text-purple-400 uppercase tracking-wide">Gap</span>
-                              </div>
-                              <p className="text-slate-300 text-sm leading-relaxed line-clamp-2">{idea.gap}</p>
-                            </div>
-                          )}
-                          {idea.impact && (
-                            <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className="w-6 h-6 rounded-lg bg-red-500/10 flex items-center justify-center">
-                                  <svg className="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                                    <line x1="12" y1="9" x2="12" y2="13" />
-                                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                                  </svg>
-                                </div>
-                                <span className="text-xs font-semibold text-red-400 uppercase tracking-wide">Impact</span>
-                              </div>
-                              <p className="text-slate-300 text-sm leading-relaxed line-clamp-2">{idea.impact}</p>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Bottom Section */}
-                        <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
-                          {/* Stack */}
-                          {idea.stack && (
-                            <div className="flex flex-wrap gap-2 flex-1">
-                              {idea.stack.split(/\s*\+\s*/).filter(Boolean).slice(0, 4).map((item) => (
-                                <span
-                                  key={item}
-                                  className="px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs rounded-md"
-                                >
-                                  {item}
-                                </span>
-                              ))}
-                              {idea.stack.split(/\s*\+\s*/).filter(Boolean).length > 4 && (
-                                <span className="px-2.5 py-1 bg-[#252525] text-slate-500 text-xs rounded-md">
-                                  +{idea.stack.split(/\s*\+\s*/).filter(Boolean).length - 4}
-                                </span>
-                              )}
-                            </div>
-                          )}
-                          
-                          {/* Potential Badge */}
-                          {idea.potential && (
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-lg flex-shrink-0 ml-3">
-                              <svg className="w-4 h-4 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                <polyline points="16 7 22 7 22 13" />
-                              </svg>
-                              <span className="text-xs font-medium text-green-400">High Potential</span>
-                            </div>
-                          )}
+                          <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                            <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="18" cy="5" r="3" />
+                              <circle cx="6" cy="12" r="3" />
+                              <circle cx="18" cy="19" r="3" />
+                              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -486,17 +398,17 @@ export default function DashboardPage() {
       {/* Modal Popup */}
       {selectedIdea && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
           onClick={() => setSelectedIdea(null)}
         >
           <div 
-            className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-3xl shadow-2xl shadow-blue-500/20 animate-scaleIn"
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0f0f0f] border border-[#2a2a2a] rounded-3xl shadow-2xl animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={() => setSelectedIdea(null)}
-              className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors z-10"
+              className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
             >
               <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -504,81 +416,61 @@ export default function DashboardPage() {
               </svg>
             </button>
 
-            {/* Gradient top bar */}
-            <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
-
-            <div className="p-8">
-              {/* Date badge */}
-              <div className="flex items-center gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  {new Date(selectedIdea.date).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </span>
-              </div>
-
-              {/* Project name */}
-              <h2 className="text-3xl font-bold text-white mb-6 leading-tight">
+            <div className="p-10">
+              {/* Project Title */}
+              <h2 className="text-4xl font-bold text-white mb-6 leading-tight pr-12">
                 {selectedIdea.projectName || "Daily Project Idea"}
               </h2>
 
-              {/* Problem statement */}
-              <div className="space-y-4 mb-6">
+              {/* Problem Statement Sections */}
+              <div className="space-y-6 mb-8">
                 {selectedIdea.who && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Who</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.who}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-3">Who</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.who}</p>
                   </div>
                 )}
                 {selectedIdea.pain && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wide">Pain</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.pain}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-3">Pain</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.pain}</p>
                   </div>
                 )}
                 {selectedIdea.gap && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-purple-400 uppercase tracking-wide">Gap</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.gap}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Gap</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.gap}</p>
                   </div>
                 )}
                 {selectedIdea.impact && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-red-400 uppercase tracking-wide">Impact</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.impact}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider mb-3">Impact</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.impact}</p>
                   </div>
                 )}
                 {selectedIdea.whyNow && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wide">Why Now</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.whyNow}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-yellow-400 uppercase tracking-wider mb-3">Why Now</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.whyNow}</p>
                   </div>
                 )}
                 {selectedIdea.potential && (
-                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
-                    <span className="text-xs font-semibold text-green-400 uppercase tracking-wide">Potential</span>
-                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.potential}</p>
+                  <div>
+                    <h3 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-3">Potential</h3>
+                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.potential}</p>
                   </div>
                 )}
               </div>
 
-              {/* Stack */}
+              {/* Tech Stack */}
               {selectedIdea.stack && (
-                <div className="mb-6">
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3 block">Tech Stack</span>
+                <div className="mb-8">
+                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Tech Stack</h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
                       <span
                         key={item}
-                        className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm rounded-lg"
+                        className="px-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] text-slate-300 text-sm rounded-xl"
                       >
                         {item}
                       </span>
@@ -587,19 +479,24 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {/* Deploy */}
-              {selectedIdea.deploy && (
-                <div className="mb-6">
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3 block">Deploy Platform</span>
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#252525] border border-[#2a2a2a] text-slate-300 text-sm rounded-lg">
-                    <svg className="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    {selectedIdea.deploy}
+              {/* Footer Info */}
+              <div className="flex items-center justify-between pt-6 border-t border-[#2a2a2a]">
+                <div className="flex items-center gap-4 text-sm text-slate-500">
+                  <span>
+                    {new Date(selectedIdea.date).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
                   </span>
+                  {selectedIdea.deploy && (
+                    <>
+                      <span className="w-1 h-1 rounded-full bg-slate-600" />
+                      <span>{selectedIdea.deploy}</span>
+                    </>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
