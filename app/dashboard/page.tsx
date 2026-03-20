@@ -587,18 +587,21 @@ export default function DashboardPage() {
                             // Handle tech stack with clickable links
                             if (headingLower === 'stack' && line.includes('+')) {
                               return (
-                                <div key={lineIdx} className="flex flex-wrap gap-2 mt-2">
-                                  {line.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => (
-                                    <a
-                                      key={techIdx}
-                                      href={getTechUrl(tech.trim())}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors"
-                                    >
-                                      {tech.trim()}
-                                    </a>
-                                  ))}
+                                <div key={lineIdx}>
+                                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Tech Stack</h3>
+                                  <div className="flex flex-wrap gap-2">
+                                    {line.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => (
+                                      <a
+                                        key={techIdx}
+                                        href={getTechUrl(tech.trim())}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors"
+                                      >
+                                        {tech.trim()}
+                                      </a>
+                                    ))}
+                                  </div>
                                 </div>
                               );
                             }
