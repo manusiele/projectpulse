@@ -24,7 +24,7 @@ interface Idea {
 export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeView, setActiveView] = useState<'ideas' | 'domains'>('ideas');
+  const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas'>('ideas');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
 
   useEffect(() => {
@@ -142,9 +142,9 @@ export default function DashboardPage() {
                     </a>
                     <a 
                       href="#ideas" 
-                      onClick={(e) => { e.preventDefault(); setActiveView('ideas'); }}
+                      onClick={(e) => { e.preventDefault(); setActiveView('allIdeas'); }}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all group ${
-                        activeView === 'ideas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
+                        activeView === 'allIdeas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
                       }`}
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -268,6 +268,51 @@ export default function DashboardPage() {
                       <p className="text-sm text-slate-400 leading-relaxed">{domain.description}</p>
                     </div>
                   ))}
+                </div>
+              </div>
+            ) : activeView === 'allIdeas' ? (
+              <div className="space-y-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">All Ideas</h2>
+                  <p className="text-sm text-slate-400">{ideas.length} total project ideas</p>
+                </div>
+                <div className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden backdrop-blur-xl">
+                  <div className="divide-y divide-[#2a2a2a]/50">
+                    {ideas.map((idea, index) => (
+                      <div 
+                        key={idea.id}
+                        className="flex items-center justify-between p-4 hover:bg-[#252525]/30 transition-colors group"
+                      >
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                            <span className="text-sm font-bold text-blue-400">{index + 1}</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-base font-semibold text-white truncate">
+                              {idea.projectName || "Daily Project Idea"}
+                            </h3>
+                            <p className="text-xs text-slate-500 mt-1">
+                              {new Date(idea.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => setSelectedIdea(idea)}
+                          className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 text-blue-400 text-sm font-medium transition-all hover:scale-105 flex items-center gap-2 flex-shrink-0"
+                        >
+                          <span>View</span>
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : ideas.length === 0 ? (
