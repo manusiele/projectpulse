@@ -24,7 +24,7 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden backdrop-blur-xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
+      <div className="relative bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl overflow-hidden backdrop-blur-2xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
         {/* Gradient top bar */}
         <div className="h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
 
