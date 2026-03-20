@@ -5,9 +5,10 @@ import { ShareButton } from "./ShareButton";
 interface Props {
   idea: Idea;
   featured?: boolean;
+  onView?: () => void;
 }
 
-export function IdeaCard({ idea, featured = false }: Props) {
+export function IdeaCard({ idea, featured = false, onView }: Props) {
   const stackItems = idea.stack
     ? idea.stack.split(/\s*\+\s*/).filter(Boolean)
     : [];
@@ -151,6 +152,14 @@ export function IdeaCard({ idea, featured = false }: Props) {
         <div className="flex items-center justify-between pt-3 border-t border-[#2a2a2a]">
           <span className="text-xs text-slate-600">{formattedDate}</span>
           <div className="flex items-center gap-1">
+            {onView && (
+              <button
+                onClick={onView}
+                className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 text-blue-400 text-xs font-medium transition-all hover:scale-105"
+              >
+                View
+              </button>
+            )}
             <SaveButton idea={idea} />
             <ShareButton idea={idea} />
           </div>
