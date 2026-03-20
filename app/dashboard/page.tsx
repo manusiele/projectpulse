@@ -503,13 +503,17 @@ export default function DashboardPage() {
 
               {/* Full Raw Content */}
               <div className="space-y-6 text-[15px] leading-relaxed">
-                {selectedIdea.raw.split('\n\n').map((section, idx) => {
-                  // Check if section is a heading (all caps or starts with specific keywords)
-                  const isHeading = section.match(/^(PROBLEM STATEMENT|PROJECT|STACK|DEPLOY|WHO|PAIN|GAP|IMPACT|WHY NOW|POTENTIAL|Docs & Links):/i);
+                {selectedIdea.raw.split('\n').map((line, idx) => {
+                  const trimmedLine = line.trim();
+                  if (!trimmedLine) return null;
                   
-                  if (isHeading) {
-                    const [heading, ...content] = section.split(/:\s*/);
-                    const headingLower = heading.toLowerCase();
+                  // Check for section headers (with : or →)
+                  const headerMatch = trimmedLine.match(/^(PROBLEM STATEMENT|Project|Stack|Deploy|Docs & Links|Why now|Potential):\s*(.*)$/i) ||
+                                     trimmedLine.match(/^(WHO|PAIN|GAP|IMPACT|WHY NOW|POTENTIAL|STACK|DEPLOY|PROJECT)\s*→\s*(.*)$/i);
+                  
+                  if (headerMatch) {
+                    const [, heading, content] = headerMatch;
+                    const headingLower = heading.toLowerCase().replace(/\s+/g, ' ');
                     
                     // Color mapping for headings
                     const colorMap: Record<string, string> = {
@@ -519,7 +523,6 @@ export default function DashboardPage() {
                       'pain': 'text-cyan-400',
                       'gap': 'text-purple-400',
                       'impact': 'text-red-400',
-                      'impact if unsolved': 'text-red-400',
                       'why now': 'text-yellow-400',
                       'potential': 'text-green-400',
                       'stack': 'text-slate-500',
@@ -529,96 +532,82 @@ export default function DashboardPage() {
                     
                     const color = colorMap[headingLower] || 'text-slate-400';
                     
+                    // Special handling for Stack with clickable tech
+                    if (headingLower === 'stack' && content) {
+                      return (
+                        <div key={idx}>
+                          <h3 className={`text-xs font-bold uppercase tracking-wider mb-3 ${color}`}>
+                            {heading}
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
+                            {content.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => {
+                              const cleanTech = tech.replace(/\|.*$/, '').trim();
+                              return (
+                                <a
+                                  key={techIdx}
+                                  href={getTechUrl(cleanTech)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors"
+                                >
+                                  {cleanTech}
+                                </a>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    }
+                    
                     return (
                       <div key={idx}>
                         <h3 className={`text-xs font-bold uppercase tracking-wider mb-2 ${color}`}>
                           {heading}
                         </h3>
-                        <div className="text-slate-300">
-                          {content.join(': ').split('\n').map((line, lineIdx) => {
-                            // Handle bullet points
-                            if (line.trim().startsWith('•')) {
-                              const cleanLine = line.replace(/^[•\s]+/, '');
-                              // Check for links in format [text](url) or text → url
-                              const linkMatch = cleanLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
-                              const arrowMatch = cleanLine.match(/(.+?)\s*→\s*(.+)/);
-                              
-                              if (linkMatch) {
-                                return (
-                                  <div key={lineIdx} className="flex items-start gap-2 mb-1">
-                                    <span className="text-slate-600 mt-0.5">•</span>
-                                    <a 
-                                      href={linkMatch[2]} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-blue-400 hover:text-blue-300 transition-colors"
-                                    >
-                                      {linkMatch[1]}
-                                    </a>
-                                  </div>
-                                );
-                              } else if (arrowMatch) {
-                                return (
-                                  <div key={lineIdx} className="flex items-start gap-2 mb-1">
-                                    <span className="text-slate-600 mt-0.5">•</span>
-                                    <div>
-                                      <span className="text-slate-400">{arrowMatch[1].trim()}</span>
-                                      <span className="text-slate-600 mx-2">→</span>
-                                      <a 
-                                        href={arrowMatch[2].trim()} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
-                                        className="text-blue-400 hover:text-blue-300 transition-colors break-all"
-                                      >
-                                        {arrowMatch[2].trim()}
-                                      </a>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              return (
-                                <div key={lineIdx} className="flex items-start gap-2 mb-1">
-                                  <span className="text-slate-600 mt-0.5">•</span>
-                                  <span>{cleanLine}</span>
-                                </div>
-                              );
-                            }
-                            
-                            // Handle tech stack with clickable links
-                            if (headingLower === 'stack' && line.includes('+')) {
-                              return (
-                                <div key={lineIdx}>
-                                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Tech Stack</h3>
-                                  <div className="flex flex-wrap gap-2">
-                                    {line.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => (
-                                      <a
-                                        key={techIdx}
-                                        href={getTechUrl(tech.trim())}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors"
-                                      >
-                                        {tech.trim()}
-                                      </a>
-                                    ))}
-                                  </div>
-                                </div>
-                              );
-                            }
-                            
-                            return line ? <p key={lineIdx} className="mb-2">{line}</p> : null;
-                          })}
-                        </div>
+                        <p className="text-slate-300">{content}</p>
                       </div>
                     );
                   }
                   
-                  // Regular paragraph
-                  return section.trim() ? (
+                  // Handle bullet points (Docs & Links section)
+                  if (trimmedLine.startsWith('•')) {
+                    const cleanLine = trimmedLine.replace(/^•\s*/, '');
+                    const arrowMatch = cleanLine.match(/^(.+?)\s*→\s*(.+)$/);
+                    
+                    if (arrowMatch) {
+                      return (
+                        <div key={idx} className="flex items-start gap-2 ml-4">
+                          <span className="text-slate-600 mt-0.5">•</span>
+                          <div>
+                            <span className="text-slate-400">{arrowMatch[1].trim()}</span>
+                            <span className="text-slate-600 mx-2">→</span>
+                            <a 
+                              href={arrowMatch[2].trim()} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-400 hover:text-blue-300 transition-colors break-all"
+                            >
+                              {arrowMatch[2].trim()}
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    }
+                    
+                    return (
+                      <div key={idx} className="flex items-start gap-2 ml-4">
+                        <span className="text-slate-600 mt-0.5">•</span>
+                        <span className="text-slate-300">{cleanLine}</span>
+                      </div>
+                    );
+                  }
+                  
+                  // Regular content line
+                  return (
                     <p key={idx} className="text-slate-300">
-                      {section}
+                      {trimmedLine}
                     </p>
-                  ) : null;
+                  );
                 })}
               </div>
             </div>
