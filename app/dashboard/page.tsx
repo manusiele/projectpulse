@@ -1,12 +1,50 @@
-import { getIdeas } from "@/lib/ideas";
+"use client";
+
+import { useEffect, useState } from "react";
 import { IdeaCard } from "@/components/IdeaCard";
 import Link from "next/link";
 import Image from "next/image";
+import { Loader } from "@/components/Loader";
 
-export const revalidate = 3600;
+interface Idea {
+  id: string;
+  date: string;
+  projectName?: string;
+  stack?: string;
+  deploy?: string;
+  who?: string;
+  pain?: string;
+  gap?: string;
+  impact?: string;
+  whyNow?: string;
+  potential?: string;
+  raw?: string;
+}
 
-export default async function DashboardPage() {
-  const ideas = await getIdeas();
+export default function DashboardPage() {
+  const [ideas, setIdeas] = useState<Idea[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchIdeas() {
+      try {
+        const response = await fetch('/data/ideas.json');
+        const data = await response.json();
+        setIdeas(data);
+      } catch (error) {
+        console.error('Failed to fetch ideas:', error);
+      } finally {
+        // Minimum loading time for smooth animation
+        setTimeout(() => setLoading(false), 1500);
+      }
+    }
+    fetchIdeas();
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   const [latest, ...rest] = ideas;
 
   const thisMonth = ideas.filter((idea) => {
@@ -18,7 +56,7 @@ export default async function DashboardPage() {
   }).length;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden animate-fadeIn">
       {/* Animated background gradients */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
