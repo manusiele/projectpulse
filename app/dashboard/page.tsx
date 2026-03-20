@@ -25,6 +25,7 @@ export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState<'ideas' | 'domains'>('ideas');
+  const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
 
   useEffect(() => {
     async function fetchIdeas() {
@@ -308,7 +309,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {rest.map((idea) => (
-                        <IdeaCard key={idea.id} idea={idea} />
+                        <IdeaCard key={idea.id} idea={idea} onView={() => setSelectedIdea(idea)} />
                       ))}
                     </div>
                   </section>
@@ -319,6 +320,128 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal Popup */}
+      {selectedIdea && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setSelectedIdea(null)}
+        >
+          <div 
+            className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-3xl shadow-2xl shadow-blue-500/20 animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedIdea(null)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors z-10"
+            >
+              <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            {/* Gradient top bar */}
+            <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-400" />
+
+            <div className="p-8">
+              {/* Date badge */}
+              <div className="flex items-center gap-2 mb-4">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  {new Date(selectedIdea.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+
+              {/* Project name */}
+              <h2 className="text-3xl font-bold text-white mb-6 leading-tight">
+                {selectedIdea.projectName || "Daily Project Idea"}
+              </h2>
+
+              {/* Problem statement */}
+              <div className="space-y-4 mb-6">
+                {selectedIdea.who && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Who</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.who}</p>
+                  </div>
+                )}
+                {selectedIdea.pain && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wide">Pain</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.pain}</p>
+                  </div>
+                )}
+                {selectedIdea.gap && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-purple-400 uppercase tracking-wide">Gap</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.gap}</p>
+                  </div>
+                )}
+                {selectedIdea.impact && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-red-400 uppercase tracking-wide">Impact</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.impact}</p>
+                  </div>
+                )}
+                {selectedIdea.whyNow && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wide">Why Now</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.whyNow}</p>
+                  </div>
+                )}
+                {selectedIdea.potential && (
+                  <div className="p-4 rounded-xl bg-[#0f0f0f] border border-[#252525]">
+                    <span className="text-xs font-semibold text-green-400 uppercase tracking-wide">Potential</span>
+                    <p className="text-slate-300 mt-2 text-sm leading-relaxed">{selectedIdea.potential}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Stack */}
+              {selectedIdea.stack && (
+                <div className="mb-6">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3 block">Tech Stack</span>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
+                      <span
+                        key={item}
+                        className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm rounded-lg"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Deploy */}
+              {selectedIdea.deploy && (
+                <div className="mb-6">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3 block">Deploy Platform</span>
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#252525] border border-[#2a2a2a] text-slate-300 text-sm rounded-lg">
+                    <svg className="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    {selectedIdea.deploy}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
