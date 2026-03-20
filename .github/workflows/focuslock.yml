@@ -28,6 +28,24 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
+    - name: Clean JSON files (remove BOM if present)
+      run: |
+        python -c "
+import json
+import os
+
+for filepath in ['data/ideas.json', 'data/history.json']:
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, 'r', encoding='utf-8-sig') as f:
+                data = json.load(f)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+            print(f'Cleaned {filepath}')
+        except Exception as e:
+            print(f'Error cleaning {filepath}: {e}')
+"
+    
     - name: Install & Start Ollama
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
