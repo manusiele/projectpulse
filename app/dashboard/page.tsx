@@ -580,11 +580,38 @@ export default function DashboardPage() {
                   // Handle bullet points (Docs & Links section)
                   if (trimmedLine.startsWith('•')) {
                     const cleanLine = trimmedLine.replace(/^•\s*/, '');
-                    const arrowMatch = cleanLine.match(/^(.+?)\s*→\s*(.+)$/);
                     
+                    // Check for markdown links [text](url)
+                    const markdownLinkMatch = cleanLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+                    if (markdownLinkMatch) {
+                      const [fullMatch, linkText, url] = markdownLinkMatch;
+                      const beforeLink = cleanLine.substring(0, cleanLine.indexOf(fullMatch));
+                      const afterLink = cleanLine.substring(cleanLine.indexOf(fullMatch) + fullMatch.length);
+                      
+                      return (
+                        <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
+                          <span className="text-slate-600 mt-0.5">•</span>
+                          <div className="text-slate-300">
+                            {beforeLink}
+                            <a 
+                              href={url.trim()} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-400 hover:text-blue-300 transition-colors underline"
+                            >
+                              {linkText}
+                            </a>
+                            {afterLink}
+                          </div>
+                        </div>
+                      );
+                    }
+                    
+                    // Check for arrow links text → url
+                    const arrowMatch = cleanLine.match(/^(.+?)\s*→\s*(.+)$/);
                     if (arrowMatch) {
                       return (
-                        <div key={idx} className="flex items-start gap-2 ml-4">
+                        <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
                           <span className="text-slate-600 mt-0.5">•</span>
                           <div>
                             <span className="text-slate-400">{arrowMatch[1].trim()}</span>
@@ -603,7 +630,7 @@ export default function DashboardPage() {
                     }
                     
                     return (
-                      <div key={idx} className="flex items-start gap-2 ml-4">
+                      <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
                         <span className="text-slate-600 mt-0.5">•</span>
                         <span className="text-slate-300">{cleanLine}</span>
                       </div>
