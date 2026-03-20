@@ -399,66 +399,66 @@ export default function DashboardPage() {
       {/* Modal Popup */}
       {selectedIdea && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
           onClick={() => setSelectedIdea(null)}
         >
           <div 
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-[#0f0f0f] border border-[#2a2a2a] rounded-3xl shadow-2xl animate-scaleIn"
+            className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl shadow-2xl animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={() => setSelectedIdea(null)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
+              className="absolute top-5 right-5 w-8 h-8 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
             >
-              <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
 
-            <div className="p-10">
+            <div className="p-8">
               {/* Project Title */}
-              <h2 className="text-4xl font-bold text-white mb-6 leading-tight pr-12">
+              <h2 className="text-3xl font-bold text-white mb-8 pr-8">
                 {selectedIdea.projectName || "Daily Project Idea"}
               </h2>
 
-              {/* Problem Statement Sections */}
+              {/* Problem Statement Grid */}
               <div className="space-y-6 mb-8">
                 {selectedIdea.who && (
                   <div>
-                    <h3 className="text-sm font-semibold text-blue-400 uppercase tracking-wider mb-3">Who</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.who}</p>
+                    <h3 className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">Who</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.who}</p>
                   </div>
                 )}
                 {selectedIdea.pain && (
                   <div>
-                    <h3 className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-3">Pain</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.pain}</p>
+                    <h3 className="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-2">Pain</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.pain}</p>
                   </div>
                 )}
                 {selectedIdea.gap && (
                   <div>
-                    <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Gap</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.gap}</p>
+                    <h3 className="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">Gap</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.gap}</p>
                   </div>
                 )}
                 {selectedIdea.impact && (
                   <div>
-                    <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider mb-3">Impact</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.impact}</p>
+                    <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-2">Impact</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.impact}</p>
                   </div>
                 )}
                 {selectedIdea.whyNow && (
                   <div>
-                    <h3 className="text-sm font-semibold text-yellow-400 uppercase tracking-wider mb-3">Why Now</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.whyNow}</p>
+                    <h3 className="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-2">Why Now</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.whyNow}</p>
                   </div>
                 )}
                 {selectedIdea.potential && (
                   <div>
-                    <h3 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-3">Potential</h3>
-                    <p className="text-slate-300 text-base leading-relaxed">{selectedIdea.potential}</p>
+                    <h3 className="text-xs font-bold text-green-400 uppercase tracking-wider mb-2">Potential</h3>
+                    <p className="text-slate-300 text-[15px] leading-relaxed">{selectedIdea.potential}</p>
                   </div>
                 )}
               </div>
@@ -466,12 +466,12 @@ export default function DashboardPage() {
               {/* Tech Stack */}
               {selectedIdea.stack && (
                 <div className="mb-8">
-                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Tech Stack</h3>
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Tech Stack</h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
                       <span
                         key={item}
-                        className="px-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] text-slate-300 text-sm rounded-xl"
+                        className="px-3 py-1.5 bg-[#1a1a1a] text-slate-400 text-sm rounded-lg"
                       >
                         {item}
                       </span>
@@ -483,37 +483,67 @@ export default function DashboardPage() {
               {/* Docs & Links */}
               {selectedIdea.docs && (
                 <div className="mb-8">
-                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Docs & Links</h3>
-                  <div className="space-y-2 text-sm text-slate-300 leading-relaxed">
-                    {selectedIdea.docs.split('\n').map((line, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
-                        <span dangerouslySetInnerHTML={{ 
-                          __html: line.replace(/^•\s*/, '').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
-                        }} />
-                      </div>
-                    ))}
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Documentation</h3>
+                  <div className="space-y-2">
+                    {selectedIdea.docs.split('\n').filter(line => line.trim()).map((line, idx) => {
+                      const cleanLine = line.replace(/^[•\s]+/, '');
+                      const linkMatch = cleanLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+                      const arrowMatch = cleanLine.match(/(.+?)\s*→\s*(.+)/);
+                      
+                      if (linkMatch) {
+                        return (
+                          <div key={idx} className="flex items-start gap-2 text-sm">
+                            <span className="text-slate-600 mt-0.5">•</span>
+                            <a 
+                              href={linkMatch[2]} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              {linkMatch[1]}
+                            </a>
+                          </div>
+                        );
+                      } else if (arrowMatch) {
+                        return (
+                          <div key={idx} className="flex items-start gap-2 text-sm">
+                            <span className="text-slate-600 mt-0.5">•</span>
+                            <div>
+                              <span className="text-slate-400">{arrowMatch[1].trim()}</span>
+                              <span className="text-slate-600 mx-2">→</span>
+                              <a 
+                                href={arrowMatch[2].trim()} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-blue-400 hover:text-blue-300 transition-colors break-all"
+                              >
+                                {arrowMatch[2].trim()}
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Footer Info */}
-              <div className="flex items-center justify-between pt-6 border-t border-[#2a2a2a]">
-                <div className="flex items-center gap-4 text-sm text-slate-500">
-                  <span>
-                    {new Date(selectedIdea.date).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
-                  {selectedIdea.deploy && (
-                    <>
-                      <span className="w-1 h-1 rounded-full bg-slate-600" />
-                      <span>{selectedIdea.deploy}</span>
-                    </>
-                  )}
-                </div>
+              {/* Footer */}
+              <div className="pt-6 border-t border-[#1a1a1a] flex items-center gap-3 text-xs text-slate-600">
+                <span>
+                  {new Date(selectedIdea.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+                {selectedIdea.deploy && (
+                  <>
+                    <span className="w-1 h-1 rounded-full bg-slate-700" />
+                    <span>{selectedIdea.deploy}</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
