@@ -52,14 +52,15 @@ jobs:
       run: |
         git config --local user.email "focuslock-bot@github.com"
         git config --local user.name "FocusLock Bot"
+        git pull --rebase origin main
         git add data/history.json data/ideas.json
         if git diff --staged --quiet; then
           echo "ℹ️ No changes to commit"
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
-          git commit -m " Daily spark delivered: $TIMESTAMP"
+          git commit -m "📝 Daily spark delivered: $TIMESTAMP"
           git push
-          echo " History updated"
+          echo "✓ History updated"
         fi
       continue-on-error: true
     
