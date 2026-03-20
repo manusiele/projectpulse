@@ -28,6 +28,67 @@ export default function DashboardPage() {
   const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas'>('ideas');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
 
+  // Tech stack URL mapping
+  const getTechUrl = (tech: string): string => {
+    const techMap: Record<string, string> = {
+      'next.js': 'https://nextjs.org',
+      'nextjs': 'https://nextjs.org',
+      'react': 'https://react.dev',
+      'vue.js': 'https://vuejs.org',
+      'vue': 'https://vuejs.org',
+      'angular': 'https://angular.io',
+      'svelte': 'https://svelte.dev',
+      'node.js': 'https://nodejs.org',
+      'nodejs': 'https://nodejs.org',
+      'express': 'https://expressjs.com',
+      'fastapi': 'https://fastapi.tiangolo.com',
+      'django': 'https://www.djangoproject.com',
+      'flask': 'https://flask.palletsprojects.com',
+      'supabase': 'https://supabase.com',
+      'firebase': 'https://firebase.google.com',
+      'mongodb': 'https://www.mongodb.com',
+      'postgresql': 'https://www.postgresql.org',
+      'postgres': 'https://www.postgresql.org',
+      'mysql': 'https://www.mysql.com',
+      'redis': 'https://redis.io',
+      'prisma': 'https://www.prisma.io',
+      'tailwind': 'https://tailwindcss.com',
+      'tailwind css': 'https://tailwindcss.com',
+      'typescript': 'https://www.typescriptlang.org',
+      'python': 'https://www.python.org',
+      'go': 'https://go.dev',
+      'rust': 'https://www.rust-lang.org',
+      'stripe': 'https://stripe.com',
+      'vercel': 'https://vercel.com',
+      'railway': 'https://railway.app',
+      'render': 'https://render.com',
+      'fly.io': 'https://fly.io',
+      'netlify': 'https://www.netlify.com',
+      'aws': 'https://aws.amazon.com',
+      's3': 'https://aws.amazon.com/s3',
+      'docker': 'https://www.docker.com',
+      'kubernetes': 'https://kubernetes.io',
+      'graphql': 'https://graphql.org',
+      'apollo': 'https://www.apollographql.com',
+      'trpc': 'https://trpc.io',
+      'websockets': 'https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API',
+      'openai': 'https://openai.com',
+      'openai api': 'https://platform.openai.com',
+      'twilio': 'https://www.twilio.com',
+      'sendgrid': 'https://sendgrid.com',
+      'shopify': 'https://www.shopify.com',
+      'shopify api': 'https://shopify.dev',
+      'ffmpeg': 'https://ffmpeg.org',
+      'expo': 'https://expo.dev',
+      'react native': 'https://reactnative.dev',
+      'electron': 'https://www.electronjs.org',
+      'tauri': 'https://tauri.app',
+    };
+    
+    const normalized = tech.toLowerCase().trim();
+    return techMap[normalized] || `https://www.google.com/search?q=${encodeURIComponent(tech)}`;
+  };
+
   useEffect(() => {
     async function fetchIdeas() {
       try {
@@ -469,12 +530,15 @@ export default function DashboardPage() {
                   <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Tech Stack</h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
-                      <span
+                      <a
                         key={item}
-                        className="px-3 py-1.5 bg-[#1a1a1a] text-slate-400 text-sm rounded-lg"
+                        href={getTechUrl(item)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors cursor-pointer"
                       >
                         {item}
-                      </span>
+                      </a>
                     ))}
                   </div>
                 </div>
