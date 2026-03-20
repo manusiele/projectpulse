@@ -479,10 +479,18 @@ export default function DashboardPage() {
             </button>
 
             <div className="p-8">
-              {/* Project Title */}
-              <h2 className="text-3xl font-bold text-white mb-2 pr-8">
-                {selectedIdea.projectName || "Daily Project Idea"}
-              </h2>
+              {/* Project Title - Extract from raw content */}
+              {(() => {
+                const projectMatch = selectedIdea.raw.match(/Project:\s*(.+?)(?:\n|$)/i) || 
+                                   selectedIdea.raw.match(/PROJECT\s*→\s*(.+?)(?:\n|$)/i);
+                const projectName = projectMatch ? projectMatch[1].trim() : (selectedIdea.projectName || "Daily Project Idea");
+                
+                return (
+                  <h2 className="text-3xl font-bold text-white mb-2 pr-8">
+                    {projectName}
+                  </h2>
+                );
+              })()}
 
               {/* Date */}
               <div className="flex items-center gap-3 text-xs text-slate-600 mb-8">
