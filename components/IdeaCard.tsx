@@ -117,9 +117,6 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
   /* ── Regular (grid) card ────────────────────────────────────────────── */
   return (
     <div className="group bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden hover:border-[#3a3a3a] backdrop-blur-xl transition-all hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1">
-      {/* Thin gradient bar */}
-      <div className="h-0.5 bg-gradient-to-r from-blue-500/40 to-cyan-500/40" />
-
       <div className="p-4">
         {/* Project name */}
         <h3 className="text-base font-semibold text-white mb-2 line-clamp-1">{displayName}</h3>
