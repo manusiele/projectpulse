@@ -166,14 +166,14 @@ export default async function DashboardPage() {
           {/* ── Main Content ─────────────────────────────────────────────── */}
           <div className="flex-1 ml-[336px] px-6 py-8 max-w-6xl">
             {ideas.length === 0 ? (
-              <div className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl p-8 text-center backdrop-blur-xl">
+              <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl shadow-2xl shadow-blue-500/10">
                 <h2 className="text-xl font-bold text-white mb-2">No ideas yet</h2>
                 <p className="text-sm text-slate-400 max-w-md leading-relaxed mb-5 mx-auto">
                   Your first idea will appear here after the GitHub Actions workflow runs — daily at 10:00 AM EAT.
                 </p>
                 <Link
                   href="/"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#2a2a2a] hover:border-slate-600 text-sm text-slate-300 hover:text-white transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 backdrop-blur-xl hover:border-slate-600 text-sm text-slate-300 hover:text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20"
                 >
                   Back to Home
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
