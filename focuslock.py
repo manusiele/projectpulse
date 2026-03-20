@@ -291,7 +291,7 @@ def log_activity(text: str):
 def get_context() -> str:
     return "\n".join(history[-8:]) if history else "Fresh PC warrior."
 
-def generate_idea() -> tuple[str, str]:
+def generate_idea():
     context = get_context()
     
     # Select random problem domain
