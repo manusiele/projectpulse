@@ -25,7 +25,7 @@ interface Idea {
 export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas'>('ideas');
+  const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas' | 'thisMonth'>('ideas');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
 
   // Tech stack URL mapping
@@ -246,7 +246,10 @@ export default function DashboardPage() {
                       <span className="text-sm text-slate-300 flex-1">Total Ideas</span>
                       <span className="text-sm font-bold text-white">{ideas.length}</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors">
+                    <div 
+                      onClick={() => setActiveView('thisMonth')}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors cursor-pointer"
+                    >
                       <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
                         <svg className="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -405,6 +408,84 @@ export default function DashboardPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            ) : activeView === 'thisMonth' ? (
+              <div className="space-y-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">This Month</h2>
+                  <p className="text-sm text-slate-400">{thisMonth} ideas from {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+                </div>
+                {thisMonth === 0 ? (
+                  <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl">
+                    <h3 className="text-xl font-bold text-white mb-2">No ideas this month yet</h3>
+                    <p className="text-sm text-slate-400">Check back after the next workflow run.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {ideas.filter((idea) => {
+                      const d = new Date(idea.date);
+                      const now = new Date();
+                      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                    }).map((idea) => (
+                      <div 
+                        key={idea.id}
+                        className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
+                      >
+                        <h3 className="text-xl font-bold text-white mb-3">
+                          {idea.projectName || "Daily Project Idea"}
+                        </h3>
+                        {idea.pain && (
+                          <p className="text-slate-400 text-sm mb-4 leading-relaxed">
+                            {idea.pain}
+                          </p>
+                        )}
+                        {idea.stack && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {idea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
+                              <span
+                                key={item}
+                                className="px-3 py-1.5 bg-[#252525] text-slate-300 text-sm rounded-lg"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
+                          <span className="text-sm text-slate-500">
+                            {new Date(idea.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setSelectedIdea(idea)}
+                              className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
+                            >
+                              View
+                            </button>
+                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                              <svg className="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                              </svg>
+                            </button>
+                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                              <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="18" cy="5" r="3" />
+                                <circle cx="6" cy="12" r="3" />
+                                <circle cx="18" cy="19" r="3" />
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : ideas.length === 0 ? (
               <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl shadow-2xl shadow-blue-500/10">
