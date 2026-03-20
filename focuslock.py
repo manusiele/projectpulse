@@ -141,16 +141,25 @@ def parse_idea(raw: str) -> dict:
         "whyNow": "",
         "potential": "",
     }
+    
+    print(f"DEBUG: Parsing idea with {len(raw)} characters")
+    
     for line in raw.split("\n"):
         line = line.strip()
+        # Support both → and -> separators
         sep = "→" if "→" in line else ("->" if "->" in line else None)
         if not sep:
             continue
+        
         key, _, value = line.partition(sep)
         key = key.strip().lower().rstrip(":")
         value = value.strip()
+        
         if not value:
             continue
+            
+        print(f"DEBUG: Found key='{key}', value='{value[:50]}...'")
+        
         if key == "project":
             result["projectName"] = value
         elif key == "stack":
@@ -169,6 +178,8 @@ def parse_idea(raw: str) -> dict:
             result["whyNow"] = value
         elif key == "potential":
             result["potential"] = value
+    
+    print(f"DEBUG: Parsed result - projectName: '{result['projectName']}'")
     return result
 
 def save_idea(raw: str):

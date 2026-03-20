@@ -31,8 +31,8 @@ jobs:
     - name: Install & Start Ollama
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
-        # Start Ollama in background
-        nohup ollama serve > /tmp/ollama.log 2>&1 &
+        # Start Ollama using systemd service
+        sudo systemctl start ollama
         echo "Waiting for Ollama to start..."
         # Wait up to 30 seconds for Ollama to be ready
         for i in {1..30}; do
@@ -44,7 +44,14 @@ jobs:
           sleep 1
         done
         # Final check
-        curl -s http://127.0.0.1:11434/api/tags || (echo "✗ Ollama failed to start" && cat /tmp/ollama.log && exit 1)
+        if ! curl -s http://127.0.0.1:11434/api/tags > /dev/null 2>&1; then
+          echo "✗ Ollama failed to start, checking logs..."
+          sudo journalctl -u ollama -n 50 --no-pager || echo "No systemd logs available"
+          echo "Trying manual start..."
+          nohup ollama serve > /tmp/ollama.log 2>&1 &
+          sleep 10
+          curl -s http://127.0.0.1:11434/api/tags || (cat /tmp/ollama.log && exit 1)
+        fi
     
     - name: Pull Phi-3 model
       run: |
