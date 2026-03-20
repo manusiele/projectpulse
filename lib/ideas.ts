@@ -11,6 +11,7 @@ export interface Idea {
   impact: string;
   whyNow: string;
   potential: string;
+  docs?: string;
 }
 
 /**

@@ -19,6 +19,7 @@ interface Idea {
   impact?: string;
   whyNow?: string;
   potential?: string;
+  docs?: string;
 }
 
 export default function DashboardPage() {
@@ -474,6 +475,23 @@ export default function DashboardPage() {
                       >
                         {item}
                       </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Docs & Links */}
+              {selectedIdea.docs && (
+                <div className="mb-8">
+                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Docs & Links</h3>
+                  <div className="space-y-2 text-sm text-slate-300 leading-relaxed">
+                    {selectedIdea.docs.split('\n').map((line, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <span className="text-blue-400 mt-1">•</span>
+                        <span dangerouslySetInnerHTML={{ 
+                          __html: line.replace(/^•\s*/, '').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">$1</a>')
+                        }} />
+                      </div>
                     ))}
                   </div>
                 </div>
