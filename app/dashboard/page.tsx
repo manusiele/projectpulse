@@ -64,8 +64,8 @@ export default function DashboardPage() {
         <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
-      <div className="relative z-10">
-        <div className="flex">
+      <div className="relative z-10 h-screen overflow-hidden">
+        <div className="flex h-full">
           {/* ── Left Sidebar ─────────────────────────────────────────────── */}
           <div className="fixed top-4 left-4 w-80 h-[98vh] z-20">
             <div className="h-full overflow-y-auto">
@@ -206,7 +206,8 @@ export default function DashboardPage() {
           </div>
 
           {/* ── Main Content ─────────────────────────────────────────────── */}
-          <div className="flex-1 ml-[336px] px-6 py-8 max-w-6xl">
+          <div className="flex-1 ml-[336px] h-screen overflow-y-auto">
+            <div className="px-6 py-8 max-w-6xl">
             {ideas.length === 0 ? (
               <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl shadow-2xl shadow-blue-500/10">
                 <h2 className="text-xl font-bold text-white mb-2">No ideas yet</h2>
@@ -253,6 +254,7 @@ export default function DashboardPage() {
                 )}
               </div>
             )}
+            </div>
           </div>
         </div>
       </div>
