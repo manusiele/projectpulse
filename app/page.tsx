@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FocusLockLogo } from "@/components/FocusLockLogo";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -17,9 +17,16 @@ export default function Home() {
       <nav className="border-b border-[#2a2a2a]/50 bg-[#1a1a1a]/30 backdrop-blur-xl sticky top-0 z-40 relative">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-40">
-              <FocusLockLogo className="w-full h-auto" />
+            <div className="w-10 h-10 rounded-lg overflow-hidden">
+              <Image 
+                src="/logo.webp" 
+                alt="FocusLock" 
+                width={40} 
+                height={40}
+                className="w-full h-full object-cover"
+              />
             </div>
+            <span className="text-xl font-bold text-white">FocusLock</span>
           </Link>
           <div className="flex items-center gap-4">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">

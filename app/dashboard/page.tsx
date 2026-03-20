@@ -1,7 +1,7 @@
 import { getIdeas } from "@/lib/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
 import Link from "next/link";
-import { FocusLockLogo } from "@/components/FocusLockLogo";
+import Image from "next/image";
 
 export const revalidate = 3600;
 
@@ -38,9 +38,13 @@ export default async function DashboardPage() {
                 <div className="p-6 pb-4">
                   <div className="flex items-center gap-3 mb-1">
                     <div className="w-12 h-12 rounded-xl bg-[#0f0f0f] border border-[#252525] overflow-hidden flex items-center justify-center flex-shrink-0">
-                      <div className="w-10">
-                        <FocusLockLogo className="w-full h-auto" />
-                      </div>
+                      <Image 
+                        src="/logo.webp" 
+                        alt="FocusLock" 
+                        width={48} 
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h2 className="text-base font-bold text-white">FocusLock</h2>
