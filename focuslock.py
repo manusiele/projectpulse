@@ -125,6 +125,66 @@ PROBLEM_DOMAINS = [
         "pain": "They juggle HIPAA-compliant note-taking, appointment scheduling, insurance billing, and client progress tracking across multiple systems while trying to provide quality care.",
         "gap": "There's no affordable, compliant practice management system designed specifically for solo therapists and small mental health practices that handles all aspects of practice management.",
         "impact": "They waste therapy time on admin work, risk compliance violations, lose revenue to billing errors, and burn out trying to manage business operations alongside clinical work."
+    },
+    {
+        "who": "Podcast creators and audio content producers trying to grow their audience",
+        "pain": "They struggle with editing, transcription, show notes creation, distribution across platforms, audience analytics, and monetization. Each episode requires hours of post-production work.",
+        "gap": "There's no unified platform that automates podcast workflow from recording to distribution while providing actionable audience insights and monetization tools.",
+        "impact": "They burn out from manual editing, miss sponsorship opportunities, can't track what content resonates, and struggle to grow beyond their initial audience."
+    },
+    {
+        "who": "Independent game developers and small studios creating games",
+        "pain": "They face challenges with asset management, version control, playtesting coordination, bug tracking, and marketing. Limited resources mean wearing too many hats.",
+        "gap": "There's no affordable, integrated development environment specifically designed for indie game creators that combines project management, testing, and marketing tools.",
+        "impact": "They miss launch deadlines, ship buggy games, struggle with visibility in crowded marketplaces, and often abandon projects due to overwhelming complexity."
+    },
+    {
+        "who": "Legal professionals and small law firms managing cases and clients",
+        "pain": "They manually track case deadlines, client communications, billable hours, and document versions across disconnected systems. Missing a deadline can mean malpractice.",
+        "gap": "There's no affordable, compliant case management system for solo practitioners that automates deadline tracking, time billing, and client communication.",
+        "impact": "They risk malpractice from missed deadlines, lose revenue from unbilled hours, waste time on admin work, and struggle to scale their practice."
+    },
+    {
+        "who": "Real estate agents managing multiple property listings and clients",
+        "pain": "They juggle property showings, client follow-ups, document signing, market analysis, and lead generation across multiple platforms. Leads fall through cracks.",
+        "gap": "There's no unified CRM designed specifically for real estate that combines listing management, client communication, document handling, and market insights.",
+        "impact": "They lose deals to more organized competitors, waste time on manual follow-ups, miss market opportunities, and can't scale beyond a handful of clients."
+    },
+    {
+        "who": "Restaurant owners and food service managers handling operations",
+        "pain": "They struggle with inventory management, staff scheduling, online orders, table reservations, and customer feedback across multiple systems. Food waste and labor costs spiral.",
+        "gap": "There's no affordable, integrated restaurant management system that handles operations, online presence, and customer engagement in one platform.",
+        "impact": "They lose money through food waste, poor scheduling, missed online orders, and can't compete with chain restaurants' operational efficiency."
+    },
+    {
+        "who": "Fitness trainers and gym owners managing clients and classes",
+        "pain": "They manually schedule sessions, track client progress, handle payments, create workout plans, and manage class bookings. Client retention suffers from lack of engagement.",
+        "gap": "There's no comprehensive platform for fitness professionals that combines scheduling, progress tracking, payment processing, and client engagement tools.",
+        "impact": "They lose clients due to poor communication, waste time on admin tasks, struggle with payment collection, and can't scale beyond in-person training."
+    },
+    {
+        "who": "Photographers and videographers managing bookings and deliverables",
+        "pain": "They juggle client inquiries, booking calendars, contracts, shoot planning, editing workflows, and file delivery. Client galleries and payments are scattered.",
+        "gap": "There's no unified platform for visual creators that handles booking, contracts, editing workflow, client galleries, and payment processing.",
+        "impact": "They lose bookings due to slow responses, waste time on manual contract handling, struggle with file delivery, and miss payment follow-ups."
+    },
+    {
+        "who": "Music teachers and performing arts instructors managing students",
+        "pain": "They manually schedule lessons, track student progress, handle payments, assign practice materials, and communicate with parents. Recital planning is chaotic.",
+        "gap": "There's no affordable platform designed for music educators that combines scheduling, progress tracking, payment processing, and parent communication.",
+        "impact": "They lose students due to poor organization, waste time on admin work, struggle with payment collection, and can't grow their teaching practice."
+    },
+    {
+        "who": "Consultants and coaches delivering services to multiple clients",
+        "pain": "They struggle with session scheduling, client onboarding, progress tracking, resource delivery, and invoicing. Each client relationship requires manual management.",
+        "gap": "There's no unified platform for service-based professionals that automates client lifecycle from onboarding to invoicing while tracking outcomes.",
+        "impact": "They can't scale beyond a few clients, waste time on repetitive admin tasks, struggle to demonstrate ROI, and lose clients due to poor experience."
+    },
+    {
+        "who": "Pet care providers including groomers, sitters, and trainers",
+        "pain": "They manually manage bookings, pet profiles, owner communications, medical records, and payments. Emergency contacts and special instructions get lost.",
+        "gap": "There's no comprehensive platform for pet care professionals that handles scheduling, pet records, owner communication, and payment processing.",
+        "impact": "They risk pet safety from lost information, lose bookings due to poor organization, struggle with payment collection, and can't scale their services."
     }
 ]
 
