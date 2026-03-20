@@ -31,8 +31,12 @@ jobs:
     - name: Install & Start Ollama
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
-        # The install script starts ollama as a service, so we don't need to start it manually
-        sleep 5  # Wait for Ollama to be ready
+        # Start Ollama in background
+        nohup ollama serve > /tmp/ollama.log 2>&1 &
+        sleep 10  # Wait for Ollama to be ready
+        # Verify Ollama is running
+        curl -s http://127.0.0.1:11434/api/tags || echo "Ollama not ready yet, waiting..."
+        sleep 5
     
     - name: Pull Phi-3 model
       run: |
