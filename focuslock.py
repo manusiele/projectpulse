@@ -261,7 +261,7 @@ def parse_idea(raw: str) -> dict:
     print(f"DEBUG: Parsed result - projectName: '{result['projectName']}'")
     return result
 
-def save_idea(raw: str):
+def save_idea(raw: str, domain: str = ""):
     """Save a structured idea entry to ideas.json for the web dashboard."""
     try:
         parsed = parse_idea(raw)
@@ -269,6 +269,7 @@ def save_idea(raw: str):
             "id": f"idea_{int(datetime.now().timestamp())}",
             "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "raw": raw,
+            "domain": domain,
             **parsed,
         }
         ideas_store.append(entry)
@@ -290,11 +291,14 @@ def log_activity(text: str):
 def get_context() -> str:
     return "\n".join(history[-8:]) if history else "Fresh PC warrior."
 
-def generate_idea() -> str:
+def generate_idea() -> tuple[str, str]:
     context = get_context()
     
     # Select random problem domain
     problem = random.choice(PROBLEM_DOMAINS)
+    
+    # Determine domain name based on problem characteristics
+    domain_name = determine_domain(problem)
     
     prompt = f"""You are FocusLock — elite, no-fluff AI co-pilot for a developer building real apps from PC only.
 
@@ -331,7 +335,7 @@ Target audience: {problem['who']}
 Make every section detailed, actionable, and inspiring. Use natural language, not bullet points except in Docs & Links."""
 
     response = ollama.generate(model=MODEL, prompt=prompt)
-    return response["response"]
+    return response["response"], domain_name
 
 def send_telegram(message: str):
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
@@ -352,15 +356,73 @@ def send_telegram(message: str):
     except Exception as e:
         print(f" Telegram failed: {e}")
 
+def determine_domain(problem: dict) -> str:
+    """Determine domain name based on problem characteristics."""
+    who = problem['who'].lower()
+    
+    # Map keywords to domain names
+    if 'business' in who or 'freelancer' in who or 'solopreneur' in who:
+        return "Business Management"
+    elif 'student' in who or 'job seeker' in who or 'career' in who:
+        return "Career Development"
+    elif 'content creator' in who or 'influencer' in who:
+        return "Content Creation"
+    elif 'remote team' in who or 'distributed' in who or 'startup' in who:
+        return "Remote Collaboration"
+    elif 'health' in who or 'fitness' in who or 'wellness' in who:
+        return "Health & Wellness"
+    elif 'parent' in who or 'family' in who:
+        return "Family Management"
+    elif 'service provider' in who or 'plumber' in who or 'electrician' in who or 'tutor' in who or 'cleaner' in who:
+        return "Local Services"
+    elif 'researcher' in who or 'writer' in who or 'knowledge worker' in who:
+        return "Knowledge Management"
+    elif 'e-commerce' in who or 'seller' in who:
+        return "E-commerce"
+    elif 'event organizer' in who:
+        return "Event Management"
+    elif 'nonprofit' in who:
+        return "Nonprofit Management"
+    elif 'landlord' in who or 'property manager' in who:
+        return "Property Management"
+    elif 'finance' in who or 'investing' in who:
+        return "Personal Finance"
+    elif 'farm' in who or 'agri' in who:
+        return "Agriculture Tech"
+    elif 'mental health' in who or 'therapist' in who:
+        return "Mental Health"
+    elif 'podcast' in who or 'audio' in who:
+        return "Podcast Production"
+    elif 'game' in who or 'indie' in who:
+        return "Game Development"
+    elif 'legal' in who or 'law' in who or 'attorney' in who:
+        return "Legal Services"
+    elif 'real estate' in who or 'agent' in who:
+        return "Real Estate"
+    elif 'restaurant' in who or 'food service' in who:
+        return "Restaurant Operations"
+    elif 'fitness trainer' in who or 'gym' in who:
+        return "Fitness Training"
+    elif 'photographer' in who or 'videographer' in who:
+        return "Photography & Video"
+    elif 'music teacher' in who or 'performing arts' in who:
+        return "Music Education"
+    elif 'consultant' in who or 'coach' in who:
+        return "Consulting & Coaching"
+    elif 'pet care' in who or 'groomer' in who or 'sitter' in who:
+        return "Pet Care Services"
+    else:
+        return "General"
+
 if __name__ == "__main__":
     try:
         print("🚀 FocusLock starting...")
-        idea = generate_idea()
+        idea, domain = generate_idea()
         timestamp = datetime.now().strftime('%b %d • %H:%M') 
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         # Save idea FIRST before sending to Telegram
-        save_idea(idea)
+        save_idea(idea, domain)
         send_telegram(message)
         log_activity("Delivered project with Problem Statement + clean stack")
         print("✅ FocusLock complete")
