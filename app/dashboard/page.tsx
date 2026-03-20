@@ -24,6 +24,7 @@ interface Idea {
 export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeView, setActiveView] = useState<'ideas' | 'domains'>('ideas');
 
   useEffect(() => {
     async function fetchIdeas() {
@@ -54,6 +55,24 @@ export default function DashboardPage() {
       d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
     );
   }).length;
+
+  const domains = [
+    { name: "Business Management", description: "Small business owners, freelancers, and solopreneurs" },
+    { name: "Career Development", description: "Students, job seekers, and career switchers" },
+    { name: "Content Creation", description: "Content creators, influencers, and digital entrepreneurs" },
+    { name: "Remote Collaboration", description: "Remote teams and distributed startups" },
+    { name: "Health & Wellness", description: "Health-conscious individuals improving fitness and wellbeing" },
+    { name: "Family Management", description: "Parents managing family schedules and children's development" },
+    { name: "Local Services", description: "Service providers like plumbers, electricians, tutors" },
+    { name: "Knowledge Management", description: "Researchers, writers, and knowledge workers" },
+    { name: "E-commerce", description: "E-commerce sellers managing inventory and orders" },
+    { name: "Event Management", description: "Event organizers managing registrations and logistics" },
+    { name: "Nonprofit Management", description: "Nonprofit organizations managing donors and volunteers" },
+    { name: "Property Management", description: "Landlords and property managers" },
+    { name: "Personal Finance", description: "Finance enthusiasts achieving financial independence" },
+    { name: "Agriculture Tech", description: "Agritech innovators and smallholder farmers" },
+    { name: "Mental Health", description: "Mental health professionals managing practices" },
+  ];
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden animate-fadeIn">
@@ -100,7 +119,10 @@ export default function DashboardPage() {
                   <nav className="space-y-1">
                     <a 
                       href="#latest" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white bg-[#252525] transition-all group"
+                      onClick={(e) => { e.preventDefault(); setActiveView('ideas'); }}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all group ${
+                        activeView === 'ideas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
+                      }`}
                     >
                       <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -109,7 +131,10 @@ export default function DashboardPage() {
                     </a>
                     <a 
                       href="#ideas" 
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#252525] transition-all group"
+                      onClick={(e) => { e.preventDefault(); setActiveView('ideas'); }}
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all group ${
+                        activeView === 'ideas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
+                      }`}
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
@@ -160,7 +185,10 @@ export default function DashboardPage() {
                       <span className="text-sm text-slate-300 flex-1">This Month</span>
                       <span className="text-sm font-bold text-white">{thisMonth}</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors">
+                    <button 
+                      onClick={() => setActiveView('domains')}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors"
+                    >
                       <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
                         <svg className="w-4 h-4 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -168,7 +196,7 @@ export default function DashboardPage() {
                       </div>
                       <span className="text-sm text-slate-300 flex-1">Domains</span>
                       <span className="text-sm font-bold text-white">15</span>
-                    </div>
+                    </button>
                   </div>
                 </div>
 
@@ -208,7 +236,30 @@ export default function DashboardPage() {
           {/* ── Main Content ─────────────────────────────────────────────── */}
           <div className="flex-1 ml-[336px] h-screen overflow-y-auto">
             <div className="px-6 py-8 max-w-6xl">
-            {ideas.length === 0 ? (
+            {activeView === 'domains' ? (
+              <div className="space-y-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">Problem Domains</h2>
+                  <p className="text-sm text-slate-400">15 problem spaces the AI generates ideas from</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {domains.map((domain, index) => (
+                    <div 
+                      key={index}
+                      className="p-5 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl hover:border-[#3a3a3a] transition-all hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-1"
+                    >
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                          <span className="text-sm font-bold text-purple-400">{index + 1}</span>
+                        </div>
+                        <h3 className="text-base font-semibold text-white leading-tight">{domain.name}</h3>
+                      </div>
+                      <p className="text-sm text-slate-400 leading-relaxed">{domain.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : ideas.length === 0 ? (
               <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl shadow-2xl shadow-blue-500/10">
                 <h2 className="text-xl font-bold text-white mb-2">No ideas yet</h2>
                 <p className="text-sm text-slate-400 max-w-md leading-relaxed mb-5 mx-auto">
