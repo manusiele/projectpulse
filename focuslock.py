@@ -19,7 +19,7 @@ HISTORY_FILE = "data/history.json"
 IDEAS_FILE = "data/ideas.json"
 
 if os.path.exists(HISTORY_FILE):
-    with open(HISTORY_FILE, "r") as f:
+    with open(HISTORY_FILE, "r", encoding="utf-8-sig") as f:
         history = json.load(f)
 else:
     history = [
@@ -30,7 +30,7 @@ else:
     ]
 
 if os.path.exists(IDEAS_FILE):
-    with open(IDEAS_FILE, "r") as f:
+    with open(IDEAS_FILE, "r", encoding="utf-8-sig") as f:
         ideas_store = json.load(f)
 else:
     ideas_store = []
