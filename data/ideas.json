@@ -12,7 +12,8 @@
     "impact": "",
     "whyNow": "Post-pandemic fitness boom + AI accessibility reaching mainstream",
     "potential": "$2B+ market in personalized health tech",
-    "docs": ""
+    "docs": "",
+    "description": ""
   },
   {
     "id": "idea_1710786660",
@@ -27,7 +28,8 @@
     "impact": "",
     "whyNow": "Remote work explosion + creator economy growth",
     "potential": "$500M+ TAM in freelance management tools",
-    "docs": ""
+    "docs": "",
+    "description": ""
   },
   {
     "id": "idea_1710700260",
@@ -42,7 +44,8 @@
     "impact": "",
     "whyNow": "Creator economy at peak; AI video processing now viable",
     "potential": "$1B+ market in content automation",
-    "docs": ""
+    "docs": "",
+    "description": ""
   },
   {
     "id": "idea_1710613860",
@@ -57,7 +60,8 @@
     "impact": "",
     "whyNow": "Post-pandemic remote work normalization",
     "potential": "$300M+ market in async collaboration",
-    "docs": ""
+    "docs": "",
+    "description": ""
   },
   {
     "id": "idea_1710527460",
@@ -72,7 +76,8 @@
     "impact": "",
     "whyNow": "E-commerce growth + AI-powered personalization becoming accessible",
     "potential": "$200M+ market in cart recovery",
-    "docs": ""
+    "docs": "",
+    "description": ""
   },
   {
     "id": "idea_1774049287",
@@ -88,7 +93,8 @@
     "impact": "",
     "whyNow": "With the growing digitization trend in real estate due to post-pandemic consumer behavior shifts towards virtual interactions and digital transactions, there's an immediate need for a tool like RealityConnect that bridges this gap efficiently; agents are increasingly aware of technology gaps hindering their growth but lacking solutions\u2014therefore timing is impeccable as the demand surge aligns with our project release.",
     "potential": "",
-    "docs": ""
+    "docs": "",
+    "description": "A dedicated real estate management platform streamlining property showings to leads with automated communication pipelines ensuring no deals slip through, providing market insights directly into the workflow and simplifying document signing digitally\u2014transforms chaotic experiences of agents today by offering an all-encompassing tool."
   },
   {
     "id": "idea_1774078437",
@@ -104,6 +110,7 @@
     "impact": "",
     "whyNow": "The market timing is impeccable for launching \"Legal Pulse\" due to increased demand from solo legal practitioners seeking digital tools amidst the growing gig economy trend in law; technological readiness has allowed easy-to-deploy solutions with minimal initial investment, and a shift towards digitization among attorneys who previously relied on disjointed systems signals an ideal moment to enter this underserved market segment. Current legal software tends toward large firms' needs rather than solo practitioners\u2019 specific workflow challenges; thus addressing their unique requirements with \"Legal Pulse\" offers a clear competitive edge and immediate value proposition, capitalizing on the urgency for compliant yet affordable solutions to enhance operational efficiency.",
     "potential": "Projected year 1 revenue from Legal Pulse is estimated at $2M based on subscription models with tiered pricing designed around small law firm scales; aiming towards a user base of 5k legal practitioners by the end of Year 3, which corresponds to market research data indicating that approximately one-third of all solo attorneys seek digital case management tools. Monetization will revolve primarily through monthly subscriptions with options for individual plans and commission earnings on referrals; long-term vision includes becoming a leading platform in the legal tech sector, fostering an international community by incorporating multilingual support to expand market reach while continuously updating features based on user feedback.",
-    "docs": "\u2022 Tailwind CSS Documentation - Legal Pulse developers will learn how to apply responsive design principles using utility-first classes, which are essential for creating accessible interfaces suitable for any screen size; understanding these features enables the application's appeal across various devices common in legal environments. The documentation is vital as it provides practical examples tailored specifically to project aesthetics and functionality within this unique sector.\n\u2022 Next.js Documentation - This resource will guide developers through server-side rendering, static site generation, API routes for backend development with Supabase integration; mastering these capabilities allows the creation of an efficient back end that handles all client data effectively without compromising on scalability or performance crucial to legal case management systems where timeliness and accuracy are non-negotiable.\n\u2022 Semantic UI Components Guide - Understanding implementation details, including API calls for dynamic content rendering based on user interaction within the Next.js ecosystem using serverless functions with Supabase; this knowledge is critical as it enables customizing legal workflows in Legal Pulse to reflect real-time updates and tailored client communication strategies that directly impact case management efficiency positively perceived by users seeking a personalized experience without added admin complexity.\n\u2022 Next.js Documentation - Integrating frontend features will be streamlined using this documentation, where understanding the integration of user interfaces with Supabase API endpoints is vital for synchronizing backend data to provide an immersive and real-time client communication platform within Legal Pulse; these insights are fundamental as they allow solo attornes' seamless access to their clients\u2019 information through a single, secure application interface."
+    "docs": "\u2022 Tailwind CSS Documentation - Legal Pulse developers will learn how to apply responsive design principles using utility-first classes, which are essential for creating accessible interfaces suitable for any screen size; understanding these features enables the application's appeal across various devices common in legal environments. The documentation is vital as it provides practical examples tailored specifically to project aesthetics and functionality within this unique sector.\n\u2022 Next.js Documentation - This resource will guide developers through server-side rendering, static site generation, API routes for backend development with Supabase integration; mastering these capabilities allows the creation of an efficient back end that handles all client data effectively without compromising on scalability or performance crucial to legal case management systems where timeliness and accuracy are non-negotiable.\n\u2022 Semantic UI Components Guide - Understanding implementation details, including API calls for dynamic content rendering based on user interaction within the Next.js ecosystem using serverless functions with Supabase; this knowledge is critical as it enables customizing legal workflows in Legal Pulse to reflect real-time updates and tailored client communication strategies that directly impact case management efficiency positively perceived by users seeking a personalized experience without added admin complexity.\n\u2022 Next.js Documentation - Integrating frontend features will be streamlined using this documentation, where understanding the integration of user interfaces with Supabase API endpoints is vital for synchronizing backend data to provide an immersive and real-time client communication platform within Legal Pulse; these insights are fundamental as they allow solo attornes' seamless access to their clients\u2019 information through a single, secure application interface.",
+    "description": "A streamlined case management app that automatically tracks all essential legal workflow aspects\u2014deadline tracking, client interactions, billable hours logging, and document version control within a unified system to safeguard against malpractice risks while increasing revenue efficiency. It offers an easy-to-use interface tailored for solo attorneys with scalability in mind."
   }
 ]

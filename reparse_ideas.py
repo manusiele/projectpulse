@@ -1,0 +1,130 @@
+import json
+import re
+
+def parse_idea(raw: str) -> dict:
+    """Extract structured fields from the LLM-generated idea text."""
+    result = {
+        "projectName": "",
+        "description": "",
+        "stack": "",
+        "deploy": "",
+        "who": "",
+        "pain": "",
+        "gap": "",
+        "impact": "",
+        "whyNow": "",
+        "potential": "",
+        "docs": "",
+    }
+    
+    # Extract project name and description from various formats
+    # Format: "ProjectName" - Description or "ProjectName" — Description
+    project_patterns = [
+        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2014]\s*(.+?)(?=\n\n|\nStack)',
+        r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
+        r'Project\s*\u2192\s*(.+?)(?:\n|$)',
+    ]
+    for pattern in project_patterns:
+        match = re.search(pattern, raw, re.IGNORECASE | re.DOTALL)
+        if match:
+            if len(match.groups()) == 2:
+                result["projectName"] = match.group(1).strip()
+                result["description"] = match.group(2).strip()
+            else:
+                full_text = match.group(1).strip()
+                # Try to split on - or —
+                if ' - ' in full_text or ' — ' in full_text or ' \u2014 ' in full_text:
+                    parts = re.split(r'\s*[-\u2014]\s*', full_text, 1)
+                    result["projectName"] = parts[0].strip().strip('""\u201c\u201d')
+                    result["description"] = parts[1].strip() if len(parts) > 1 else ""
+                else:
+                    result["projectName"] = full_text.strip('""\u201c\u201d')
+            break
+    
+    # Extract project name from various formats
+    project_patterns = [
+        r'Project:\s*["\u201c]?([^"\u201d\n]+)["\u201d]?',
+        r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
+        r'Project\s*\u2192\s*(.+?)(?:\n|$)',
+    ]
+    for pattern in project_patterns:
+        match = re.search(pattern, raw, re.IGNORECASE)
+        if match:
+            result["projectName"] = match.group(1).strip()
+            break
+    
+    # Extract Stack section (handles multi-line)
+    stack_match = re.search(r'Stack:\s*(.+?)(?=\n(?:Deploy|Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if stack_match:
+        result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
+    
+    # Extract Deploy section (handles multi-line)
+    deploy_match = re.search(r'Deploy:\s*(.+?)(?=\n(?:Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if deploy_match:
+        result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
+    
+    # Extract docs section
+    docs_match = re.search(r'Docs & Links:\s*\n?((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
+    if docs_match:
+        result["docs"] = docs_match.group(1).strip()
+    
+    # Extract Why now section
+    why_match = re.search(r'Why now:\s*(.+?)(?=\n(?:Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if why_match:
+        result["whyNow"] = why_match.group(1).strip().replace('\n', ' ')
+    
+    # Extract Potential section
+    potential_match = re.search(r'Potential:\s*(.+?)(?=\n(?:Target audience|Next idea|$))', raw, re.IGNORECASE | re.DOTALL)
+    if potential_match:
+        result["potential"] = potential_match.group(1).strip().replace('\n', ' ')
+    
+    for line in raw.split("\n"):
+        line = line.strip()
+        sep = "\u2192" if "\u2192" in line else ("->" if "->" in line else None)
+        if not sep:
+            continue
+        
+        key, _, value = line.partition(sep)
+        key = key.strip().lower().rstrip(":")
+        value = value.strip()
+        
+        if not value:
+            continue
+        
+        if key == "stack" and not result["stack"]:
+            result["stack"] = value
+        elif key == "deploy" and not result["deploy"]:
+            result["deploy"] = value
+        elif key == "who":
+            result["who"] = value
+        elif key == "pain":
+            result["pain"] = value
+        elif key == "gap":
+            result["gap"] = value
+        elif key in ("impact if unsolved", "impact"):
+            result["impact"] = value
+        elif key == "why now" and not result["whyNow"]:
+            result["whyNow"] = value
+        elif key == "potential" and not result["potential"]:
+            result["potential"] = value
+    
+    return result
+
+# Load ideas
+with open('data/ideas.json', 'r', encoding='utf-8-sig') as f:
+    ideas = json.load(f)
+
+# Re-parse all ideas
+for idea in ideas:
+    parsed = parse_idea(idea['raw'])
+    idea.update(parsed)
+    print(f"Updated: {idea['projectName']}")
+
+# Save updated ideas
+with open('data/ideas.json', 'w', encoding='utf-8') as f:
+    json.dump(ideas, f, indent=2)
+
+with open('public/ideas.json', 'w', encoding='utf-8') as f:
+    json.dump(ideas, f, indent=2)
+
+print("\n✓ All ideas re-parsed and saved!")

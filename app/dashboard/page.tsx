@@ -12,6 +12,7 @@ interface Idea {
   raw: string;
   domain?: string;
   projectName?: string;
+  description?: string;
   stack?: string;
   deploy?: string;
   who?: string;
@@ -649,18 +650,16 @@ export default function DashboardPage() {
             </button>
 
             <div className="p-8">
-              {/* Project Title - Extract from raw content */}
-              {(() => {
-                const projectMatch = selectedIdea.raw.match(/Project:\s*(.+?)(?:\n|$)/i) || 
-                                   selectedIdea.raw.match(/PROJECT\s*→\s*(.+?)(?:\n|$)/i);
-                const projectName = projectMatch ? projectMatch[1].trim() : (selectedIdea.projectName || "Daily Project Idea");
-                
-                return (
-                  <h2 className="text-3xl font-bold text-white mb-2 pr-8">
-                    {projectName}
-                  </h2>
-                );
-              })()}
+              {/* Project Title and Description */}
+              <h2 className="text-3xl font-bold text-white mb-3 pr-8">
+                {selectedIdea.projectName || "Daily Project Idea"}
+              </h2>
+              
+              {selectedIdea.description && (
+                <p className="text-slate-400 text-base leading-relaxed mb-6">
+                  {selectedIdea.description}
+                </p>
+              )}
 
               {/* Date */}
               <div className="flex items-center gap-3 text-xs text-slate-600 mb-8">

@@ -193,6 +193,7 @@ def parse_idea(raw: str) -> dict:
     """Extract structured fields from the LLM-generated idea text."""
     result = {
         "projectName": "",
+        "description": "",
         "stack": "",
         "deploy": "",
         "who": "",
@@ -206,17 +207,30 @@ def parse_idea(raw: str) -> dict:
     
     print(f"DEBUG: Parsing idea with {len(raw)} characters")
     
-    # Extract project name from various formats
+    # Extract project name and description from various formats
+    # Format: "ProjectName" - Description or "ProjectName" — Description
     project_patterns = [
-        r'Project:\s*["\u201c]?([^"\u201d\n]+)["\u201d]?',
+        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2014]\s*(.+?)(?=\n\n|\nStack)',
         r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
         r'Project\s*\u2192\s*(.+?)(?:\n|$)',
     ]
     for pattern in project_patterns:
-        match = re.search(pattern, raw, re.IGNORECASE)
+        match = re.search(pattern, raw, re.IGNORECASE | re.DOTALL)
         if match:
-            result["projectName"] = match.group(1).strip()
+            if len(match.groups()) == 2:
+                result["projectName"] = match.group(1).strip()
+                result["description"] = match.group(2).strip()
+            else:
+                full_text = match.group(1).strip()
+                # Try to split on - or —
+                if ' - ' in full_text or ' — ' in full_text or ' \u2014 ' in full_text:
+                    parts = re.split(r'\s*[-\u2014]\s*', full_text, 1)
+                    result["projectName"] = parts[0].strip().strip('""\u201c\u201d')
+                    result["description"] = parts[1].strip() if len(parts) > 1 else ""
+                else:
+                    result["projectName"] = full_text.strip('""\u201c\u201d')
             print(f"DEBUG: Found project name: '{result['projectName']}'")
+            print(f"DEBUG: Found description: '{result['description'][:50]}...'")
             break
     
     # Extract Stack section (handles multi-line)
