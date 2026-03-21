@@ -210,7 +210,8 @@ def parse_idea(raw: str) -> dict:
     # Extract project name and description from various formats
     # Format: "ProjectName" - Description or "ProjectName" — Description
     project_patterns = [
-        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2014]\s*(.+?)(?=\n\n|\nStack)',
+        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2014—]\s*(.+?)(?=\n\n|\nStack)',
+        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]',
         r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
         r'Project\s*\u2192\s*(.+?)(?:\n|$)',
     ]
@@ -222,15 +223,16 @@ def parse_idea(raw: str) -> dict:
                 result["description"] = match.group(2).strip()
             else:
                 full_text = match.group(1).strip()
-                # Try to split on - or —
+                # Try to split on - or — or em dash
                 if ' - ' in full_text or ' — ' in full_text or ' \u2014 ' in full_text:
-                    parts = re.split(r'\s*[-\u2014]\s*', full_text, 1)
+                    parts = re.split(r'\s*[-\u2014—]\s*', full_text, 1)
                     result["projectName"] = parts[0].strip().strip('""\u201c\u201d')
                     result["description"] = parts[1].strip() if len(parts) > 1 else ""
                 else:
                     result["projectName"] = full_text.strip('""\u201c\u201d')
             print(f"DEBUG: Found project name: '{result['projectName']}'")
-            print(f"DEBUG: Found description: '{result['description'][:50]}...'")
+            if result["description"]:
+                print(f"DEBUG: Found description: '{result['description'][:50]}...'")
             break
     
     # Extract Stack section (handles multi-line)
@@ -457,9 +459,24 @@ if __name__ == "__main__":
         print("🚀 FocusLock starting...")
         idea, domain = generate_idea()
         timestamp = datetime.now().strftime('%b %d • %H:%M') 
-        message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
-        # Save idea FIRST before sending to Telegram
+        # Create a shorter version for Telegram (max 4096 chars)
+        lines = idea.split('\n')
+        telegram_message = []
+        char_count = 0
+        max_chars = 3500  # Leave room for header and footer
+        
+        for line in lines:
+            if char_count + len(line) + 1 > max_chars:
+                telegram_message.append("\n... (view full details on dashboard)")
+                break
+            telegram_message.append(line)
+            char_count += len(line) + 1
+        
+        short_idea = '\n'.join(telegram_message)
+        message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
+        
+        # Save full idea to JSON
         save_idea(idea, domain)
         send_telegram(message)
         log_activity("Delivered project with Problem Statement + clean stack")
