@@ -323,11 +323,11 @@ export default function DashboardPage() {
                   <p className="text-sm text-slate-400">25 problem spaces the AI generates ideas from</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {domains.map((domain, index) => {
+                  {domains.map((domain) => {
                     const domainIdeas = ideas.filter(idea => idea.domain === domain.name);
                     return (
                       <div 
-                        key={index}
+                        key={domain.name}
                         onClick={() => {
                           setSelectedDomain(domain.name);
                           setActiveView('allIdeas');
@@ -336,7 +336,7 @@ export default function DashboardPage() {
                       >
                         <div className="flex items-start gap-3 mb-3">
                           <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                            <span className="text-sm font-bold text-purple-400">{index + 1}</span>
+                            <span className="text-sm font-bold text-purple-400">{domains.indexOf(domain) + 1}</span>
                           </div>
                           <h3 className="text-base font-semibold text-white leading-tight">{domain.name}</h3>
                         </div>
@@ -601,7 +601,7 @@ export default function DashboardPage() {
                   <section id="latest">
                     <div className="mb-3">
                       <h2 className="text-xl font-bold text-white">Latest Spark</h2>
-                      <p className="text-xs text-slate-500 mt-1">Today's project idea</p>
+                      <p className="text-xs text-slate-500 mt-1">Today&apos;s project idea</p>
                     </div>
                     <IdeaCard idea={latest} featured />
                   </section>

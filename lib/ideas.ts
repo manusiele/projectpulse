@@ -2,15 +2,17 @@ export interface Idea {
   id: string;
   date: string;
   raw: string;
-  projectName: string;
-  stack: string;
-  deploy: string;
-  who: string;
-  pain: string;
-  gap: string;
-  impact: string;
-  whyNow: string;
-  potential: string;
+  domain?: string;
+  projectName?: string;
+  description?: string;
+  stack?: string;
+  deploy?: string;
+  who?: string;
+  pain?: string;
+  gap?: string;
+  impact?: string;
+  whyNow?: string;
+  potential?: string;
   docs?: string;
 }
 

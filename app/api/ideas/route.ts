@@ -9,7 +9,7 @@ export async function GET() {
     const ideas = JSON.parse(fileContents);
     
     // Sort by date descending (newest first)
-    const sortedIdeas = ideas.sort((a: any, b: any) => 
+    const sortedIdeas = ideas.sort((a: { date: string }, b: { date: string }) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     

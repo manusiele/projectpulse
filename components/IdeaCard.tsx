@@ -29,7 +29,7 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wide mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-            Today's Spark
+            Today&apos;s Spark
           </span>
 
           {/* Project name */}
