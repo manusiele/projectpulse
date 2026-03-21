@@ -95,13 +95,9 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchIdeas() {
       try {
-        const response = await fetch('/ideas.json');
+        const response = await fetch('/api/ideas');
         const data = await response.json();
-        // Sort by date descending (newest first)
-        const sortedData = data.sort((a: Idea, b: Idea) => 
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-        setIdeas(sortedData);
+        setIdeas(data);
       } catch (error) {
         console.error('Failed to fetch ideas:', error);
       } finally {
