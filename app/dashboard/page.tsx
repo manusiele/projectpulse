@@ -29,6 +29,7 @@ export default function DashboardPage() {
   const [activeView, setActiveView] = useState<'ideas' | 'domains' | 'allIdeas' | 'thisMonth'>('ideas');
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
 
   // Tech stack URL mapping
   const getTechUrl = (tech: string): string => {
@@ -451,9 +452,26 @@ export default function DashboardPage() {
               </div>
             ) : activeView === 'thisMonth' ? (
               <div className="space-y-6">
-                <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-white mb-2">This Month</h2>
-                  <p className="text-sm text-slate-400">{thisMonth} ideas from {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+                <div className="mb-6 flex items-center justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white mb-2">This Month</h2>
+                    <p className="text-sm text-slate-400">{thisMonth} ideas from {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+                  </div>
+                  {/* Week Filter Dropdown */}
+                  <div className="relative">
+                    <select
+                      value={selectedWeek || ''}
+                      onChange={(e) => setSelectedWeek(e.target.value ? Number(e.target.value) : null)}
+                      className="px-4 py-2 rounded-lg bg-[#1a1a1a] border border-[#2a2a2a] text-slate-300 text-sm focus:outline-none focus:border-blue-500/50 transition-colors cursor-pointer hover:bg-[#252525]"
+                    >
+                      <option value="">All Weeks</option>
+                      <option value="1">Week 1</option>
+                      <option value="2">Week 2</option>
+                      <option value="3">Week 3</option>
+                      <option value="4">Week 4</option>
+                      <option value="5">Week 5</option>
+                    </select>
+                  </div>
                 </div>
                 {thisMonth === 0 ? (
                   <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl">
@@ -485,11 +503,16 @@ export default function DashboardPage() {
                       weekGroups[week].push(idea);
                     });
 
-                    return Object.keys(weekGroups).sort((a, b) => Number(b) - Number(a)).map(weekNum => (
+                    // Filter by selected week if any
+                    const weeksToShow = selectedWeek 
+                      ? [selectedWeek.toString()]
+                      : Object.keys(weekGroups).sort((a, b) => Number(b) - Number(a));
+
+                    return weeksToShow.map(weekNum => (
                       <div key={weekNum} className="space-y-4">
                         <h3 className="text-lg font-semibold text-white">Week {weekNum}</h3>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                          {weekGroups[Number(weekNum)].map((idea) => (
+                          {(weekGroups[Number(weekNum)] || []).map((idea) => (
                             <div 
                               key={idea.id}
                               className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
