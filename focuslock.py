@@ -219,11 +219,35 @@ def parse_idea(raw: str) -> dict:
             print(f"DEBUG: Found project name: '{result['projectName']}'")
             break
     
+    # Extract Stack section (handles multi-line)
+    stack_match = re.search(r'Stack:\s*(.+?)(?=\n(?:Deploy|Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if stack_match:
+        result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
+        print(f"DEBUG: Found stack")
+    
+    # Extract Deploy section (handles multi-line)
+    deploy_match = re.search(r'Deploy:\s*(.+?)(?=\n(?:Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if deploy_match:
+        result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
+        print(f"DEBUG: Found deploy")
+    
     # Extract docs section
-    docs_match = re.search(r'Docs & Links:\s*\n((?:\u2022.+\n?)+)', raw, re.IGNORECASE)
+    docs_match = re.search(r'Docs & Links:\s*\n?((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
     if docs_match:
         result["docs"] = docs_match.group(1).strip()
         print(f"DEBUG: Found docs section")
+    
+    # Extract Why now section
+    why_match = re.search(r'Why now:\s*(.+?)(?=\n(?:Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    if why_match:
+        result["whyNow"] = why_match.group(1).strip().replace('\n', ' ')
+        print(f"DEBUG: Found why now")
+    
+    # Extract Potential section
+    potential_match = re.search(r'Potential:\s*(.+?)(?=\n(?:Target audience|Next idea|$))', raw, re.IGNORECASE | re.DOTALL)
+    if potential_match:
+        result["potential"] = potential_match.group(1).strip().replace('\n', ' ')
+        print(f"DEBUG: Found potential")
     
     for line in raw.split("\n"):
         line = line.strip()
@@ -241,9 +265,9 @@ def parse_idea(raw: str) -> dict:
             
         print(f"DEBUG: Found key='{key}', value='{value[:50]}...'")
         
-        if key == "stack":
+        if key == "stack" and not result["stack"]:
             result["stack"] = value
-        elif key == "deploy":
+        elif key == "deploy" and not result["deploy"]:
             result["deploy"] = value
         elif key == "who":
             result["who"] = value
@@ -253,9 +277,9 @@ def parse_idea(raw: str) -> dict:
             result["gap"] = value
         elif key in ("impact if unsolved", "impact"):
             result["impact"] = value
-        elif key == "why now":
+        elif key == "why now" and not result["whyNow"]:
             result["whyNow"] = value
-        elif key == "potential":
+        elif key == "potential" and not result["potential"]:
             result["potential"] = value
     
     print(f"DEBUG: Parsed result - projectName: '{result['projectName']}'")
