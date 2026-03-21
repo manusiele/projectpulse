@@ -458,22 +458,33 @@ if __name__ == "__main__":
     try:
         print("🚀 FocusLock starting...")
         idea, domain = generate_idea()
-        timestamp = datetime.now().strftime('%b %d • %H:%M') 
+        timestamp = datetime.now().strftime('%b %d • %H:%M')
         
-        # Create a shorter version for Telegram (max 4096 chars)
-        lines = idea.split('\n')
-        telegram_message = []
-        char_count = 0
-        max_chars = 3500  # Leave room for header and footer
+        # Parse the idea to get key fields
+        parsed = parse_idea(idea)
         
-        for line in lines:
-            if char_count + len(line) + 1 > max_chars:
-                telegram_message.append("\n... (view full details on dashboard)")
-                break
-            telegram_message.append(line)
-            char_count += len(line) + 1
+        # Create condensed Telegram message
+        telegram_parts = []
+        telegram_parts.append(f"*{parsed['projectName'] or 'Daily Project Idea'}*")
         
-        short_idea = '\n'.join(telegram_message)
+        if parsed['description']:
+            telegram_parts.append(f"\n{parsed['description'][:200]}...")
+        
+        if parsed['who']:
+            telegram_parts.append(f"\n\n*Who* → {parsed['who']}")
+        
+        if parsed['pain']:
+            telegram_parts.append(f"\n*Pain* → {parsed['pain'][:150]}...")
+        
+        if parsed['stack']:
+            telegram_parts.append(f"\n*Stack* → {parsed['stack'][:100]}...")
+        
+        if parsed['potential']:
+            telegram_parts.append(f"\n*Potential* → {parsed['potential'][:150]}...")
+        
+        telegram_parts.append(f"\n\n_View full details on dashboard_")
+        
+        short_idea = ''.join(telegram_parts)
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         # Save full idea to JSON
