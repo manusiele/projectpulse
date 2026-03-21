@@ -97,7 +97,11 @@ export default function DashboardPage() {
       try {
         const response = await fetch('/ideas.json');
         const data = await response.json();
-        setIdeas(data);
+        // Sort by date descending (newest first)
+        const sortedData = data.sort((a: Idea, b: Idea) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setIdeas(sortedData);
       } catch (error) {
         console.error('Failed to fetch ideas:', error);
       } finally {
