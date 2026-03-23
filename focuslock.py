@@ -237,32 +237,32 @@ def parse_idea(raw: str) -> dict:
                 print(f"DEBUG: Found description: '{result['description'][:50]}...'")
             break
     
-    # Extract Stack section (handles multi-line)
-    stack_match = re.search(r'Stack:\s*(.+?)(?=\n(?:Deploy|Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Stack section (handles multi-line, case-insensitive section headers, with or without colon)
+    stack_match = re.search(r'(?:Stack|STACK)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Deploy|DEPLOY|Docs|DOCS|Why now|WHY NOW|Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
     if stack_match:
         result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found stack")
     
-    # Extract Deploy section (handles multi-line)
-    deploy_match = re.search(r'Deploy:\s*(.+?)(?=\n(?:Docs|Why now|Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Deploy section (handles multi-line, case-insensitive section headers, with or without colon)
+    deploy_match = re.search(r'(?:Deploy|DEPLOY)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Docs|DOCS|Why now|WHY NOW|Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
     if deploy_match:
         result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found deploy")
     
-    # Extract docs section
-    docs_match = re.search(r'Docs & Links:\s*\n?((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
+    # Extract docs section (with or without colon)
+    docs_match = re.search(r'(?:Docs & Links|DOCS & LINKS)\s*:?\s*\n\s*((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
     if docs_match:
         result["docs"] = docs_match.group(1).strip()
         print(f"DEBUG: Found docs section")
     
-    # Extract Why now section
-    why_match = re.search(r'Why now:\s*(.+?)(?=\n(?:Potential|$))', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Why now section (handles multi-line, case-insensitive, with or without colon)
+    why_match = re.search(r'(?:Why now|WHY NOW)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
     if why_match:
         result["whyNow"] = why_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found why now")
     
-    # Extract Potential section
-    potential_match = re.search(r'Potential:\s*(.+?)(?=\n(?:Target audience|Next idea|$))', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Potential section (handles multi-line, case-insensitive, with or without colon)
+    potential_match = re.search(r'(?:Potential|POTENTIAL)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Target audience|TARGET AUDIENCE|Next idea|NEXT IDEA)|$)', raw, re.IGNORECASE | re.DOTALL)
     if potential_match:
         result["potential"] = potential_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found potential")
