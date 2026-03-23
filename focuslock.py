@@ -307,8 +307,9 @@ def save_idea(raw: str, domain: str = ""):
     """Save a structured idea entry to ideas.json for the web dashboard."""
     try:
         parsed = parse_idea(raw)
+        idea_id = f"idea_{int(datetime.now().timestamp())}"
         entry = {
-            "id": f"idea_{int(datetime.now().timestamp())}",
+            "id": idea_id,
             "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             "raw": raw,
             "domain": domain,
@@ -319,10 +320,12 @@ def save_idea(raw: str, domain: str = ""):
             json.dump(ideas_store, f, indent=2)
         print(f"✓ Idea saved to {IDEAS_FILE}")
         print(f"✓ Parsed project name: {parsed.get('projectName', 'N/A')}")
+        return idea_id
     except Exception as e:
         print(f"✗ Failed to save idea: {e}")
         import traceback
         traceback.print_exc()
+        return None
 
 def log_activity(text: str):
     entry = f"{text} — {datetime.now().strftime('%Y-%m-%d %H:%M')}"
@@ -501,13 +504,20 @@ if __name__ == "__main__":
         if parsed['potential']:
             telegram_parts.append(f"\n*Potential* → {parsed['potential'][:300]}...")
         
-        telegram_parts.append(f"\n\n_View full details on dashboard_")
+        short_idea = ''.join(telegram_parts)
+        
+        # Save full idea to JSON and get the ID
+        idea_id = save_idea(idea, domain)
+        
+        # Create shareable URL
+        project_url = f"https://focuslock-ai-gzi6.vercel.app/dashboard?idea={idea_id}"
+        
+        # Add link to message
+        telegram_parts.append(f"\n\n[View full details]({project_url})")
         
         short_idea = ''.join(telegram_parts)
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
-        # Save full idea to JSON
-        save_idea(idea, domain)
         send_telegram(message)
         log_activity("Delivered project with Problem Statement + clean stack")
         print("✅ FocusLock complete")
