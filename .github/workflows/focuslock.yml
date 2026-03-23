@@ -102,6 +102,8 @@ jobs:
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
           git commit -m "📝 Daily spark delivered: $TIMESTAMP"
+          # Pull latest changes before pushing
+          git pull --rebase origin main
           git push
           echo "✓ History updated"
         fi
