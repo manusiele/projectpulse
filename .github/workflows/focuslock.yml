@@ -107,6 +107,13 @@ jobs:
         fi
       continue-on-error: true
     
+    - name: Trigger Vercel Deployment
+      if: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+      run: |
+        curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+        echo "✓ Vercel deployment triggered"
+      continue-on-error: true
+    
     - name: Job Summary
       if: always()
       run: |
