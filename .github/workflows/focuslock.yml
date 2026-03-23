@@ -102,18 +102,35 @@ jobs:
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
           git commit -m "📝 Daily spark delivered: $TIMESTAMP"
-          # Pull latest changes before pushing with retry
+          # Retry push with pull rebase on each attempt
+          PUSH_SUCCESS=false
           for i in {1..5}; do
-            if git pull --rebase origin main && git push; then
-              echo "✓ History updated"
-              break
+            echo "📤 Attempting push (attempt $i/5)..."
+            # Always pull latest before pushing
+            if git pull --rebase origin main; then
+              echo "✓ Rebase successful"
+              if git push; then
+                echo "✓ Push successful"
+                PUSH_SUCCESS=true
+                break
+              else
+                echo "⚠️ Push failed, will retry..."
+              fi
             else
-              echo "⚠️ Push failed, retrying in 10 seconds... (attempt $i/5)"
+              echo "⚠️ Rebase failed, will retry..."
+            fi
+            
+            if [ $i -lt 5 ]; then
+              echo "⏳ Waiting 10 seconds before retry..."
               sleep 10
             fi
           done
+          
+          if [ "$PUSH_SUCCESS" = false ]; then
+            echo "❌ Failed to push after 5 attempts"
+            exit 1
+          fi
         fi
-      continue-on-error: true
     
     - name: Trigger Vercel Deployment
       run: |
