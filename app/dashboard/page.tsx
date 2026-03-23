@@ -501,9 +501,9 @@ export default function DashboardPage() {
                       </h3>
 
                       {/* Pain/Description */}
-                      {idea.pain && (
-                        <p className="text-slate-400 text-sm mb-4 leading-relaxed">
-                          {idea.pain}
+                      {(idea.pain || idea.description) && (
+                        <p className="text-slate-400 text-sm mb-4 leading-relaxed line-clamp-3">
+                          {idea.pain || idea.description}
                         </p>
                       )}
 
