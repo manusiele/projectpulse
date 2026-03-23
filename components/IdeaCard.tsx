@@ -27,7 +27,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
   if (featured) {
     return (
       <div className="relative bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl overflow-hidden backdrop-blur-2xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wide mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
@@ -35,12 +35,27 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
           </span>
 
           {/* Project name */}
-          <h2 className="text-2xl font-bold text-white mb-5 leading-tight">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-5 leading-tight">
             {displayName}
           </h2>
 
+          {/* Description */}
+          {idea.description && (
+            <div className="mb-4 sm:mb-5">
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">{idea.description}</p>
+            </div>
+          )}
+
+          {/* Stack section */}
+          {idea.stack && (
+            <div className="mb-4 sm:mb-5">
+              <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Stack</span>
+              <p className="text-slate-300 mt-1 text-sm leading-relaxed">{idea.stack}</p>
+            </div>
+          )}
+
           {/* Problem statement */}
-          <div className="space-y-3 mb-5">
+          <div className="space-y-3 mb-4 sm:mb-5">
             {idea.who && (
               <div>
                 <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Who</span>
@@ -75,7 +90,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
 
           {/* Stack badges */}
           {stackItems.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap gap-2 mb-4 sm:mb-5">
               {stackItems.map((item) => (
                 <span
                   key={item}
@@ -88,7 +103,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 pt-4 border-t border-[#2a2a2a]">
             <div className="flex items-center gap-2 text-slate-500 text-xs">
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -103,7 +118,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 w-full sm:w-auto justify-end">
               {onView && (
                 <button
                   onClick={onView}
