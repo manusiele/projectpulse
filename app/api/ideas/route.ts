@@ -13,7 +13,11 @@ export async function GET() {
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     
-    return NextResponse.json(sortedIdeas);
+    return NextResponse.json(sortedIdeas, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600'
+      }
+    });
   } catch (error) {
     console.error('Failed to read ideas:', error);
     return NextResponse.json([], { status: 500 });
