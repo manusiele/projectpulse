@@ -116,14 +116,17 @@ jobs:
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
           git commit -m "📝 Daily spark delivered: $TIMESTAMP"
-          # Retry push with pull rebase on each attempt
+          # Retry push with fetch and rebase on each attempt
           PUSH_SUCCESS=false
           for i in {1..5}; do
             echo "📤 Attempting push (attempt $i/5)..."
-            # Always pull latest before pushing
-            if git pull --rebase origin main; then
+            # Fetch latest changes
+            git fetch origin main
+            # Try to rebase
+            if git rebase origin/main; then
               echo "✓ Rebase successful"
-              if git push; then
+              # Try to push
+              if git push origin main; then
                 echo "✓ Push successful"
                 PUSH_SUCCESS=true
                 break
@@ -131,7 +134,8 @@ jobs:
                 echo "⚠️ Push failed, will retry..."
               fi
             else
-              echo "⚠️ Rebase failed, will retry..."
+              echo "⚠️ Rebase failed, aborting and retrying..."
+              git rebase --abort
             fi
             
             if [ $i -lt 5 ]; then
@@ -142,6 +146,7 @@ jobs:
           
           if [ "$PUSH_SUCCESS" = false ]; then
             echo "❌ Failed to push after 5 attempts"
+            echo "⚠️ Changes were generated but not committed to repo"
             exit 1
           fi
         fi
