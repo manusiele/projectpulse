@@ -149,9 +149,11 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
         {/* Project name */}
         <h3 className="text-base font-semibold text-white mb-2 line-clamp-1">{displayName}</h3>
 
-        {/* Pain snippet */}
-        {idea.pain && (
-          <p className="text-slate-400 text-sm mb-3 line-clamp-3 leading-relaxed">{idea.pain}</p>
+        {/* Description snippet - show pain if available, otherwise description */}
+        {(idea.pain || idea.description) && (
+          <p className="text-slate-400 text-sm mb-3 line-clamp-3 leading-relaxed">
+            {idea.pain || idea.description}
+          </p>
         )}
 
         {/* Stack badges (max 3 + overflow count) */}
