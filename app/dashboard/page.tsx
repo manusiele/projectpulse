@@ -300,6 +300,8 @@ export default function DashboardPage() {
     { name: "Pet Care Services", description: "Pet care providers including groomers and sitters" },
   ];
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden animate-fadeIn">
       {/* Animated background gradients */}
@@ -311,8 +313,30 @@ export default function DashboardPage() {
 
       <div className="relative z-10 h-screen overflow-hidden">
         <div className="flex h-full">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="fixed top-4 left-4 z-30 lg:hidden w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center hover:bg-[#252525] transition-colors"
+          >
+            <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
+          {/* Mobile Backdrop */}
+          {sidebarOpen && (
+            <div 
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 lg:hidden"
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
+
           {/* ── Left Sidebar ─────────────────────────────────────────────── */}
-          <div className="fixed top-4 left-4 w-80 h-[98vh] z-20">
+          <div className={`fixed top-4 left-4 w-80 max-w-[calc(100vw-2rem)] h-[98vh] z-20 transition-transform duration-300 lg:translate-x-0 ${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-[calc(100%+1rem)]'
+          }`}>
             <div className="h-full overflow-y-auto">
               {/* Single Unified Sidebar */}
               <div className="h-full bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-3xl backdrop-blur-2xl shadow-2xl shadow-blue-500/10 flex flex-col">
@@ -333,6 +357,16 @@ export default function DashboardPage() {
                       <h2 className="text-base font-bold text-white">Nexus</h2>
                       <p className="text-xs text-slate-500">AI Project Ideas</p>
                     </div>
+                    {/* Close button for mobile */}
+                    <button
+                      onClick={() => setSidebarOpen(false)}
+                      className="ml-auto lg:hidden w-8 h-8 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors"
+                    >
+                      <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
 
@@ -345,7 +379,7 @@ export default function DashboardPage() {
                   <nav className="space-y-1">
                     <a 
                       href="#latest" 
-                      onClick={(e) => { e.preventDefault(); setActiveView('ideas'); }}
+                      onClick={(e) => { e.preventDefault(); setActiveView('ideas'); setSidebarOpen(false); }}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all group ${
                         activeView === 'ideas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
                       }`}
@@ -357,7 +391,7 @@ export default function DashboardPage() {
                     </a>
                     <a 
                       href="#ideas" 
-                      onClick={(e) => { e.preventDefault(); setActiveView('allIdeas'); }}
+                      onClick={(e) => { e.preventDefault(); setActiveView('allIdeas'); setSidebarOpen(false); }}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all group ${
                         activeView === 'allIdeas' ? 'text-white bg-[#252525]' : 'text-slate-400 hover:text-white hover:bg-[#252525]'
                       }`}
@@ -390,7 +424,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="space-y-2">
                     <div 
-                      onClick={() => setActiveView('allIdeas')}
+                      onClick={() => { setActiveView('allIdeas'); setSidebarOpen(false); }}
                       className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors cursor-pointer"
                     >
                       <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
@@ -403,7 +437,7 @@ export default function DashboardPage() {
                       <span className="text-sm font-bold text-white">{ideas.length}</span>
                     </div>
                     <div 
-                      onClick={() => setActiveView('thisMonth')}
+                      onClick={() => { setActiveView('thisMonth'); setSidebarOpen(false); }}
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors cursor-pointer"
                     >
                       <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
@@ -418,7 +452,7 @@ export default function DashboardPage() {
                       <span className="text-sm font-bold text-white">{thisMonth}</span>
                     </div>
                     <button 
-                      onClick={() => setActiveView('domains')}
+                      onClick={() => { setActiveView('domains'); setSidebarOpen(false); }}
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors"
                     >
                       <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
@@ -466,15 +500,15 @@ export default function DashboardPage() {
           </div>
 
           {/* ── Main Content ─────────────────────────────────────────────── */}
-          <div className="flex-1 ml-[336px] h-screen overflow-y-auto">
-            <div className="px-6 py-8 max-w-6xl">
+          <div className="flex-1 lg:ml-[336px] h-screen overflow-y-auto">
+            <div className="px-4 sm:px-6 py-6 sm:py-8 pt-16 lg:pt-8 max-w-6xl">
             {activeView === 'domains' ? (
               <div className="space-y-6">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-white mb-2">Problem Domains</h2>
                   <p className="text-sm text-slate-400">25 problem spaces the AI generates ideas from</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {domains.map((domain) => {
                     const domainIdeas = ideas.filter(idea => idea.domain === domain.name);
                     return (
@@ -535,7 +569,7 @@ export default function DashboardPage() {
                     )}
                   </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea) => (
                     <div 
                       key={idea.id}
@@ -664,7 +698,7 @@ export default function DashboardPage() {
                     return weeksToShow.map(weekNum => (
                       <div key={weekNum} className="space-y-4">
                         <h3 className="text-lg font-semibold text-white">Week {weekNum}</h3>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {(weekGroups[Number(weekNum)] || []).map((idea) => (
                             <div 
                               key={idea.id}
@@ -773,7 +807,7 @@ export default function DashboardPage() {
                       <h2 className="text-xl font-bold text-white">Previous Ideas</h2>
                       <p className="text-xs text-slate-500 mt-1">{rest.length} archived ideas</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {rest.map((idea) => (
                         <IdeaCard 
                           key={idea.id} 
@@ -797,17 +831,17 @@ export default function DashboardPage() {
       {/* Modal Popup */}
       {selectedIdea && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
           onClick={closeModal}
         >
           <div 
-            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl shadow-2xl animate-scaleIn"
+            className="relative w-full max-w-4xl max-h-[90vh] sm:max-h-[85vh] overflow-y-auto bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl shadow-2xl animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-5 right-5 w-8 h-8 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
+              className="absolute top-3 right-3 sm:top-5 sm:right-5 w-8 h-8 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
             >
               <svg className="w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -815,9 +849,9 @@ export default function DashboardPage() {
               </svg>
             </button>
 
-            <div className="p-8">
+            <div className="p-5 sm:p-8">
               {/* Project Title and Description */}
-              <h2 className="text-3xl font-bold text-white mb-3 pr-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 pr-8">
                 {selectedIdea.projectName || "Daily Project Idea"}
               </h2>
               
@@ -987,7 +1021,7 @@ export default function DashboardPage() {
 
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 animate-slideUp">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-slideUp">
           <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-4 py-3 shadow-2xl backdrop-blur-xl flex items-center gap-3">
             <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
