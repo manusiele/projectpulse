@@ -380,6 +380,12 @@ Make every section detailed, actionable, and inspiring. Use natural language, no
     return response["response"], domain_name
 
 def send_telegram(message: str):
+    if not TOKEN or not CHAT_ID:
+        print("❌ ERROR: Missing TELEGRAM_TOKEN or CHAT_ID environment variables")
+        print(f"   TOKEN exists: {bool(TOKEN)}")
+        print(f"   CHAT_ID exists: {bool(CHAT_ID)}")
+        return False
+
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
     payload = {
         "chat_id": CHAT_ID,
@@ -388,15 +394,26 @@ def send_telegram(message: str):
         "disable_web_page_preview": True
     }
     try:
+        print(f"📤 Sending message to Telegram...")
+        print(f"   Message length: {len(message)} chars")
+        print(f"   Chat ID: {CHAT_ID}")
         resp = requests.post(url, data=payload, timeout=15)
         if resp.status_code == 200:
-            print(" Ping sent to Telegram")
+            print("✅ Message sent to Telegram successfully!")
+            return True
         else:
-            print(f" Telegram returned {resp.status_code}: {resp.text}")
+            print(f"❌ Telegram API error {resp.status_code}:")
+            print(f"   Response: {resp.text}")
+            return False
     except requests.exceptions.Timeout:
-        print(" Telegram timeout after 15s")
+        print("❌ Telegram request timeout after 15s")
+        return False
     except Exception as e:
-        print(f" Telegram failed: {e}")
+        print(f"❌ Telegram request failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
 
 def determine_domain(problem: dict) -> str:
     """Determine domain name based on problem characteristics."""

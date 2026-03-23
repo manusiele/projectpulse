@@ -22,6 +22,9 @@ interface Idea {
   whyNow?: string;
   potential?: string;
   docs?: string;
+  likes?: number;
+  shares?: number;
+  views?: number;
 }
 
 export default function DashboardPage() {
@@ -31,6 +34,81 @@ export default function DashboardPage() {
   const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
+  const [likedIdeas, setLikedIdeas] = useState<Set<string>>(new Set());
+
+  // Load liked ideas from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('likedIdeas');
+    if (saved) {
+      setLikedIdeas(new Set(JSON.parse(saved)));
+    }
+  }, []);
+
+  const handleLike = async (ideaId: string) => {
+    const isLiked = likedIdeas.has(ideaId);
+    const newLiked = new Set(likedIdeas);
+    
+    if (isLiked) {
+      newLiked.delete(ideaId);
+    } else {
+      newLiked.add(ideaId);
+    }
+    
+    setLikedIdeas(newLiked);
+    localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
+    
+    // Update like count
+    try {
+      await fetch('/api/ideas/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ideaId, increment: !isLiked }),
+      });
+      
+      // Refresh ideas to get updated counts
+      const response = await fetch('/api/ideas');
+      const data = await response.json();
+      setIdeas(data);
+    } catch (error) {
+      console.error('Failed to update like:', error);
+    }
+  };
+
+  const handleShare = async (idea: Idea) => {
+    const url = `${window.location.origin}/dashboard?idea=${idea.id}`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: idea.projectName || 'FocusLock Project Idea',
+          text: idea.description || 'Check out this project idea!',
+          url: url,
+        });
+      } catch (error) {
+        console.log('Share cancelled');
+      }
+    } else {
+      // Fallback: copy to clipboard
+      await navigator.clipboard.writeText(url);
+      alert('Link copied to clipboard!');
+    }
+    
+    // Update share count
+    try {
+      await fetch('/api/ideas/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ideaId: idea.id }),
+      });
+      
+      // Refresh ideas to get updated counts
+      const response = await fetch('/api/ideas');
+      const data = await response.json();
+      setIdeas(data);
+    } catch (error) {
+      console.error('Failed to update share:', error);
+    }
+  };
 
   // Tech stack URL mapping
   const getTechUrl = (tech: string): string => {
@@ -603,7 +681,13 @@ export default function DashboardPage() {
                       <h2 className="text-xl font-bold text-white">Latest Spark</h2>
                       <p className="text-xs text-slate-500 mt-1">Today&apos;s project idea</p>
                     </div>
-                    <IdeaCard idea={latest} featured />
+                    <IdeaCard 
+                      idea={latest} 
+                      featured 
+                      onLike={handleLike}
+                      onShare={handleShare}
+                      isLiked={likedIdeas.has(latest.id)}
+                    />
                   </section>
                 )}
 
@@ -616,7 +700,14 @@ export default function DashboardPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {rest.map((idea) => (
-                        <IdeaCard key={idea.id} idea={idea} onView={() => setSelectedIdea(idea)} />
+                        <IdeaCard 
+                          key={idea.id} 
+                          idea={idea} 
+                          onView={() => setSelectedIdea(idea)}
+                          onLike={handleLike}
+                          onShare={handleShare}
+                          isLiked={likedIdeas.has(idea.id)}
+                        />
                       ))}
                     </div>
                   </section>

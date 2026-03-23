@@ -6,9 +6,12 @@ interface Props {
   idea: Idea;
   featured?: boolean;
   onView?: () => void;
+  onLike?: (ideaId: string) => void;
+  onShare?: (idea: Idea) => void;
+  isLiked?: boolean;
 }
 
-export function IdeaCard({ idea, featured = false, onView }: Props) {
+export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLiked = false }: Props) {
   const stackItems = idea.stack
     ? idea.stack.split(/\s*\+\s*/).filter(Boolean)
     : [];
@@ -102,8 +105,38 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
               )}
             </div>
             <div className="flex items-center gap-1">
-              <SaveButton idea={idea} />
-              <ShareButton idea={idea} />
+              <button
+                onClick={() => onLike?.(idea.id)}
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors relative ${
+                  isLiked ? 'bg-pink-500/20 hover:bg-pink-500/30' : 'bg-[#252525] hover:bg-[#2a2a2a]'
+                }`}
+              >
+                <svg className={`w-4 h-4 ${isLiked ? 'text-pink-400' : 'text-pink-400'}`} viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+                {(idea.likes || 0) > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                    {idea.likes}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => onShare?.(idea)}
+                className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors relative"
+              >
+                <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                </svg>
+                {(idea.shares || 0) > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                    {idea.shares}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -154,8 +187,38 @@ export function IdeaCard({ idea, featured = false, onView }: Props) {
                 View
               </button>
             )}
-            <SaveButton idea={idea} />
-            <ShareButton idea={idea} />
+            <button
+              onClick={() => onLike?.(idea.id)}
+              className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors relative ${
+                isLiked ? 'bg-pink-500/20 hover:bg-pink-500/30' : 'bg-[#252525] hover:bg-[#2a2a2a]'
+              }`}
+            >
+              <svg className={`w-4 h-4 ${isLiked ? 'text-pink-400' : 'text-pink-400'}`} viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              {(idea.likes || 0) > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {idea.likes}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => onShare?.(idea)}
+              className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors relative"
+            >
+              <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+              {(idea.shares || 0) > 0 && (
+                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {idea.shares}
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </div>
