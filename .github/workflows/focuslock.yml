@@ -46,6 +46,14 @@ jobs:
                     print(f'Error cleaning {filepath}: {e}')
         EOF
     
+    - name: Cache Ollama models
+      uses: actions/cache@v4
+      with:
+        path: ~/.ollama
+        key: ollama-models-${{ runner.os }}-phi3-mini
+        restore-keys: |
+          ollama-models-${{ runner.os }}-
+    
     - name: Install & Start Ollama
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
@@ -73,10 +81,16 @@ jobs:
           exit 1
         fi
     
-    - name: Pull Phi-3 model
+    - name: Pull Phi-3 model (if not cached)
       run: |
-        ollama pull phi3:mini
-        echo " Model ready"
+        # Check if model already exists
+        if ollama list | grep -q "phi3:mini"; then
+          echo "✓ Model already cached, skipping download"
+        else
+          echo "📥 Downloading phi3:mini model (2.3 GB)..."
+          ollama pull phi3:mini
+        fi
+        echo "✅ Model ready"
     
     - name: Run FocusLock
       env:
