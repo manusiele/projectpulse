@@ -37,6 +37,7 @@ export default function DashboardPage() {
   const [likedIdeas, setLikedIdeas] = useState<Set<string>>(new Set());
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Load liked ideas from localStorage
   useEffect(() => {
