@@ -487,19 +487,19 @@ if __name__ == "__main__":
         telegram_parts.append(f"*{parsed['projectName'] or 'Daily Project Idea'}*")
         
         if parsed['description']:
-            telegram_parts.append(f"\n{parsed['description'][:200]}...")
+            telegram_parts.append(f"\n{parsed['description'][:300]}...")
         
         if parsed['stack']:
-            telegram_parts.append(f"\n\n*Stack* → {parsed['stack'][:150]}...")
+            telegram_parts.append(f"\n\n*Stack* → {parsed['stack'][:400]}...")
         
         if parsed['who']:
-            telegram_parts.append(f"\n\n*Who* → {parsed['who'][:150]}...")
+            telegram_parts.append(f"\n\n*Who* → {parsed['who'][:250]}...")
         
         if parsed['pain']:
-            telegram_parts.append(f"\n*Pain* → {parsed['pain'][:150]}...")
+            telegram_parts.append(f"\n*Pain* → {parsed['pain'][:250]}...")
         
         if parsed['potential']:
-            telegram_parts.append(f"\n*Potential* → {parsed['potential'][:150]}...")
+            telegram_parts.append(f"\n*Potential* → {parsed['potential'][:300]}...")
         
         telegram_parts.append(f"\n\n_View full details on dashboard_")
         
