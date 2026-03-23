@@ -102,10 +102,16 @@ jobs:
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
           git commit -m "📝 Daily spark delivered: $TIMESTAMP"
-          # Pull latest changes before pushing
-          git pull --rebase origin main
-          git push
-          echo "✓ History updated"
+          # Pull latest changes before pushing with retry
+          for i in {1..3}; do
+            if git pull --rebase origin main && git push; then
+              echo "✓ History updated"
+              break
+            else
+              echo "⚠️ Push failed, retrying in 5 seconds... (attempt $i/3)"
+              sleep 5
+            fi
+          done
         fi
       continue-on-error: true
     
