@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "FocusLock — Daily Project Ideas",
   description:
     "Your daily AI-powered project idea engine. One brutally honest problem statement, one shippable project, exact stack, real potential.",
+  icons: {
+    icon: '/logo.webp',
+    shortcut: '/logo.webp',
+    apple: '/logo.webp',
+  },
 };
 
 export default function RootLayout({
