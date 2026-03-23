@@ -35,6 +35,8 @@ export default function DashboardPage() {
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const [likedIdeas, setLikedIdeas] = useState<Set<string>>(new Set());
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   // Load liked ideas from localStorage
   useEffect(() => {
@@ -128,13 +130,32 @@ export default function DashboardPage() {
           text: idea.description || 'Check out this project idea!',
           url: url,
         });
-      } catch {
-        console.log('Share cancelled');
+        // Show success toast
+        setToastMessage('Shared successfully!');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+      } catch (error) {
+        // User cancelled or share failed
+        if ((error as Error).name !== 'AbortError') {
+          setToastMessage('Share cancelled');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 2000);
+        }
+        return; // Don't increment share count if cancelled
       }
     } else {
       // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(url);
-      alert('Link copied to clipboard!');
+      try {
+        await navigator.clipboard.writeText(url);
+        setToastMessage('Link copied to clipboard!');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+      } catch {
+        setToastMessage('Failed to copy link');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+        return;
+      }
     }
     
     // Update local counts in localStorage
@@ -960,6 +981,18 @@ export default function DashboardPage() {
                 })}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-slideUp">
+          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-4 py-3 shadow-2xl backdrop-blur-xl flex items-center gap-3">
+            <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span className="text-sm text-white font-medium">{toastMessage}</span>
           </div>
         </div>
       )}
