@@ -1,5 +1,33 @@
 import json
 import re
+import subprocess
+from datetime import datetime, timezone
+
+def check_workflow_schedule_risk():
+    """Warn if running close to workflow schedule (07:00 UTC)"""
+    now = datetime.now(timezone.utc)
+    # Workflow runs at 07:00 UTC - warn if within 10 minutes
+    minutes_to_run = (7 * 60) - (now.hour * 60 + now.minute)
+    minutes_to_run = minutes_to_run % (24 * 60)  # wrap around midnight
+    
+    if minutes_to_run <= 10:
+        print(f"⚠️  WARNING: Workflow runs in ~{minutes_to_run} min (07:00 UTC)!")
+        confirm = input("Continue anyway? (y/N): ")
+        if confirm.lower() != 'y':
+            print("Aborted. Run after 07:10 UTC to be safe.")
+            exit(0)
+
+def check_git_is_clean():
+    """Ensure git working directory is clean"""
+    result = subprocess.run(['git', 'status', '--porcelain'], capture_output=True, text=True)
+    if result.stdout.strip():
+        print("❌ Uncommitted changes detected. Pull and stage first:")
+        print("   git pull && python reparse_ideas.py")
+        exit(1)
+
+# Safety checks before proceeding
+check_workflow_schedule_risk()
+check_git_is_clean()
 
 def parse_idea(raw: str) -> dict:
     """Extract structured fields from the LLM-generated idea text."""
