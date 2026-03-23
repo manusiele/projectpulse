@@ -84,7 +84,7 @@ export default function DashboardPage() {
           text: idea.description || 'Check out this project idea!',
           url: url,
         });
-      } catch (error) {
+      } catch {
         console.log('Share cancelled');
       }
     } else {

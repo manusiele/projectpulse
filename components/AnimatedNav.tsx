@@ -16,7 +16,6 @@ const navItems: NavItem[] = [
 
 export function AnimatedNav() {
   const [activeSection, setActiveSection] = useState("stats");
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +54,7 @@ export function AnimatedNav() {
 
   return (
     <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6">
-      {navItems.map((item) => {
+      {navItems.map((item, index) => {
         const isActive = activeSection === item.id;
 
         return (
@@ -63,8 +62,6 @@ export function AnimatedNav() {
             {/* Animated SVG - smaller and cleaner */}
             <button
               onClick={() => scrollToSection(item.id)}
-              onMouseEnter={() => setHoveredItem(item.id)}
-              onMouseLeave={() => setHoveredItem(null)}
               className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
                 isActive
                   ? "bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/50 shadow-lg shadow-purple-500/20"
