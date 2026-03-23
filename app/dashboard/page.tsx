@@ -44,6 +44,20 @@ export default function DashboardPage() {
     }
   }, []);
 
+  // Check URL for shared idea parameter
+  useEffect(() => {
+    if (ideas.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const ideaId = params.get('idea');
+      if (ideaId) {
+        const idea = ideas.find(i => i.id === ideaId);
+        if (idea) {
+          setSelectedIdea(idea);
+        }
+      }
+    }
+  }, [ideas]);
+
   const handleLike = async (ideaId: string) => {
     const isLiked = likedIdeas.has(ideaId);
     const newLiked = new Set(likedIdeas);
@@ -74,6 +88,13 @@ export default function DashboardPage() {
     }
   };
 
+  const closeModal = () => {
+    setSelectedIdea(null);
+    // Remove idea parameter from URL
+    const url = new URL(window.location.href);
+    url.searchParams.delete('idea');
+    window.history.replaceState({}, '', url.toString());
+  };
   const handleShare = async (idea: Idea) => {
     const url = `${window.location.origin}/dashboard?idea=${idea.id}`;
     
@@ -726,7 +747,7 @@ export default function DashboardPage() {
       {selectedIdea && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
-          onClick={() => setSelectedIdea(null)}
+          onClick={closeModal}
         >
           <div 
             className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl shadow-2xl animate-scaleIn"
@@ -734,7 +755,7 @@ export default function DashboardPage() {
           >
             {/* Close button */}
             <button
-              onClick={() => setSelectedIdea(null)}
+              onClick={closeModal}
               className="absolute top-5 right-5 w-8 h-8 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] flex items-center justify-center transition-colors z-10"
             >
               <svg className="w-4 h-4 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
