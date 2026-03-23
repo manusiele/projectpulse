@@ -71,21 +71,19 @@ export default function DashboardPage() {
     setLikedIdeas(newLiked);
     localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
     
-    // Update like count
-    try {
-      await fetch('/api/ideas/like', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ideaId, increment: !isLiked }),
-      });
-      
-      // Refresh ideas to get updated counts
-      const response = await fetch('/api/ideas');
-      const data = await response.json();
-      setIdeas(data);
-    } catch (error) {
-      console.error('Failed to update like:', error);
-    }
+    // Update local counts in localStorage
+    const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
+    if (!counts[ideaId]) counts[ideaId] = { likes: 0, shares: 0 };
+    counts[ideaId].likes += isLiked ? -1 : 1;
+    if (counts[ideaId].likes < 0) counts[ideaId].likes = 0;
+    localStorage.setItem('ideaCounts', JSON.stringify(counts));
+    
+    // Update UI immediately
+    setIdeas(ideas.map(idea => 
+      idea.id === ideaId 
+        ? { ...idea, likes: (idea.likes || 0) + (isLiked ? -1 : 1) }
+        : idea
+    ));
   };
 
   const closeModal = () => {
@@ -114,21 +112,18 @@ export default function DashboardPage() {
       alert('Link copied to clipboard!');
     }
     
-    // Update share count
-    try {
-      await fetch('/api/ideas/share', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ideaId: idea.id }),
-      });
-      
-      // Refresh ideas to get updated counts
-      const response = await fetch('/api/ideas');
-      const data = await response.json();
-      setIdeas(data);
-    } catch (error) {
-      console.error('Failed to update share:', error);
-    }
+    // Update local counts in localStorage
+    const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
+    if (!counts[idea.id]) counts[idea.id] = { likes: 0, shares: 0 };
+    counts[idea.id].shares += 1;
+    localStorage.setItem('ideaCounts', JSON.stringify(counts));
+    
+    // Update UI immediately
+    setIdeas(ideas.map(i => 
+      i.id === idea.id 
+        ? { ...i, shares: (i.shares || 0) + 1 }
+        : i
+    ));
   };
 
   // Tech stack URL mapping
@@ -197,7 +192,16 @@ export default function DashboardPage() {
       try {
         const response = await fetch('/api/ideas');
         const data = await response.json();
-        setIdeas(data);
+        
+        // Merge with localStorage counts
+        const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
+        const mergedData = data.map((idea: Idea) => ({
+          ...idea,
+          likes: (idea.likes || 0) + (counts[idea.id]?.likes || 0),
+          shares: (idea.shares || 0) + (counts[idea.id]?.shares || 0),
+        }));
+        
+        setIdeas(mergedData);
       } catch (err) {
         console.error('Failed to fetch ideas:', err);
       } finally {
