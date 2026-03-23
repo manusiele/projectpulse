@@ -108,10 +108,13 @@ jobs:
       continue-on-error: true
     
     - name: Trigger Vercel Deployment
-      if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
       run: |
-        curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
-        echo "✓ Vercel deployment triggered"
+        if [ -n "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then
+          curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+          echo "✓ Vercel deployment triggered"
+        else
+          echo "ℹ️ VERCEL_DEPLOY_HOOK not configured, skipping deployment trigger"
+        fi
       continue-on-error: true
     
     - name: Job Summary
