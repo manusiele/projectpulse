@@ -1,6 +1,4 @@
 import type { Idea } from "@/lib/ideas";
-import { SaveButton } from "./SaveButton";
-import { ShareButton } from "./ShareButton";
 
 interface Props {
   idea: Idea;

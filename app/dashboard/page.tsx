@@ -177,8 +177,8 @@ export default function DashboardPage() {
         const response = await fetch('/api/ideas');
         const data = await response.json();
         setIdeas(data);
-      } catch (error) {
-        console.error('Failed to fetch ideas:', error);
+      } catch (err) {
+        console.error('Failed to fetch ideas:', err);
       } finally {
         // Minimum loading time for smooth animation
         setTimeout(() => setLoading(false), 1500);
@@ -462,7 +462,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea, index) => (
+                  {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea) => (
                     <div 
                       key={idea.id}
                       className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"

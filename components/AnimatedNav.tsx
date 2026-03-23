@@ -55,9 +55,8 @@ export function AnimatedNav() {
 
   return (
     <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6">
-      {navItems.map((item, index) => {
+      {navItems.map((item) => {
         const isActive = activeSection === item.id;
-        const isHovered = hoveredItem === item.id;
 
         return (
           <div key={item.id} className="relative group">
