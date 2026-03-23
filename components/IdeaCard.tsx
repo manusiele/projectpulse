@@ -14,7 +14,8 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
     ? idea.stack.split(/\s*\+\s*/).filter(Boolean)
     : [];
 
-  const displayName = idea.projectName || "Daily Project Idea";
+  // Remove brackets from project name
+  const displayName = (idea.projectName || "Daily Project Idea").replace(/^\[|\]$/g, '');
 
   const formattedDate = new Date(idea.date).toLocaleDateString("en-US", {
     month: "short",
@@ -103,6 +104,14 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               )}
             </div>
             <div className="flex items-center gap-1">
+              {onView && (
+                <button
+                  onClick={onView}
+                  className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/30 text-blue-400 text-xs font-medium transition-all hover:scale-105"
+                >
+                  View
+                </button>
+              )}
               <button
                 onClick={() => onLike?.(idea.id)}
                 className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors relative ${

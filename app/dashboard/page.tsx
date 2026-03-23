@@ -44,6 +44,31 @@ export default function DashboardPage() {
     }
   }, []);
 
+  // Auto-refresh: Poll for new ideas every 30 seconds
+  useEffect(() => {
+    const pollInterval = setInterval(async () => {
+      try {
+        const response = await fetch('/api/ideas');
+        if (response.ok) {
+          const freshIdeas = await response.json();
+          // Merge with localStorage counts
+          const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
+          const mergedIdeas = freshIdeas.map((idea: Idea) => ({
+            ...idea,
+            likes: (idea.likes || 0) + (counts[idea.id]?.likes || 0),
+            shares: (idea.shares || 0) + (counts[idea.id]?.shares || 0),
+            views: (idea.views || 0) + (counts[idea.id]?.views || 0),
+          }));
+          setIdeas(mergedIdeas);
+        }
+      } catch (error) {
+        console.error('Failed to refresh ideas:', error);
+      }
+    }, 30000); // Poll every 30 seconds
+
+    return () => clearInterval(pollInterval);
+  }, []);
+
   // Check URL for shared idea parameter
   useEffect(() => {
     if (ideas.length > 0) {
@@ -712,6 +737,7 @@ export default function DashboardPage() {
                     <IdeaCard 
                       idea={latest} 
                       featured 
+                      onView={() => setSelectedIdea(latest)}
                       onLike={handleLike}
                       onShare={handleShare}
                       isLiked={likedIdeas.has(latest.id)}
