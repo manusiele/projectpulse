@@ -485,37 +485,65 @@ if __name__ == "__main__":
         # Parse the idea to get key fields
         parsed = parse_idea(idea)
         
-        # Create condensed Telegram message
-        telegram_parts = []
-        telegram_parts.append(f"*{parsed['projectName'] or 'Daily Project Idea'}*")
-        
-        if parsed['description']:
-            telegram_parts.append(f"\n{parsed['description'][:300]}...")
-        
-        if parsed['stack']:
-            telegram_parts.append(f"\n\n*Stack* → {parsed['stack'][:400]}...")
-        
-        if parsed['who']:
-            telegram_parts.append(f"\n\n*Who* → {parsed['who'][:250]}...")
-        
-        if parsed['pain']:
-            telegram_parts.append(f"\n*Pain* → {parsed['pain'][:250]}...")
-        
-        if parsed['potential']:
-            telegram_parts.append(f"\n*Potential* → {parsed['potential'][:300]}...")
-        
-        short_idea = ''.join(telegram_parts)
-        
         # Save full idea to JSON and get the ID
         idea_id = save_idea(idea, domain)
         
         # Create shareable URL
         project_url = f"https://focuslock-ai-gzi6.vercel.app/dashboard?idea={idea_id}"
         
-        # Add link to message
-        telegram_parts.append(f"\n\n[View full details]({project_url})")
+        # Create detailed Telegram message (Telegram limit is 4096 chars)
+        telegram_parts = []
+        telegram_parts.append(f"*{parsed['projectName'] or 'Daily Project Idea'}*")
+        
+        if parsed['description']:
+            # Full description, no truncation
+            telegram_parts.append(f"\n{parsed['description']}")
+        
+        if parsed['stack']:
+            # Expanded stack section
+            telegram_parts.append(f"\n\n*Stack*\n{parsed['stack'][:800]}")
+        
+        if parsed['deploy']:
+            # Add deploy section
+            telegram_parts.append(f"\n\n*Deploy*\n{parsed['deploy'][:400]}")
+        
+        if parsed['whyNow']:
+            # Add why now section
+            telegram_parts.append(f"\n\n*Why Now*\n{parsed['whyNow'][:600]}")
+        
+        if parsed['potential']:
+            # Expanded potential section
+            telegram_parts.append(f"\n\n*Potential*\n{parsed['potential'][:600]}")
+        
+        # Add clickable link to full project
+        telegram_parts.append(f"\n\n[📱 View full details on dashboard]({project_url})")
         
         short_idea = ''.join(telegram_parts)
+        
+        # Check if message is too long (Telegram limit: 4096 chars)
+        if len(short_idea) > 3800:  # Leave room for header and footer
+            # If too long, truncate sections proportionally
+            telegram_parts = []
+            telegram_parts.append(f"*{parsed['projectName'] or 'Daily Project Idea'}*")
+            
+            if parsed['description']:
+                telegram_parts.append(f"\n{parsed['description'][:400]}")
+            
+            if parsed['stack']:
+                telegram_parts.append(f"\n\n*Stack*\n{parsed['stack'][:500]}...")
+            
+            if parsed['deploy']:
+                telegram_parts.append(f"\n\n*Deploy*\n{parsed['deploy'][:300]}...")
+            
+            if parsed['whyNow']:
+                telegram_parts.append(f"\n\n*Why Now*\n{parsed['whyNow'][:400]}...")
+            
+            if parsed['potential']:
+                telegram_parts.append(f"\n\n*Potential*\n{parsed['potential'][:400]}...")
+            
+            telegram_parts.append(f"\n\n[📱 View full details on dashboard]({project_url})")
+            short_idea = ''.join(telegram_parts)
+        
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         send_telegram(message)
