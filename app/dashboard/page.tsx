@@ -318,7 +318,10 @@ export default function DashboardPage() {
                     <span className="text-xs text-slate-600 font-bold">3</span>
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors">
+                    <div 
+                      onClick={() => setActiveView('allIdeas')}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0f0f0f] hover:bg-[#151515] transition-colors cursor-pointer"
+                    >
                       <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
                         <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
