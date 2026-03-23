@@ -116,29 +116,20 @@ jobs:
         else
           TIMESTAMP=$(date +'%Y-%m-%d %H:%M EAT')
           git commit -m "📝 Daily spark delivered: $TIMESTAMP"
-          # Retry push with merge strategy
+          # Simple retry with pull and push
           PUSH_SUCCESS=false
           for i in {1..5}; do
             echo "📤 Attempting push (attempt $i/5)..."
-            # Fetch latest changes
-            git fetch origin main
+            # Pull with merge strategy that prefers our changes for data files
+            git pull origin main --no-rebase --strategy-option=ours || true
             
-            # Try to merge with strategy to keep our data files
-            if git merge origin/main -X ours --no-edit; then
-              echo "✓ Merge successful"
-              # Try to push
-              if git push origin main; then
-                echo "✓ Push successful"
-                PUSH_SUCCESS=true
-                break
-              else
-                echo "⚠️ Push failed, will retry..."
-                # Reset to before merge
-                git reset --hard HEAD~1
-              fi
+            # Try to push
+            if git push origin main; then
+              echo "✓ Push successful"
+              PUSH_SUCCESS=true
+              break
             else
-              echo "⚠️ Merge failed, will retry..."
-              git merge --abort
+              echo "⚠️ Push failed, will retry..."
             fi
             
             if [ $i -lt 5 ]; then
