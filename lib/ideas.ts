@@ -14,6 +14,9 @@ export interface Idea {
   whyNow?: string;
   potential?: string;
   docs?: string;
+  likes?: number;
+  shares?: number;
+  views?: number;
 }
 
 /**
