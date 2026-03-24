@@ -950,13 +950,43 @@ export default function DashboardPage() {
                   </div>
                 )}
 
+                {/* Who */}
+                {selectedIdea.who && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2">
+                      Target Audience
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.who}</p>
+                  </div>
+                )}
+
                 {/* Pain Point */}
                 {selectedIdea.pain && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
                       Problem
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
+                  </div>
+                )}
+
+                {/* Gap */}
+                {selectedIdea.gap && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">
+                      Market Gap
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.gap}</p>
+                  </div>
+                )}
+
+                {/* Why Now */}
+                {selectedIdea.whyNow && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-2">
+                      Why Now
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.whyNow}</p>
                   </div>
                 )}
 
@@ -964,7 +994,7 @@ export default function DashboardPage() {
                 {selectedIdea.potential && (
                   <div>
                     <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">
-                      Potential
+                      Market Potential
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.potential}</p>
                   </div>
@@ -977,6 +1007,26 @@ export default function DashboardPage() {
                       Deployment
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.deploy}</p>
+                  </div>
+                )}
+
+                {/* Impact */}
+                {selectedIdea.impact && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                      Impact
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.impact}</p>
+                  </div>
+                )}
+
+                {/* Docs */}
+                {selectedIdea.docs && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      Documentation
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.docs}</p>
                   </div>
                 )}
               </div>
