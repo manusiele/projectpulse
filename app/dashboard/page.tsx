@@ -153,11 +153,13 @@ export default function DashboardPage() {
               : idea
           ));
         } else {
-          // Revert on error
-          const revertLiked = new Set(likedIdeas);
-          revertLiked.add(ideaId);
-          setLikedIdeas(revertLiked);
-          localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+          // Revert on error - restore the like
+          setLikedIdeas(prevLiked => {
+            const revertLiked = new Set(prevLiked);
+            revertLiked.add(ideaId);
+            localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+            return revertLiked;
+          });
           // Revert count
           setIdeas(prevIdeas => prevIdeas.map(idea => 
             idea.id === ideaId 
@@ -180,11 +182,13 @@ export default function DashboardPage() {
               : idea
           ));
         } else {
-          // Revert on error
-          const revertLiked = new Set(likedIdeas);
-          revertLiked.delete(ideaId);
-          setLikedIdeas(revertLiked);
-          localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+          // Revert on error - remove the like
+          setLikedIdeas(prevLiked => {
+            const revertLiked = new Set(prevLiked);
+            revertLiked.delete(ideaId);
+            localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+            return revertLiked;
+          });
           // Revert count
           setIdeas(prevIdeas => prevIdeas.map(idea => 
             idea.id === ideaId 
@@ -196,17 +200,16 @@ export default function DashboardPage() {
     } catch (error) {
       console.error('Failed to update like:', error);
       // Revert on error
-      if (isLiked) {
-        const revertLiked = new Set(likedIdeas);
-        revertLiked.add(ideaId);
-        setLikedIdeas(revertLiked);
+      setLikedIdeas(prevLiked => {
+        const revertLiked = new Set(prevLiked);
+        if (isLiked) {
+          revertLiked.add(ideaId);
+        } else {
+          revertLiked.delete(ideaId);
+        }
         localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
-      } else {
-        const revertLiked = new Set(likedIdeas);
-        revertLiked.delete(ideaId);
-        setLikedIdeas(revertLiked);
-        localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
-      }
+        return revertLiked;
+      });
       // Revert count
       setIdeas(prevIdeas => prevIdeas.map(idea => 
         idea.id === ideaId 
