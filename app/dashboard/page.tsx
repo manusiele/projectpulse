@@ -363,18 +363,18 @@ export default function DashboardPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] animate-gradient" />
         
         {/* Floating geometric shapes */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-cyan-500/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/15 to-blue-500/10 rounded-full blur-3xl animate-float-reverse" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/15 to-cyan-500/10 rounded-full blur-3xl animate-float-reverse" />
         <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-gradient-to-bl from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse-slow" />
         
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(34, 211, 238, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 211, 238, 0.5) 1px, transparent 1px)',
           backgroundSize: '50px 50px'
         }} />
         
         {/* Accent lines */}
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent" />
         <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent" />
       </div>
 
@@ -408,7 +408,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() => { setActiveView('ideas'); setMobileNavOpen(false); }}
                       className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all ${
-                        activeView === 'ideas' ? 'text-blue-400 bg-blue-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                        activeView === 'ideas' ? 'text-cyan-400 bg-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
                       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -420,7 +420,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() => { setActiveView('allIdeas'); setMobileNavOpen(false); }}
                       className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all ${
-                        activeView === 'allIdeas' ? 'text-blue-400 bg-blue-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                        activeView === 'allIdeas' ? 'text-cyan-400 bg-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
                       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -434,7 +434,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() => { setActiveView('domains'); setMobileNavOpen(false); }}
                       className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all ${
-                        activeView === 'domains' ? 'text-blue-400 bg-blue-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                        activeView === 'domains' ? 'text-cyan-400 bg-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
                       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -449,7 +449,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() => { setActiveView('thisMonth'); setMobileNavOpen(false); }}
                       className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-all ${
-                        activeView === 'thisMonth' ? 'text-blue-400 bg-blue-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                        activeView === 'thisMonth' ? 'text-cyan-400 bg-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
                       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
