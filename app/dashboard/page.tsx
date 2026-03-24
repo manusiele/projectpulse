@@ -613,23 +613,9 @@ export default function DashboardPage() {
 
                       {/* Pain/Description */}
                       {(idea.pain || idea.description) && (
-                        <p className="text-slate-400 text-sm mb-4 leading-relaxed line-clamp-3">
+                        <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-3">
                           {idea.pain || idea.description}
                         </p>
-                      )}
-
-                      {/* Stack badges */}
-                      {idea.stack && (
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {idea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
-                            <span
-                              key={item}
-                              className="px-3 py-1.5 bg-[#252525] text-slate-300 text-sm rounded-lg"
-                            >
-                              {item}
-                            </span>
-                          ))}
-                        </div>
                       )}
 
                       {/* Footer */}
@@ -738,22 +724,10 @@ export default function DashboardPage() {
                               <h3 className="text-xl font-bold text-white mb-3">
                                 {idea.projectName || "Daily Project Idea"}
                               </h3>
-                              {idea.pain && (
-                                <p className="text-slate-400 text-sm mb-4 leading-relaxed">
-                                  {idea.pain}
+                              {(idea.pain || idea.description) && (
+                                <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                                  {idea.pain || idea.description}
                                 </p>
-                              )}
-                              {idea.stack && (
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                  {idea.stack.split(/\s*\+\s*/).filter(Boolean).map((item) => (
-                                    <span
-                                      key={item}
-                                      className="px-3 py-1.5 bg-[#252525] text-slate-300 text-sm rounded-lg"
-                                    >
-                                      {item}
-                                    </span>
-                                  ))}
-                                </div>
                               )}
                               <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
                                 <span className="text-sm text-slate-500">
@@ -909,141 +883,62 @@ export default function DashboardPage() {
                 )}
               </div>
 
-              {/* Full Raw Content */}
-              <div className="space-y-6 text-[15px] leading-relaxed">
-                {selectedIdea.raw.split('\n').map((line, idx) => {
-                  const trimmedLine = line.trim();
-                  if (!trimmedLine) return null;
-                  
-                  // Check for section headers (with : or →)
-                  const headerMatch = trimmedLine.match(/^(PROBLEM STATEMENT|Project|Stack|Deploy|Docs & Links|Why now|Potential):\s*(.*)$/i) ||
-                                     trimmedLine.match(/^(WHO|PAIN|GAP|IMPACT|WHY NOW|POTENTIAL|STACK|DEPLOY|PROJECT)\s*→\s*(.*)$/i);
-                  
-                  if (headerMatch) {
-                    const [, heading, content] = headerMatch;
-                    const headingLower = heading.toLowerCase().replace(/\s+/g, ' ');
-                    
-                    // Color mapping for headings
-                    const colorMap: Record<string, string> = {
-                      'problem statement': 'text-slate-400',
-                      'project': 'text-white',
-                      'who': 'text-blue-400',
-                      'pain': 'text-cyan-400',
-                      'gap': 'text-purple-400',
-                      'impact': 'text-red-400',
-                      'why now': 'text-yellow-400',
-                      'potential': 'text-green-400',
-                      'stack': 'text-slate-500',
-                      'deploy': 'text-slate-500',
-                      'docs & links': 'text-slate-500',
-                    };
-                    
-                    const color = colorMap[headingLower] || 'text-slate-400';
-                    
-                    // Special handling for Stack with clickable tech
-                    if (headingLower === 'stack' && content) {
-                      return (
-                        <div key={idx}>
-                          <h3 className={`text-xs font-bold uppercase tracking-wider mb-3 ${color}`}>
-                            {heading}
-                          </h3>
-                          <div className="flex flex-wrap gap-2">
-                            {content.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => {
-                              const cleanTech = tech.replace(/\|.*$/, '').trim();
-                              return (
-                                <a
-                                  key={techIdx}
-                                  href={getTechUrl(cleanTech)}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors"
-                                >
-                                  {cleanTech}
-                                </a>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    }
-                    
-                    return (
-                      <div key={idx}>
-                        <h3 className={`text-xs font-bold uppercase tracking-wider mb-2 ${color}`}>
-                          {heading}
-                        </h3>
-                        <p className="text-slate-300">{content}</p>
-                      </div>
-                    );
-                  }
-                  
-                  // Handle bullet points (Docs & Links section)
-                  if (trimmedLine.startsWith('•')) {
-                    const cleanLine = trimmedLine.replace(/^•\s*/, '');
-                    
-                    // Check for markdown links [text](url)
-                    const markdownLinkMatch = cleanLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
-                    if (markdownLinkMatch) {
-                      const [fullMatch, linkText, url] = markdownLinkMatch;
-                      const beforeLink = cleanLine.substring(0, cleanLine.indexOf(fullMatch));
-                      const afterLink = cleanLine.substring(cleanLine.indexOf(fullMatch) + fullMatch.length);
-                      
-                      return (
-                        <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
-                          <span className="text-slate-600 mt-0.5">•</span>
-                          <div className="text-slate-300">
-                            {beforeLink}
-                            <a 
-                              href={url.trim()} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="text-blue-400 hover:text-blue-300 transition-colors underline"
-                            >
-                              {linkText}
-                            </a>
-                            {afterLink}
-                          </div>
-                        </div>
-                      );
-                    }
-                    
-                    // Check for arrow links text → url
-                    const arrowMatch = cleanLine.match(/^(.+?)\s*→\s*(.+)$/);
-                    if (arrowMatch) {
-                      return (
-                        <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
-                          <span className="text-slate-600 mt-0.5">•</span>
-                          <div>
-                            <span className="text-slate-400">{arrowMatch[1].trim()}</span>
-                            <span className="text-slate-600 mx-2">→</span>
-                            <a 
-                              href={arrowMatch[2].trim()} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="text-blue-400 hover:text-blue-300 transition-colors break-all"
-                            >
-                              {arrowMatch[2].trim()}
-                            </a>
-                          </div>
-                        </div>
-                      );
-                    }
-                    
-                    return (
-                      <div key={idx} className="flex items-start gap-2 ml-4 mb-2">
-                        <span className="text-slate-600 mt-0.5">•</span>
-                        <span className="text-slate-300">{cleanLine}</span>
-                      </div>
-                    );
-                  }
-                  
-                  // Regular content line
-                  return (
-                    <p key={idx} className="text-slate-300">
-                      {trimmedLine}
-                    </p>
-                  );
-                })}
+              {/* Key Details */}
+              <div className="space-y-5">
+                {/* Stack */}
+                {selectedIdea.stack && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                      Tech Stack
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => {
+                        const cleanTech = tech.replace(/\|.*$/, '').trim();
+                        return (
+                          <a
+                            key={techIdx}
+                            href={getTechUrl(cleanTech)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-slate-300 text-sm rounded-lg transition-colors border border-[#2a2a2a]"
+                          >
+                            {cleanTech}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Pain Point */}
+                {selectedIdea.pain && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                      Problem
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
+                  </div>
+                )}
+
+                {/* Potential */}
+                {selectedIdea.potential && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">
+                      Potential
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.potential}</p>
+                  </div>
+                )}
+
+                {/* Deploy */}
+                {selectedIdea.deploy && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                      Deployment
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed">{selectedIdea.deploy}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

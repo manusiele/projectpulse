@@ -114,7 +114,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
         <h3 className="text-lg font-semibold text-white mb-3 line-clamp-2">{displayName}</h3>
 
         {/* Description - truncated to 3 lines */}
-        <p className="text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed">
+        <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">
           {idea.description || idea.pain || "A new project idea to explore"}
         </p>
 
