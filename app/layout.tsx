@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   description:
     "Your daily AI-powered project idea engine. One brutally honest problem statement, one shippable project, exact stack, real potential.",
   icons: {
-    icon: '/logo.webp',
-    shortcut: '/logo.webp',
-    apple: '/logo.webp',
+    icon: '/icon-512.png',
+    shortcut: '/icon-512.png',
+    apple: '/icon-512.png',
   },
   manifest: '/manifest.json',
   themeColor: '#3b82f6',
