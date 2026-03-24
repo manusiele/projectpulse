@@ -68,7 +68,7 @@ export default function DashboardPage() {
               
               // Show notification if permission granted
               if ('Notification' in window && Notification.permission === 'granted') {
-                const notification = new Notification('🚀 New FocusLock Idea!', {
+                const notification = new Notification('🚀 New ProjectPulse Idea!', {
                   body: newIdea.projectName || 'A fresh project idea just arrived',
                   icon: '/icon-192.png',
                   badge: '/icon-192.png',
@@ -568,8 +568,8 @@ export default function DashboardPage() {
                 <div className="mb-8">
                   <div className="flex items-center justify-center">
                     <svg width="180" height="45" viewBox="0 0 180 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <text x="5" y="30" className="font-black" style={{ fontSize: '26px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
-                        FocusLock
+                      <text x="5" y="30" className="font-black" style={{ fontSize: '24px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
+                        ProjectPulse
                       </text>
                       <defs>
                         <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">

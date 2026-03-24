@@ -1,6 +1,6 @@
 "use client";
 
-export function FocusLockLogo({ className = "" }: { className?: string }) {
+export function ProjectPulseLogo({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 200 50"
@@ -48,27 +48,26 @@ export function FocusLockLogo({ className = "" }: { className?: string }) {
         `}</style>
       </defs>
 
-      {/* Lock Icon */}
+      {/* Pulse Icon */}
       <g className="logo-icon" transform="translate(15, 25)">
-        <rect x="-8" y="-5" width="16" height="14" rx="2" 
-              fill="none" stroke="url(#logoGradient)" strokeWidth="2" filter="url(#glow)" />
-        <path d="M -5 -5 L -5 -10 A 5 5 0 0 1 5 -10 L 5 -5" 
-              fill="none" stroke="url(#logoGradient)" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="0" cy="2" r="2" fill="url(#logoGradient)" />
+        <circle cx="0" cy="0" r="8" 
+                fill="none" stroke="url(#logoGradient)" strokeWidth="2" filter="url(#glow)" />
+        <path d="M -6 0 L -3 0 L -1 -4 L 2 4 L 4 0 L 6 0" 
+              fill="none" stroke="url(#logoGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </g>
 
       {/* Text */}
       <text x="35" y="32" className="logo-text" 
             fontFamily="system-ui, -apple-system, sans-serif" 
-            fontSize="24" 
+            fontSize="22" 
             fontWeight="700" 
             fill="white"
             letterSpacing="-0.5">
-        FocusLock
+        ProjectPulse
       </text>
       
       {/* Accent dot */}
-      <circle cx="185" cy="28" r="2.5" fill="url(#logoGradient)" className="logo-icon" />
+      <circle cx="195" cy="28" r="2.5" fill="url(#logoGradient)" className="logo-icon" />
     </svg>
   );
 }

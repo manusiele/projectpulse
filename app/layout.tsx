@@ -5,7 +5,7 @@ import { NotificationPrompt } from "@/components/NotificationPrompt";
 import { ClientProviders } from "./client-providers";
 
 export const metadata: Metadata = {
-  title: "FocusLock — Daily Project Ideas",
+  title: "ProjectPulse — Daily Project Ideas",
   description:
     "Your daily AI-powered project idea engine. One brutally honest problem statement, one shippable project, exact stack, real potential.",
   icons: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'FocusLock',
+    title: 'ProjectPulse',
   },
 };
 

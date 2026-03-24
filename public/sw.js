@@ -1,7 +1,7 @@
-// Service Worker for FocusLock PWA
-const CACHE_NAME = 'focuslock-v1';
-const RUNTIME_CACHE = 'focuslock-runtime';
-const API_CACHE = 'focuslock-api';
+// Service Worker for ProjectPulse PWA
+const CACHE_NAME = 'projectpulse-v1';
+const RUNTIME_CACHE = 'projectpulse-runtime';
+const API_CACHE = 'projectpulse-api';
 
 // Assets to cache on install
 const PRECACHE_ASSETS = [
@@ -138,7 +138,7 @@ async function checkForNewIdeas() {
 
 // Show notification for new idea
 async function showNewIdeaNotification(idea) {
-  const title = '🚀 New FocusLock Idea!';
+  const title = '🚀 New ProjectPulse Idea!';
   const options = {
     body: idea.projectName || 'A fresh project idea just arrived',
     icon: '/icon-192.png',
@@ -169,12 +169,12 @@ async function showNewIdeaNotification(idea) {
 // Push notification event
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
-  const title = data.title || 'FocusLock - New Idea!';
+  const title = data.title || 'ProjectPulse - New Idea!';
   const options = {
     body: data.body || 'A new project idea is ready for you',
     icon: '/icon-192.png',
     badge: '/icon-192.png',
-    tag: 'focuslock-notification',
+    tag: 'projectpulse-notification',
     requireInteraction: false,
     vibrate: [200, 100, 200],
     data: {

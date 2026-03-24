@@ -34,8 +34,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center group">
             <svg width="180" height="45" viewBox="0 0 180 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <text x="5" y="30" className="font-black" style={{ fontSize: '26px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
-                FocusLock
+              <text x="5" y="30" className="font-black" style={{ fontSize: '24px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
+                ProjectPulse
               </text>
               <defs>
                 <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -127,7 +127,7 @@ export default function Home() {
 
         {/* ── Features ────────────────────────────────────────────────────── */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">Why FocusLock?</h2>
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">Why ProjectPulse?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -290,7 +290,7 @@ export default function Home() {
       {/* ── Footer ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-[#2a2a2a]/30 py-12 mt-20 bg-[#1a1a1a]/20 backdrop-blur-2xl relative">
         <div className="max-w-6xl mx-auto px-6 text-center text-sm text-slate-500">
-          © 2026 FocusLock. Serverless. Open source. Daily ideas.
+          © 2026 ProjectPulse. Serverless. Open source. Daily ideas.
         </div>
       </footer>
     </div>
