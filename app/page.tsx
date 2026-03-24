@@ -179,23 +179,23 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-white mb-16 text-center">How It Works</h2>
           <div className="max-w-5xl mx-auto px-4">
             <div className="relative">
-              {/* SVG connecting line with dots - desktop only */}
-              <svg className="hidden md:block absolute top-[35px] left-0 w-full h-[2px] pointer-events-none" style={{ zIndex: 0 }} preserveAspectRatio="none" viewBox="0 0 1000 2">
+              {/* SVG connecting line - desktop only */}
+              <svg className="hidden md:block absolute top-0 left-0 w-full h-[70px] pointer-events-none" style={{ zIndex: 0 }} preserveAspectRatio="none" viewBox="0 0 1000 70">
                 <defs>
                   <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 0.6 }} />
-                    <stop offset="33%" style={{ stopColor: '#06b6d4', stopOpacity: 0.6 }} />
-                    <stop offset="66%" style={{ stopColor: '#a855f7', stopOpacity: 0.6 }} />
-                    <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.6 }} />
+                    <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 0.5 }} />
+                    <stop offset="33%" style={{ stopColor: '#06b6d4', stopOpacity: 0.5 }} />
+                    <stop offset="66%" style={{ stopColor: '#a855f7', stopOpacity: 0.5 }} />
+                    <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.5 }} />
                   </linearGradient>
                 </defs>
-                {/* Horizontal line */}
-                <line x1="100" y1="1" x2="900" y2="1" stroke="url(#lineGradient)" strokeWidth="2" />
+                {/* Horizontal line through center */}
+                <line x1="80" y1="35" x2="920" y2="35" stroke="url(#lineGradient)" strokeWidth="2" />
                 {/* Dots at connection points */}
-                <circle cx="100" cy="1" r="4" fill="#3b82f6" />
-                <circle cx="367" cy="1" r="4" fill="#06b6d4" />
-                <circle cx="633" cy="1" r="4" fill="#a855f7" />
-                <circle cx="900" cy="1" r="4" fill="#ec4899" />
+                <circle cx="125" cy="35" r="5" fill="#3b82f6" />
+                <circle cx="375" cy="35" r="5" fill="#06b6d4" />
+                <circle cx="625" cy="35" r="5" fill="#a855f7" />
+                <circle cx="875" cy="35" r="5" fill="#ec4899" />
               </svg>
               
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative" style={{ zIndex: 1 }}>
