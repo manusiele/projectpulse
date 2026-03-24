@@ -38,6 +38,7 @@ export default function DashboardPage() {
   const [toastMessage, setToastMessage] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
 
   // Load liked ideas from localStorage
   useEffect(() => {
@@ -51,18 +52,56 @@ export default function DashboardPage() {
   useEffect(() => {
     const pollInterval = setInterval(async () => {
       try {
+        setIsCheckingUpdates(true);
         const response = await fetch('/api/ideas');
         if (response.ok) {
           const freshIdeas = await response.json();
+          
+          // Check if there's a new idea (compare first idea ID)
+          if (ideas.length > 0 && freshIdeas.length > 0) {
+            const latestOldId = ideas[0].id;
+            const latestNewId = freshIdeas[0].id;
+            
+            if (latestOldId !== latestNewId) {
+              // New idea detected!
+              const newIdea = freshIdeas[0];
+              
+              // Show notification if permission granted
+              if ('Notification' in window && Notification.permission === 'granted') {
+                const notification = new Notification('🚀 New FocusLock Idea!', {
+                  body: newIdea.projectName || 'A fresh project idea just arrived',
+                  icon: '/icon-192.png',
+                  badge: '/icon-192.png',
+                  tag: 'new-idea',
+                  requireInteraction: false,
+                  data: { ideaId: newIdea.id }
+                });
+                
+                notification.onclick = () => {
+                  window.focus();
+                  setSelectedIdea(newIdea);
+                  notification.close();
+                };
+              }
+              
+              // Show toast notification
+              setToastMessage('🎉 New idea available!');
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 5000);
+            }
+          }
+          
           setIdeas(freshIdeas);
         }
       } catch (error) {
         console.error('Failed to refresh ideas:', error);
+      } finally {
+        setIsCheckingUpdates(false);
       }
     }, 30000); // Poll every 30 seconds
 
     return () => clearInterval(pollInterval);
-  }, []);
+  }, [ideas]);
 
   // Check URL for shared idea parameter
   useEffect(() => {
@@ -378,6 +417,21 @@ export default function DashboardPage() {
         <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent" />
       </div>
 
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-4 right-4 z-50 animate-slideUp">
+          <div className="bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-xl backdrop-blur-xl shadow-2xl px-4 py-3 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 flex items-center justify-center">
+              <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <span className="text-sm text-white font-medium">{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
       <div className="relative z-10 h-screen overflow-hidden">
         <div className="flex h-full">
           {/* Mobile Menu Button */}
@@ -385,11 +439,17 @@ export default function DashboardPage() {
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
             className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center hover:bg-[#252525] transition-colors"
           >
-            <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
+            {isCheckingUpdates ? (
+              <svg className="w-5 h-5 text-blue-400 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            )}
           </button>
 
           {/* Mobile Bottom Navigation */}
