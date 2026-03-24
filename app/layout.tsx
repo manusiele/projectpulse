@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     apple: '/logo.webp',
   },
   manifest: '/manifest.json',
-  themeColor: '#22d3ee',
+  themeColor: '#3b82f6',
   viewport: {
     width: 'device-width',
     initialScale: 1,
