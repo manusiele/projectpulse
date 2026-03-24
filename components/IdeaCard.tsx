@@ -93,8 +93,8 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               )}
               <button
                 onClick={() => onLike?.(idea.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors ${
-                  isLiked ? 'bg-blue-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${
+                  isLiked ? 'bg-blue-500/20 text-blue-400 animate-like-bounce' : 'bg-[#252525] text-slate-400 hover:text-blue-400 hover:scale-105'
                 }`}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -148,8 +148,8 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
             )}
             <button
               onClick={() => onLike?.(idea.id)}
-              className={`flex items-center gap-1 px-2 py-1.5 rounded-lg transition-colors ${
-                isLiked ? 'bg-blue-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
+              className={`flex items-center gap-1 px-2 py-1.5 rounded-lg transition-all ${
+                isLiked ? 'bg-blue-500/20 text-blue-400 animate-like-bounce' : 'bg-[#252525] text-slate-400 hover:text-blue-400 hover:scale-105'
               }`}
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

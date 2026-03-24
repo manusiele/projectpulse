@@ -81,6 +81,23 @@ export default function DashboardPage() {
   const handleLike = async (ideaId: string) => {
     const isLiked = likedIdeas.has(ideaId);
     
+    // Optimistic update - update UI immediately
+    const newLiked = new Set(likedIdeas);
+    if (isLiked) {
+      newLiked.delete(ideaId);
+    } else {
+      newLiked.add(ideaId);
+    }
+    setLikedIdeas(newLiked);
+    localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
+    
+    // Optimistically update the count
+    setIdeas(ideas.map(idea => 
+      idea.id === ideaId 
+        ? { ...idea, likes: (idea.likes || 0) + (isLiked ? -1 : 1) }
+        : idea
+    ));
+    
     try {
       if (isLiked) {
         // Unlike
@@ -90,17 +107,18 @@ export default function DashboardPage() {
         
         if (response.ok) {
           const data = await response.json();
-          const newLiked = new Set(likedIdeas);
-          newLiked.delete(ideaId);
-          setLikedIdeas(newLiked);
-          localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
-          
-          // Update UI immediately
+          // Update with server response
           setIdeas(ideas.map(idea => 
             idea.id === ideaId 
               ? { ...idea, likes: data.likes }
               : idea
           ));
+        } else {
+          // Revert on error
+          const revertLiked = new Set(likedIdeas);
+          revertLiked.add(ideaId);
+          setLikedIdeas(revertLiked);
+          localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
         }
       } else {
         // Like
@@ -110,21 +128,24 @@ export default function DashboardPage() {
         
         if (response.ok) {
           const data = await response.json();
-          const newLiked = new Set(likedIdeas);
-          newLiked.add(ideaId);
-          setLikedIdeas(newLiked);
-          localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
-          
-          // Update UI immediately
+          // Update with server response
           setIdeas(ideas.map(idea => 
             idea.id === ideaId 
               ? { ...idea, likes: data.likes }
               : idea
           ));
+        } else {
+          // Revert on error
+          const revertLiked = new Set(likedIdeas);
+          revertLiked.delete(ideaId);
+          setLikedIdeas(revertLiked);
+          localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
         }
       }
     } catch (error) {
       console.error('Failed to update like:', error);
+      // Revert on error
+      setLikedIdeas(isLiked ? new Set([...likedIdeas, ideaId]) : new Set([...likedIdeas].filter(id => id !== ideaId)));
     }
   };
 
