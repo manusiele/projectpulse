@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { IdeaCard } from "@/components/IdeaCard";
 import Link from "next/link";
-import Image from "next/image";
 import { Loader } from "@/components/Loader";
 
 interface Idea {
@@ -432,21 +431,39 @@ export default function DashboardPage() {
                 
                 {/* Header with Logo */}
                 <div className="mb-8">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-purple-500/20 border border-blue-500/40 overflow-hidden flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
-                      <Image 
-                        src="/logo.webp" 
-                        alt="FocusLock" 
-                        width={56} 
-                        height={56}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-bold text-white">FocusLock</h2>
-                      <p className="text-xs text-slate-500">AI Project Ideas</p>
-                    </div>
+                  <div className="flex items-center justify-center">
+                    <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Focus text with gradient */}
+                      <text x="10" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient1)', letterSpacing: '-0.02em' }}>
+                        Focus
+                      </text>
+                      {/* Lock text with gradient */}
+                      <text x="115" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient2)', letterSpacing: '-0.02em' }}>
+                        Lock
+                      </text>
+                      {/* Glow effect */}
+                      <text x="10" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient1)', letterSpacing: '-0.02em', filter: 'blur(8px)', opacity: 0.3 }}>
+                        Focus
+                      </text>
+                      <text x="115" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient2)', letterSpacing: '-0.02em', filter: 'blur(8px)', opacity: 0.3 }}>
+                        Lock
+                      </text>
+                      {/* Gradients */}
+                      <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{ stopColor: '#60a5fa', stopOpacity: 1 }} />
+                          <stop offset="50%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#2563eb', stopOpacity: 1 }} />
+                        </linearGradient>
+                        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{ stopColor: '#22d3ee', stopOpacity: 1 }} />
+                          <stop offset="50%" style={{ stopColor: '#06b6d4', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#0891b2', stopOpacity: 1 }} />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </div>
+                  <p className="text-xs text-slate-500 text-center mt-1">AI Project Ideas</p>
                 </div>
 
                 {/* Menu Section */}
