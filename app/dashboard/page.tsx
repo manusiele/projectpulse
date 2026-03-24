@@ -55,15 +55,7 @@ export default function DashboardPage() {
         const response = await fetch('/api/ideas');
         if (response.ok) {
           const freshIdeas = await response.json();
-          // Merge with localStorage counts
-          const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
-          const mergedIdeas = freshIdeas.map((idea: Idea) => ({
-            ...idea,
-            likes: (idea.likes || 0) + (counts[idea.id]?.likes || 0),
-            shares: (idea.shares || 0) + (counts[idea.id]?.shares || 0),
-            views: (idea.views || 0) + (counts[idea.id]?.views || 0),
-          }));
-          setIdeas(mergedIdeas);
+          setIdeas(freshIdeas);
         }
       } catch (error) {
         console.error('Failed to refresh ideas:', error);
@@ -89,30 +81,52 @@ export default function DashboardPage() {
 
   const handleLike = async (ideaId: string) => {
     const isLiked = likedIdeas.has(ideaId);
-    const newLiked = new Set(likedIdeas);
     
-    if (isLiked) {
-      newLiked.delete(ideaId);
-    } else {
-      newLiked.add(ideaId);
+    try {
+      if (isLiked) {
+        // Unlike
+        const response = await fetch(`/api/ideas/${ideaId}/like`, {
+          method: 'DELETE',
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const newLiked = new Set(likedIdeas);
+          newLiked.delete(ideaId);
+          setLikedIdeas(newLiked);
+          localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
+          
+          // Update UI immediately
+          setIdeas(ideas.map(idea => 
+            idea.id === ideaId 
+              ? { ...idea, likes: data.likes }
+              : idea
+          ));
+        }
+      } else {
+        // Like
+        const response = await fetch(`/api/ideas/${ideaId}/like`, {
+          method: 'POST',
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const newLiked = new Set(likedIdeas);
+          newLiked.add(ideaId);
+          setLikedIdeas(newLiked);
+          localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
+          
+          // Update UI immediately
+          setIdeas(ideas.map(idea => 
+            idea.id === ideaId 
+              ? { ...idea, likes: data.likes }
+              : idea
+          ));
+        }
+      }
+    } catch (error) {
+      console.error('Failed to update like:', error);
     }
-    
-    setLikedIdeas(newLiked);
-    localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
-    
-    // Update local counts in localStorage
-    const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
-    if (!counts[ideaId]) counts[ideaId] = { likes: 0, shares: 0 };
-    counts[ideaId].likes += isLiked ? -1 : 1;
-    if (counts[ideaId].likes < 0) counts[ideaId].likes = 0;
-    localStorage.setItem('ideaCounts', JSON.stringify(counts));
-    
-    // Update UI immediately
-    setIdeas(ideas.map(idea => 
-      idea.id === ideaId 
-        ? { ...idea, likes: (idea.likes || 0) + (isLiked ? -1 : 1) }
-        : idea
-    ));
   };
 
   const closeModal = () => {
@@ -240,16 +254,7 @@ export default function DashboardPage() {
       try {
         const response = await fetch('/api/ideas');
         const data = await response.json();
-        
-        // Merge with localStorage counts
-        const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
-        const mergedData = data.map((idea: Idea) => ({
-          ...idea,
-          likes: (idea.likes || 0) + (counts[idea.id]?.likes || 0),
-          shares: (idea.shares || 0) + (counts[idea.id]?.shares || 0),
-        }));
-        
-        setIdeas(mergedData);
+        setIdeas(data);
       } catch (err) {
         console.error('Failed to fetch ideas:', err);
       } finally {
