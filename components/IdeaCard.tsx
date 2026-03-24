@@ -47,11 +47,11 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
-      <div className="relative bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl overflow-hidden backdrop-blur-2xl shadow-2xl shadow-cyan-500/10 hover:shadow-cyan-500/20 transition-all">
+      <div className="relative bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl overflow-hidden backdrop-blur-2xl shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
         <div className="p-6">
           {/* Badge */}
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium uppercase tracking-wide mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wide mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
             Today&apos;s Spark
           </span>
 
@@ -73,13 +73,13 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               {stackItems.slice(0, 5).map((item) => (
                 <span
                   key={item}
-                  className="px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs rounded-md"
+                  className="px-2.5 py-1 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 text-blue-300 text-xs rounded-md"
                 >
                   {item}
                 </span>
               ))}
               {stackItems.length > 5 && (
-                <span className="px-2.5 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs rounded-md">
+                <span className="px-2.5 py-1 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 text-blue-400 text-xs rounded-md">
                   +{stackItems.length - 5} more
                 </span>
               )}
@@ -93,7 +93,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               {onView && (
                 <button
                   onClick={onView}
-                  className="px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-sm font-medium transition-all"
+                  className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 border border-blue-500/20 text-blue-400 text-sm font-medium transition-all"
                 >
                   View
                 </button>
@@ -101,7 +101,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               <button
                 onClick={handleLikeClick}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${
-                  isLiked ? 'bg-cyan-500/20 text-cyan-400' : 'bg-[#252525] text-slate-400 hover:text-cyan-400'
+                  isLiked ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
                 } ${animateButton ? 'animate-like-bounce' : 'hover:scale-105'}`}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -148,7 +148,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
             {onView && (
               <button
                 onClick={onView}
-                className="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-xs font-medium transition-all"
+                className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 hover:from-blue-500/20 hover:to-cyan-500/20 border border-blue-500/20 text-blue-400 text-xs font-medium transition-all"
               >
                 View
               </button>
@@ -156,7 +156,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
             <button
               onClick={handleLikeClick}
               className={`flex items-center gap-1 px-2 py-1.5 rounded-lg transition-all ${
-                isLiked ? 'bg-cyan-500/20 text-cyan-400' : 'bg-[#252525] text-slate-400 hover:text-cyan-400'
+                isLiked ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
               } ${animateButton ? 'animate-like-bounce' : 'hover:scale-105'}`}
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
