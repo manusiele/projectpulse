@@ -309,11 +309,25 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden animate-fadeIn">
-      {/* Animated background gradients */}
+      {/* LeetCode-inspired animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        {/* Gradient base layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] animate-gradient" />
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-cyan-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-tr from-purple-500/15 to-blue-500/10 rounded-full blur-3xl animate-float-reverse" />
+        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-gradient-to-bl from-cyan-500/10 to-transparent rounded-full blur-3xl animate-pulse-slow" />
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)',
+          backgroundSize: '50px 50px'
+        }} />
+        
+        {/* Accent lines */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent" />
       </div>
 
       <div className="relative z-10 h-screen overflow-hidden">
@@ -951,63 +965,63 @@ export default function DashboardPage() {
                     <>
                       {sections.stack && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                             Tech Stack
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed">{sections.stack}</p>
                         </div>
                       )}
                       
                       {sections.problem && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Problem Statement
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.problem}</p>
                         </div>
                       )}
                       
                       {sections.project && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Project
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.project}</p>
                         </div>
                       )}
                       
                       {sections.deploy && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Deployment
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed">{sections.deploy}</p>
                         </div>
                       )}
                       
                       {sections.docs && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                             Docs & Links
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.docs}</p>
                         </div>
                       )}
                       
                       {sections.whyNow && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Why Now
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.whyNow}</p>
                         </div>
                       )}
                       
                       {sections.potential && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Market Potential
-                          </h3>
+                          </span>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.potential}</p>
                         </div>
                       )}
@@ -1018,10 +1032,10 @@ export default function DashboardPage() {
                 {/* Stack */}
                 {selectedIdea.stack && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                       Tech Stack
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
+                    </span>
+                    <div className="flex flex-wrap gap-2 mt-3">
                       {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => {
                         const cleanTech = tech.replace(/\|.*$/, '').trim();
                         return (
@@ -1043,10 +1057,10 @@ export default function DashboardPage() {
                 {/* Problem Statement - parse from raw if available */}
                 {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && selectedIdea.stack && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Problem Statement
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
+                    </span>
+                    <p className="text-slate-300 leading-relaxed whitespace-pre-line mt-2">
                       {selectedIdea.raw.split('PROBLEM STATEMENT')[1]?.split(/PROJECT|STACK|DEPLOY|WHY NOW|POTENTIAL/)[0]?.replace(/^[:\s]+/, '').trim()}
                     </p>
                   </div>
@@ -1055,69 +1069,69 @@ export default function DashboardPage() {
                 {/* Who */}
                 {selectedIdea.who && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Target Audience
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.who}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.who}</p>
                   </div>
                 )}
 
                 {/* Pain Point */}
                 {selectedIdea.pain && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Problem
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.pain}</p>
                   </div>
                 )}
 
                 {/* Gap */}
                 {selectedIdea.gap && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Market Gap
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.gap}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.gap}</p>
                   </div>
                 )}
 
                 {/* Why Now */}
                 {selectedIdea.whyNow && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Why Now
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.whyNow}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
                   </div>
                 )}
 
                 {/* Potential */}
                 {selectedIdea.potential && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Market Potential
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.potential}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
                   </div>
                 )}
 
                 {/* Deploy */}
                 {selectedIdea.deploy && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Deployment
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.deploy}</p>
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.deploy}</p>
                   </div>
                 )}
 
                 {/* Docs & Links */}
                 {selectedIdea.docs && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                       Docs & Links
-                    </h3>
+                    </span>
                     <div className="flex flex-col gap-2">
                       {selectedIdea.docs.split('•').filter(Boolean).map((doc, idx) => {
                         // Extract the title (before the dash) and clean it
