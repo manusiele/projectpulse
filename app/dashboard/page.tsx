@@ -950,6 +950,18 @@ export default function DashboardPage() {
                   </div>
                 )}
 
+                {/* Problem Statement - parse from raw if available */}
+                {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
+                      Problem Statement
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed whitespace-pre-line">
+                      {selectedIdea.raw.split('PROBLEM STATEMENT')[1]?.split(/PROJECT|STACK|DEPLOY|WHY NOW|POTENTIAL/)[0]?.replace(/^[:\s]+/, '').trim()}
+                    </p>
+                  </div>
+                )}
+
                 {/* Who */}
                 {selectedIdea.who && (
                   <div>
@@ -1010,6 +1022,18 @@ export default function DashboardPage() {
                   </div>
                 )}
 
+                {/* Docs & Links */}
+                {selectedIdea.docs && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                      Docs & Links
+                    </h3>
+                    <div className="text-slate-300 leading-relaxed whitespace-pre-line">
+                      {selectedIdea.docs}
+                    </div>
+                  </div>
+                )}
+
                 {/* Impact */}
                 {selectedIdea.impact && (
                   <div>
@@ -1017,16 +1041,6 @@ export default function DashboardPage() {
                       Impact
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.impact}</p>
-                  </div>
-                )}
-
-                {/* Docs */}
-                {selectedIdea.docs && (
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                      Documentation
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.docs}</p>
                   </div>
                 )}
               </div>
