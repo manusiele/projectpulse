@@ -428,22 +428,22 @@ export default function DashboardPage() {
           <div className="hidden lg:block fixed top-4 left-4 w-80 h-[98vh] z-40">
             <div className="h-full overflow-y-auto">
               {/* Single Unified Sidebar */}
-              <div className="h-full bg-[#0f0f0f]/95 border border-[#1a1a1a] rounded-3xl backdrop-blur-2xl shadow-2xl flex flex-col p-6">
+              <div className="h-full bg-gradient-to-b from-[#0a0a0a] to-[#0f0f0f] border border-[#1a1a1a] rounded-3xl backdrop-blur-2xl shadow-2xl flex flex-col p-6">
                 
                 {/* Header with Logo */}
                 <div className="mb-8">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/30 via-cyan-500/20 to-purple-500/20 border border-blue-500/40 overflow-hidden flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
                       <Image 
                         src="/logo.webp" 
                         alt="FocusLock" 
-                        width={48} 
-                        height={48}
+                        width={56} 
+                        height={56}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div>
-                      <h2 className="text-lg font-bold text-white">FocusLock</h2>
+                      <h2 className="text-xl font-bold text-white">FocusLock</h2>
                       <p className="text-xs text-slate-500">AI Project Ideas</p>
                     </div>
                   </div>
@@ -451,64 +451,72 @@ export default function DashboardPage() {
 
                 {/* Menu Section */}
                 <div className="mb-8">
-                  <div className="flex items-center justify-between mb-3 px-1">
-                    <span className="text-xs text-slate-600 uppercase tracking-wider font-bold">Menu</span>
-                    <span className="text-xs text-slate-600 font-bold">{ideas.length}</span>
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <span className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">Menu</span>
+                    <span className="text-xs text-slate-600 font-bold px-2 py-0.5 rounded-md bg-slate-800/50">{ideas.length}</span>
                   </div>
                   <nav className="space-y-2">
                     <Link 
                       href="/" 
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a] transition-all"
+                      className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80 transition-all group"
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                      </svg>
-                      <span className="font-medium flex-1 text-left">Home</span>
+                      <div className="w-9 h-9 rounded-lg bg-slate-800/50 group-hover:bg-slate-700/50 flex items-center justify-center transition-colors">
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                          <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                      </div>
+                      <span className="font-semibold flex-1 text-left">Home</span>
                     </Link>
                     <button 
                       onClick={() => setActiveView('ideas')}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
+                      className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm transition-all group ${
                         activeView === 'ideas' 
-                          ? 'text-white bg-blue-500/10 border border-blue-500/30' 
-                          : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]'
+                          ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/10 border border-blue-500/40 shadow-lg shadow-blue-500/20' 
+                          : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
                       }`}
                     >
-                      <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                      </svg>
-                      <span className="font-medium flex-1 text-left">Latest Spark</span>
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                        activeView === 'ideas'
+                          ? 'bg-blue-500/20 border border-blue-500/30'
+                          : 'bg-slate-800/50 group-hover:bg-slate-700/50'
+                      }`}>
+                        <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                      </div>
+                      <span className="font-semibold flex-1 text-left">Latest Spark</span>
                     </button>
                   </nav>
                 </div>
 
                 {/* Stats Section */}
                 <div>
-                  <div className="flex items-center justify-between mb-3 px-1">
-                    <span className="text-xs text-slate-600 uppercase tracking-wider font-bold">Stats</span>
-                    <span className="text-xs text-slate-600 font-bold">3</span>
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <span className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">Stats</span>
+                    <span className="text-xs text-slate-600 font-bold px-2 py-0.5 rounded-md bg-slate-800/50">3</span>
                   </div>
                   <div className="space-y-2">
                     <button 
                       onClick={() => setActiveView('allIdeas')}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/10">
                         <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                           <polyline points="16 7 22 7 22 13" />
                         </svg>
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-sm text-slate-400 font-medium">Total Ideas</p>
+                        <p className="text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">Total Ideas</p>
                       </div>
-                      <span className="text-lg font-bold text-white">{ideas.length}</span>
+                      <span className="text-xl font-bold text-white">{ideas.length}</span>
                     </button>
                     <button 
                       onClick={() => setActiveView('thisMonth')}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
                         <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                           <line x1="16" y1="2" x2="16" y2="6" />
@@ -517,23 +525,23 @@ export default function DashboardPage() {
                         </svg>
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-sm text-slate-400 font-medium">This Month</p>
+                        <p className="text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">This Month</p>
                       </div>
-                      <span className="text-lg font-bold text-white">{thisMonth}</span>
+                      <span className="text-xl font-bold text-white">{thisMonth}</span>
                     </button>
                     <button 
                       onClick={() => setActiveView('domains')}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
                         <svg className="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                         </svg>
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-sm text-slate-400 font-medium">Domains</p>
+                        <p className="text-sm text-slate-400 font-medium group-hover:text-slate-300 transition-colors">Domains</p>
                       </div>
-                      <span className="text-lg font-bold text-white">25</span>
+                      <span className="text-xl font-bold text-white">25</span>
                     </button>
                   </div>
                 </div>
