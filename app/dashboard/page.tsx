@@ -361,6 +361,9 @@ export default function DashboardPage() {
     async function fetchIdeas() {
       try {
         const response = await fetch('/api/ideas');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         setIdeas(data);
       } catch (err) {
