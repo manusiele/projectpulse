@@ -92,7 +92,7 @@ export default function DashboardPage() {
     localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
     
     // Optimistically update the count
-    setIdeas(ideas.map(idea => 
+    setIdeas(prevIdeas => prevIdeas.map(idea => 
       idea.id === ideaId 
         ? { ...idea, likes: (idea.likes || 0) + (isLiked ? -1 : 1) }
         : idea
@@ -108,7 +108,7 @@ export default function DashboardPage() {
         if (response.ok) {
           const data = await response.json();
           // Update with server response
-          setIdeas(ideas.map(idea => 
+          setIdeas(prevIdeas => prevIdeas.map(idea => 
             idea.id === ideaId 
               ? { ...idea, likes: data.likes }
               : idea
@@ -119,6 +119,12 @@ export default function DashboardPage() {
           revertLiked.add(ideaId);
           setLikedIdeas(revertLiked);
           localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+          // Revert count
+          setIdeas(prevIdeas => prevIdeas.map(idea => 
+            idea.id === ideaId 
+              ? { ...idea, likes: (idea.likes || 0) + 1 }
+              : idea
+          ));
         }
       } else {
         // Like
@@ -129,7 +135,7 @@ export default function DashboardPage() {
         if (response.ok) {
           const data = await response.json();
           // Update with server response
-          setIdeas(ideas.map(idea => 
+          setIdeas(prevIdeas => prevIdeas.map(idea => 
             idea.id === ideaId 
               ? { ...idea, likes: data.likes }
               : idea
@@ -140,12 +146,34 @@ export default function DashboardPage() {
           revertLiked.delete(ideaId);
           setLikedIdeas(revertLiked);
           localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+          // Revert count
+          setIdeas(prevIdeas => prevIdeas.map(idea => 
+            idea.id === ideaId 
+              ? { ...idea, likes: (idea.likes || 0) - 1 }
+              : idea
+          ));
         }
       }
     } catch (error) {
       console.error('Failed to update like:', error);
       // Revert on error
-      setLikedIdeas(isLiked ? new Set([...likedIdeas, ideaId]) : new Set([...likedIdeas].filter(id => id !== ideaId)));
+      if (isLiked) {
+        const revertLiked = new Set(likedIdeas);
+        revertLiked.add(ideaId);
+        setLikedIdeas(revertLiked);
+        localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+      } else {
+        const revertLiked = new Set(likedIdeas);
+        revertLiked.delete(ideaId);
+        setLikedIdeas(revertLiked);
+        localStorage.setItem('likedIdeas', JSON.stringify([...revertLiked]));
+      }
+      // Revert count
+      setIdeas(prevIdeas => prevIdeas.map(idea => 
+        idea.id === ideaId 
+          ? { ...idea, likes: (idea.likes || 0) + (isLiked ? 1 : -1) }
+          : idea
+      ));
     }
   };
 
