@@ -2,12 +2,50 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+// Rate limiting map
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const limit = rateLimitMap.get(ip);
+  
+  if (!limit || now > limit.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 60000 });
+    return true;
+  }
+  
+  if (limit.count >= 10) { // Max 10 likes per minute
+    return false;
+  }
+  
+  limit.count++;
+  return true;
+}
+
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  
   try {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded' },
+        { status: 429 }
+      );
+    }
+    
+    // Validate ID format
+    if (!id || typeof id !== 'string' || !id.startsWith('idea_')) {
+      return NextResponse.json(
+        { error: 'Invalid idea ID' },
+        { status: 400 }
+      );
+    }
+    
     const filePath = path.join(process.cwd(), 'data', 'ideas.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
@@ -45,7 +83,25 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  
   try {
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded' },
+        { status: 429 }
+      );
+    }
+    
+    // Validate ID format
+    if (!id || typeof id !== 'string' || !id.startsWith('idea_')) {
+      return NextResponse.json(
+        { error: 'Invalid idea ID' },
+        { status: 400 }
+      );
+    }
+    
     const filePath = path.join(process.cwd(), 'data', 'ideas.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
