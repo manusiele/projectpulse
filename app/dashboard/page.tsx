@@ -574,7 +574,7 @@ export default function DashboardPage() {
             ) : activeView === 'allIdeas' ? (
               <div className="space-y-6">
                 <div className="mb-6">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
                       <h2 className="text-2xl font-bold text-white mb-2">
                         {selectedDomain ? `${selectedDomain} Ideas` : 'All Ideas'}
@@ -589,13 +589,13 @@ export default function DashboardPage() {
                     {selectedDomain && (
                       <button
                         onClick={() => setSelectedDomain(null)}
-                        className="px-4 py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] text-slate-400 hover:text-white text-sm transition-all flex items-center gap-2"
+                        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] text-slate-400 hover:text-white text-sm transition-all flex items-center justify-center gap-2"
                       >
                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="18" y1="6" x2="6" y2="18" />
                           <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
-                        Clear Filter
+                        <span>Clear Filter</span>
                       </button>
                     )}
                   </div>
