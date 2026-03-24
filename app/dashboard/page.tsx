@@ -317,7 +317,7 @@ export default function DashboardPage() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="fixed top-4 left-4 z-30 lg:hidden w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center hover:bg-[#252525] transition-colors"
+            className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center hover:bg-[#252525] transition-colors"
           >
             <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="3" y1="12" x2="21" y2="12" />
@@ -329,13 +329,13 @@ export default function DashboardPage() {
           {/* Mobile Backdrop */}
           {sidebarOpen && (
             <div 
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 lg:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
           )}
 
           {/* ── Left Sidebar ─────────────────────────────────────────────── */}
-          <div className={`fixed top-4 left-4 w-80 max-w-[calc(100vw-2rem)] h-[98vh] z-20 transition-transform duration-300 lg:translate-x-0 ${
+          <div className={`fixed top-4 left-4 w-80 max-w-[calc(100vw-2rem)] h-[98vh] z-40 transition-transform duration-300 lg:translate-x-0 ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-[calc(100%+1rem)]'
           }`}>
             <div className="h-full overflow-y-auto">
