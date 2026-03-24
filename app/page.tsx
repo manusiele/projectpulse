@@ -256,16 +256,6 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    {/* Step number badge */}
-                    <div className={`absolute top-0 right-1/2 translate-x-1/2 -translate-y-2 w-8 h-8 rounded-lg bg-gradient-to-br ${
-                      item.color === 'blue' ? 'from-blue-500 to-blue-600' :
-                      item.color === 'cyan' ? 'from-cyan-500 to-cyan-600' :
-                      item.color === 'purple' ? 'from-purple-500 to-purple-600' :
-                      'from-pink-500 to-pink-600'
-                    } text-white text-sm font-bold flex items-center justify-center shadow-lg`}>
-                      {item.step}
-                    </div>
-                    
                     <h3 className="font-bold text-white mb-2 text-lg">{item.title}</h3>
                     <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
