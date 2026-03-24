@@ -607,7 +607,7 @@ export default function DashboardPage() {
                       className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
                     >
                       {/* Project Title */}
-                      <h3 className="text-base font-bold text-white mb-3 line-clamp-2 leading-snug">
+                      <h3 className="text-sm font-bold text-white mb-3 line-clamp-2 leading-tight">
                         {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
                       </h3>
 
@@ -721,7 +721,7 @@ export default function DashboardPage() {
                               key={idea.id}
                               className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
                             >
-                              <h3 className="text-base font-bold text-white mb-3 line-clamp-2 leading-snug">
+                              <h3 className="text-sm font-bold text-white mb-3 line-clamp-2 leading-tight">
                                 {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
                               </h3>
                               {(idea.pain || idea.description) && (

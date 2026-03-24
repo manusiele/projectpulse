@@ -111,7 +111,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
     <div className="group bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl overflow-hidden hover:border-[#3a3a3a] backdrop-blur-xl transition-all hover:shadow-xl hover:shadow-blue-500/5">
       <div className="p-5">
         {/* Project name */}
-        <h3 className="text-base font-semibold text-white mb-3 line-clamp-2 leading-snug">{displayName}</h3>
+        <h3 className="text-sm font-semibold text-white mb-3 line-clamp-2 leading-tight">{displayName}</h3>
 
         {/* Description - truncated to 3 lines */}
         <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">
