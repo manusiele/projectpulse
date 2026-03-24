@@ -158,27 +158,87 @@ export default function Home() {
 
         {/* ── How It Works ────────────────────────────────────────────────── */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              { step: "1", title: "Pick Domain", desc: "Random problem domain selected" },
-              { step: "2", title: "Generate", desc: "AI creates idea with context" },
-              { step: "3", title: "Send", desc: "Delivered to Telegram instantly" },
-              { step: "4", title: "Archive", desc: "Saved to git history" },
-            ].map((item) => (
-              <div key={item.step} className="relative">
-                <div className="p-6 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl text-center hover:shadow-lg hover:shadow-blue-500/10 transition-all">
-                  <div className="w-10 h-10 rounded-lg bg-blue-600/90 backdrop-blur-xl text-white font-bold flex items-center justify-center mx-auto mb-4">
-                    {item.step}
+          <h2 className="text-3xl font-bold text-white mb-4 text-center">How It Works</h2>
+          <p className="text-slate-400 text-center mb-12 max-w-2xl mx-auto">
+            Fully automated workflow running on GitHub Actions — zero servers, zero cost
+          </p>
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6">
+              {[
+                { 
+                  step: "01", 
+                  title: "GitHub Actions Triggers", 
+                  desc: "Every day at 10:00 AM EAT, the workflow spins up a fresh Ubuntu VM",
+                  icon: (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                  )
+                },
+                { 
+                  step: "02", 
+                  title: "AI Generates Idea", 
+                  desc: "Ollama runs phi3:mini locally, picks a random domain, and creates a detailed project idea",
+                  icon: (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" y1="19" x2="12" y2="22" />
+                    </svg>
+                  )
+                },
+                { 
+                  step: "03", 
+                  title: "Telegram Delivery", 
+                  desc: "Formatted message sent to your Telegram bot with full project details and dashboard link",
+                  icon: (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m22 2-7 20-4-9-9-4Z" />
+                      <path d="M22 2 11 13" />
+                    </svg>
+                  )
+                },
+                { 
+                  step: "04", 
+                  title: "Git Commit & Archive", 
+                  desc: "Idea saved to JSON files and committed back to the repo — permanent history, no database needed",
+                  icon: (
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                      <line x1="12" y1="22.08" x2="12" y2="12" />
+                    </svg>
+                  )
+                },
+              ].map((item, idx) => (
+                <div key={item.step} className="relative">
+                  <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl hover:border-[#3a3a3a] transition-all hover:shadow-lg hover:shadow-blue-500/10 group">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-xs font-bold text-blue-400 tracking-wider">STEP {item.step}</span>
+                        <div className="h-px flex-1 bg-gradient-to-r from-blue-500/20 to-transparent" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-1">{item.title}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-500">{item.desc}</p>
+                  {idx < 3 && (
+                    <div className="flex justify-center py-2">
+                      <svg className="w-5 h-5 text-blue-500/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <polyline points="19 12 12 19 5 12" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
-                {item.step !== "4" && (
-                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-blue-500/40 to-transparent" />
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
