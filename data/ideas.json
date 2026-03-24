@@ -203,7 +203,8 @@
     "whyNow": "",
     "potential": "",
     "docs": "• Supabase Documentation - Developers will learn about setting up the database schema for FocusFrame to ensure efficient query execution, which is essential given that a significant portion of client interactions involves retrieving bookings and gallery information quickly; this documentation provides specific features like automatic backups and multi-region deployments ensuring data availability.\n• React Native Expo Documentation - A critical guide in implementing the mobile app integration for FocusFrame, providing implementation details on connecting to Next.js backend services via RESTful APIs or GraphQL using native networking libraries such as Axios; this is crucial given that freelancers often handle work across multiple devices—offering them a way to access their business from anywhere with ease and instant synchronization of data between apps for consistency in client experience.\n• Tailwind CSS Guide - This detailed guide on using utility-first styling will help developers ensure FocusFrame has an attractive, responsive design that appeals to creatives as well as streamlines the editing workflows through customizable styles within the app's interface; it also provides specific examples of how this can optimize gallery presentations with a consistent look and feel across different platforms.\n• MongoDB Documentation - FocusFrame developers will utilize these integration steps for creating, reading, updating, and deleting (CRUD) operations to manage their photo/video libraries effectively within the platform; it includes methods on indexing images which benefits full-text search capabilities ensuring users can find assets quickly—an important feature considering that creatives often need fast access during client meetings.",
-    "likes": 0
+    "likes": 1,
+    "shares": 1
   },
   {
     "id": "idea_1774291085",
@@ -293,6 +294,7 @@
     "whyNow": "",
     "potential": "",
     "docs": "• GraphQL Documentation — Learning querying and mutating graph structures is essential, this project specifically needs understanding of resolving complex family schedule queries with nested resources such as school activities or medical appointments that require strong relationships between entities (e.g., \"How to write a request for AI-generated reminders based on specific events in the child's timetable?\").\n• AWS Lambda Documentation — Essential knowledge of writing serverless functions is critical, implementation details matter as they dictate performance and scalability necessary when handling real time data from diverse sources (e.g., \"What are best practices for setting up a trigger-based system to push notifications based on user input?\").\n• AWS DynamoDB Documentation — Integrating this NoSQL database is key due to its low latency which can directly impact the timely synchronization of schedules across devices and services, crucial when tracking critical appointments in real time (e.g., \"How do I implement a cache system using AWS DAX for frequently accessed family calendar data?\").\n• Auth0 Documentation — Implementing security measures is non-negotiable to protect sensitive information such as medical records; understanding how to use user management and access controls with JSON Web Tokens (JWT) will ensure parents' trust through robust authentication methods.",
-    "likes": 1
+    "likes": 2,
+    "shares": 1
   }
 ]
