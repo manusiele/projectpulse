@@ -4,15 +4,16 @@ import path from 'path';
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const filePath = path.join(process.cwd(), 'data', 'ideas.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
     
     // Find the idea and increment likes
-    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === params.id);
+    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === id);
     
     if (ideaIndex === -1) {
       return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
@@ -41,15 +42,16 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const filePath = path.join(process.cwd(), 'data', 'ideas.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
     
     // Find the idea and decrement likes
-    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === params.id);
+    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === id);
     
     if (ideaIndex === -1) {
       return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
