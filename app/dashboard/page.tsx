@@ -601,57 +601,74 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea) => (
-                    <div 
-                      key={idea.id}
-                      className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
-                    >
-                      {/* Project Title */}
-                      <h3 className="text-sm font-bold text-white mb-3 line-clamp-2 leading-tight">
-                        {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
-                      </h3>
+                  {(selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).length === 0 ? (
+                    <div className="col-span-full bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl">
+                      <svg className="w-16 h-16 mx-auto mb-4 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      <h3 className="text-xl font-bold text-white mb-2">No ideas found</h3>
+                      <p className="text-sm text-slate-400">
+                        {selectedDomain 
+                          ? `No ideas in the "${selectedDomain}" domain yet.`
+                          : 'No ideas available yet. Check back after the workflow runs.'
+                        }
+                      </p>
+                    </div>
+                  ) : (
+                    (selectedDomain ? ideas.filter(i => i.domain === selectedDomain) : ideas).map((idea) => (
+                      <div 
+                        key={idea.id}
+                        className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
+                      >
+                        {/* Project Title */}
+                        <h3 className="text-sm font-bold text-white mb-3 line-clamp-2 leading-tight">
+                          {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
+                        </h3>
 
-                      {/* Pain/Description */}
-                      {(idea.pain || idea.description) && (
-                        <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-3">
-                          {idea.pain || idea.description}
-                        </p>
-                      )}
+                        {/* Pain/Description */}
+                        {(idea.pain || idea.description) && (
+                          <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-3">
+                            {idea.pain || idea.description}
+                          </p>
+                        )}
 
-                      {/* Footer */}
-                      <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
-                        <span className="text-sm text-slate-500">
-                          {new Date(idea.date).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => setSelectedIdea(idea)}
-                            className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
-                          >
-                            View
-                          </button>
-                          <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
-                            <svg className="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                          </button>
-                          <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
-                            <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <circle cx="18" cy="5" r="3" />
-                              <circle cx="6" cy="12" r="3" />
-                              <circle cx="18" cy="19" r="3" />
-                              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                            </svg>
-                          </button>
+                        {/* Footer */}
+                        <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
+                          <span className="text-sm text-slate-500">
+                            {new Date(idea.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setSelectedIdea(idea)}
+                              className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
+                            >
+                              View
+                            </button>
+                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                              <svg className="w-4 h-4 text-pink-400" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                              </svg>
+                            </button>
+                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                              <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="18" cy="5" r="3" />
+                                <circle cx="6" cy="12" r="3" />
+                                <circle cx="18" cy="19" r="3" />
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
             ) : activeView === 'thisMonth' ? (
@@ -712,10 +729,23 @@ export default function DashboardPage() {
                       ? [selectedWeek.toString()]
                       : Object.keys(weekGroups).sort((a, b) => Number(b) - Number(a));
 
-                    return weeksToShow.map(weekNum => (
-                      <div key={weekNum} className="space-y-4">
-                        <h3 className="text-lg font-semibold text-white">Week {weekNum}</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    return weeksToShow.map(weekNum => {
+                      const weekIdeas = weekGroups[Number(weekNum)] || [];
+                      return (
+                        <div key={weekNum} className="space-y-4">
+                          <h3 className="text-lg font-semibold text-white">Week {weekNum}</h3>
+                          {weekIdeas.length === 0 ? (
+                            <div className="bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 rounded-2xl p-8 text-center backdrop-blur-2xl">
+                              <svg className="w-12 h-12 mx-auto mb-3 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                              </svg>
+                              <h4 className="text-base font-bold text-white mb-1">No ideas this week</h4>
+                              <p className="text-sm text-slate-400">Check back after the workflow runs.</p>
+                            </div>
+                          ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {(weekGroups[Number(weekNum)] || []).map((idea) => (
                             <div 
                               key={idea.id}
@@ -763,8 +793,10 @@ export default function DashboardPage() {
                             </div>
                           ))}
                         </div>
-                      </div>
-                    ));
+                          )}
+                        </div>
+                      );
+                    });
                   })()
                 )}
               </div>
