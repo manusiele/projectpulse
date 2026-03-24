@@ -456,6 +456,16 @@ export default function DashboardPage() {
                     <span className="text-xs text-slate-600 font-bold">{ideas.length}</span>
                   </div>
                   <nav className="space-y-2">
+                    <Link 
+                      href="/" 
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a] transition-all"
+                    >
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                      </svg>
+                      <span className="font-medium flex-1 text-left">Home</span>
+                    </Link>
                     <button 
                       onClick={() => setActiveView('ideas')}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
@@ -469,16 +479,6 @@ export default function DashboardPage() {
                       </svg>
                       <span className="font-medium flex-1 text-left">Latest Spark</span>
                     </button>
-                    <Link 
-                      href="/" 
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a] transition-all"
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                      </svg>
-                      <span className="font-medium flex-1 text-left">Home</span>
-                    </Link>
                   </nav>
                 </div>
 
