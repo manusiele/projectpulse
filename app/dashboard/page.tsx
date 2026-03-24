@@ -960,7 +960,7 @@ export default function DashboardPage() {
                       
                       {sections.problem && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                             Problem Statement
                           </h3>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.problem}</p>
@@ -969,7 +969,7 @@ export default function DashboardPage() {
                       
                       {sections.project && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                             Project
                           </h3>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.project}</p>
@@ -978,7 +978,7 @@ export default function DashboardPage() {
                       
                       {sections.deploy && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                             Deployment
                           </h3>
                           <p className="text-slate-300 leading-relaxed">{sections.deploy}</p>
@@ -987,7 +987,7 @@ export default function DashboardPage() {
                       
                       {sections.docs && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
                             Docs & Links
                           </h3>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.docs}</p>
@@ -996,7 +996,7 @@ export default function DashboardPage() {
                       
                       {sections.whyNow && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                             Why Now
                           </h3>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.whyNow}</p>
@@ -1005,7 +1005,7 @@ export default function DashboardPage() {
                       
                       {sections.potential && (
                         <div>
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                             Market Potential
                           </h3>
                           <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.potential}</p>
@@ -1043,7 +1043,7 @@ export default function DashboardPage() {
                 {/* Problem Statement - parse from raw if available */}
                 {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && selectedIdea.stack && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Problem Statement
                     </h3>
                     <p className="text-slate-300 leading-relaxed whitespace-pre-line">
@@ -1055,7 +1055,7 @@ export default function DashboardPage() {
                 {/* Who */}
                 {selectedIdea.who && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Target Audience
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.who}</p>
@@ -1065,7 +1065,7 @@ export default function DashboardPage() {
                 {/* Pain Point */}
                 {selectedIdea.pain && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Problem
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
@@ -1075,7 +1075,7 @@ export default function DashboardPage() {
                 {/* Gap */}
                 {selectedIdea.gap && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Market Gap
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.gap}</p>
@@ -1085,7 +1085,7 @@ export default function DashboardPage() {
                 {/* Why Now */}
                 {selectedIdea.whyNow && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Why Now
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.whyNow}</p>
@@ -1095,7 +1095,7 @@ export default function DashboardPage() {
                 {/* Potential */}
                 {selectedIdea.potential && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Market Potential
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.potential}</p>
@@ -1105,7 +1105,7 @@ export default function DashboardPage() {
                 {/* Deploy */}
                 {selectedIdea.deploy && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
                       Deployment
                     </h3>
                     <p className="text-slate-300 leading-relaxed">{selectedIdea.deploy}</p>
@@ -1115,7 +1115,7 @@ export default function DashboardPage() {
                 {/* Docs & Links */}
                 {selectedIdea.docs && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
                       Docs & Links
                     </h3>
                     <div className="flex flex-col gap-2">
