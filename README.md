@@ -1,14 +1,14 @@
-# FocusLock AI 🔥
+# ProjectPulse 💡
 
-**Your Daily Money-Making Project Ideas**  
-Telegram: [@focuslock_bot](https://t.me/focuslock_bot)
+**Your Daily Pulse of Shippable Project Ideas**  
+Telegram: [@projectpulse_bot](https://t.me/projectpulse_bot)
 
 Every single day you get:
 - 1 brutally honest problem statement
 - 1 fully shippable project (2–8 hours max)
 - Exact stack + live deploy platform
 - Direct doc links
-- Real KSh potential
+- Real market potential
 
 **No code to run**  
 **No laptop needed**  
@@ -19,7 +19,7 @@ Every single day you get:
 ## Quick Start (10 seconds)
 
 1. Open Telegram  
-2. Search: `@focuslock_bot`  
+2. Search: `@projectpulse_bot`  
 3. Tap the bot → press START  
    (or just type `/idea` anytime)
 
@@ -29,7 +29,7 @@ That's it. You're now receiving daily weapons that actually pay.
 
 ## How It Works (Technical Deep Dive)
 
-FocusLock is a **fully automated AI agent** that runs on **GitHub Actions** and delivers project ideas to Telegram every 3 hours (or on-demand). Zero servers, zero costs.
+ProjectPulse is a **fully automated AI agent** that runs on **GitHub Actions** and delivers project ideas to Telegram daily. Zero servers, zero costs.
 
 ### Architecture Overview
 
@@ -253,8 +253,8 @@ jobs:
 
 1. Message [@BotFather](https://t.me/BotFather) on Telegram
 2. Send `/newbot`
-3. Choose a name: `FocusLock`
-4. Choose a username: `@focuslock_bot`
+3. Choose a name: `ProjectPulse`
+4. Choose a username: `@projectpulse_bot`
 5. BotFather gives you a token: `1234567890:ABCdefGHIjklMNOpqrsTUVwxyz`
 
 #### Getting Your Chat ID
@@ -327,14 +327,25 @@ python focuslock.py
 ## Project Structure
 
 ```
-focuslock-ai/
+projectpulse/
 ├── .github/
 │   └── workflows/
 │       └── focuslock.yml     # GitHub Actions automation
 ├── data/
 │   └── history.json          # Persistent conversation memory
+│   └── ideas.json            # All generated ideas
+├── app/
+│   ├── api/                  # Next.js API routes
+│   ├── dashboard/            # Dashboard page
+│   └── page.tsx              # Homepage
+├── components/               # React components
+├── public/
+│   ├── sw.js                 # Service worker for PWA
+│   ├── manifest.json         # PWA manifest
+│   └── icon-*.png            # App icons
 ├── focuslock.py              # Main bot script
 ├── requirements.txt          # Python dependencies
+├── package.json              # Node.js dependencies
 ├── .env.example              # Template for local testing
 ├── .gitignore
 └── README.md                 # This file
@@ -495,17 +506,20 @@ MODEL = "gemma2:2b"  # 1.6GB (faster download)
 
 ## Roadmap
 
+- [x] Web dashboard with PWA support
+- [x] Like and share functionality
+- [x] Push notifications for new ideas
+- [x] Offline support with service worker
 - [ ] Add `/feedback` command to influence next idea
 - [ ] Sentiment analysis on history (detect burnout patterns)
 - [ ] Multi-language support (Swahili project descriptions)
-- [ ] Web dashboard to view all past ideas
 - [ ] Integration with GitHub to auto-create repos for ideas
 
 ---
 
 ## Contributing
 
-Built by [@manusiele](https://github.com/manusiele) for Kenyan devs.
+Built by [@manusiele](https://github.com/manusiele) for developers worldwide.
 
 Want to contribute?
 1. Fork the repo
@@ -522,12 +536,13 @@ MIT License - feel free to fork and customize for your own use.
 
 ## Contact
 
-- Telegram: [@focuslock_bot](https://t.me/focuslock_bot)
-- Issues: [GitHub Issues](https://github.com/manusiele/focuslock-ai/issues)
+- Telegram: [@projectpulse_bot](https://t.me/projectpulse_bot)
+- Issues: [GitHub Issues](https://github.com/manusiele/projectpulse/issues)
+- Web App: [projectpulse.app](https://projectpulse.app)
 
 ---
 
 **Built by a Kenyan dev for Kenyan devs.**  
 **Kenya's about to eat in 2025.** 🇰🇪
 
-[@focuslock_bot](https://t.me/focuslock_bot)
+[@projectpulse_bot](https://t.me/projectpulse_bot)
