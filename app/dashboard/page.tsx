@@ -432,33 +432,24 @@ export default function DashboardPage() {
                 {/* Header with Logo */}
                 <div className="mb-8">
                   <div className="flex items-center justify-center">
-                    <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="180" height="45" viewBox="0 0 180 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                       {/* Focus text with gradient */}
-                      <text x="10" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient1)', letterSpacing: '-0.02em' }}>
+                      <text x="5" y="30" className="font-black" style={{ fontSize: '26px', fill: 'url(#gradient1)', letterSpacing: '-0.02em' }}>
                         Focus
                       </text>
                       {/* Lock text with gradient */}
-                      <text x="115" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient2)', letterSpacing: '-0.02em' }}>
-                        Lock
-                      </text>
-                      {/* Glow effect */}
-                      <text x="10" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient1)', letterSpacing: '-0.02em', filter: 'blur(8px)', opacity: 0.3 }}>
-                        Focus
-                      </text>
-                      <text x="115" y="40" className="font-black" style={{ fontSize: '36px', fill: 'url(#gradient2)', letterSpacing: '-0.02em', filter: 'blur(8px)', opacity: 0.3 }}>
+                      <text x="95" y="30" className="font-black" style={{ fontSize: '26px', fill: 'url(#gradient2)', letterSpacing: '-0.02em' }}>
                         Lock
                       </text>
                       {/* Gradients */}
                       <defs>
                         <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
                           <stop offset="0%" style={{ stopColor: '#60a5fa', stopOpacity: 1 }} />
-                          <stop offset="50%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />
-                          <stop offset="100%" style={{ stopColor: '#2563eb', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#3b82f6', stopOpacity: 1 }} />
                         </linearGradient>
                         <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
                           <stop offset="0%" style={{ stopColor: '#22d3ee', stopOpacity: 1 }} />
-                          <stop offset="50%" style={{ stopColor: '#06b6d4', stopOpacity: 1 }} />
-                          <stop offset="100%" style={{ stopColor: '#0891b2', stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: '#06b6d4', stopOpacity: 1 }} />
                         </linearGradient>
                       </defs>
                     </svg>
@@ -467,15 +458,21 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Menu Section */}
-                <div className="mb-8">
+                <div className="mb-8 relative">
+                  {/* Connecting line from Menu to Stats */}
+                  <div className="absolute left-[52px] top-[calc(100%+16px)] w-0.5 h-8 bg-gradient-to-b from-slate-700 to-transparent" />
+                  
                   <div className="flex items-center justify-between mb-4 px-1">
                     <span className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">Menu</span>
                     <span className="text-xs text-slate-600 font-bold px-2 py-0.5 rounded-md bg-slate-800/50">{ideas.length}</span>
                   </div>
-                  <nav className="space-y-2">
+                  <nav className="space-y-2 relative">
+                    {/* Connecting line between menu items */}
+                    <div className="absolute left-[52px] top-[52px] w-0.5 h-[calc(100%-52px)] bg-gradient-to-b from-slate-700/50 to-slate-700/20" />
+                    
                     <Link 
                       href="/" 
-                      className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80 transition-all group"
+                      className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80 transition-all group relative z-10"
                     >
                       <div className="w-9 h-9 rounded-lg bg-slate-800/50 group-hover:bg-slate-700/50 flex items-center justify-center transition-colors">
                         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -487,7 +484,7 @@ export default function DashboardPage() {
                     </Link>
                     <button 
                       onClick={() => setActiveView('ideas')}
-                      className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm transition-all group ${
+                      className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm transition-all group relative z-10 ${
                         activeView === 'ideas' 
                           ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/10 border border-blue-500/40 shadow-lg shadow-blue-500/20' 
                           : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
@@ -508,15 +505,18 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Stats Section */}
-                <div>
+                <div className="relative">
                   <div className="flex items-center justify-between mb-4 px-1">
                     <span className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">Stats</span>
                     <span className="text-xs text-slate-600 font-bold px-2 py-0.5 rounded-md bg-slate-800/50">3</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 relative">
+                    {/* Connecting lines between stat items */}
+                    <div className="absolute left-[52px] top-[68px] w-0.5 h-[calc(100%-68px)] bg-gradient-to-b from-blue-500/30 via-cyan-500/20 to-purple-500/20" />
+                    
                     <button 
                       onClick={() => setActiveView('allIdeas')}
-                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group relative z-10"
                     >
                       <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/10">
                         <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -531,7 +531,7 @@ export default function DashboardPage() {
                     </button>
                     <button 
                       onClick={() => setActiveView('thisMonth')}
-                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group relative z-10"
                     >
                       <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10">
                         <svg className="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -548,7 +548,7 @@ export default function DashboardPage() {
                     </button>
                     <button 
                       onClick={() => setActiveView('domains')}
-                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group"
+                      className="w-full flex items-center gap-3 px-4 py-4 rounded-xl bg-gradient-to-br from-[#1a1a1a] to-[#151515] hover:from-[#1f1f1f] hover:to-[#1a1a1a] border border-[#252525] transition-all group relative z-10"
                     >
                       <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/30 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/10">
                         <svg className="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
