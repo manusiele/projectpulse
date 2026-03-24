@@ -26,6 +26,18 @@ export function NotificationPrompt() {
     if (permission === 'granted') {
       setShowPrompt(false);
       localStorage.setItem('notificationPromptDismissed', 'true');
+      
+      // Trigger an immediate background sync check
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        if ('sync' in registration) {
+          try {
+            await (registration as any).sync.register('check-new-ideas');
+          } catch (error) {
+            console.log('Could not register sync:', error);
+          }
+        }
+      }
     }
   };
 
@@ -49,7 +61,7 @@ export function NotificationPrompt() {
           
           <div className="flex-1 min-w-0">
             <h3 className="text-xs font-semibold text-white mb-1">Get Notified</h3>
-            <p className="text-xs text-slate-400 mb-2 leading-tight">Receive alerts for new daily ideas</p>
+            <p className="text-xs text-slate-400 mb-2 leading-tight">Get alerts for new ideas even when the app is closed</p>
             
             <div className="flex items-center gap-1.5">
               <button
