@@ -33,17 +33,18 @@ export default function Home() {
       {/* ── Navigation ─────────────────────────────────────────────────── */}
       <nav className="border-b border-[#2a2a2a]/50 bg-[#1a1a1a]/30 backdrop-blur-xl sticky top-0 z-40 relative">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg overflow-hidden">
-              <Image 
-                src="/logo.webp" 
-                alt="FocusLock" 
-                width={40} 
-                height={40}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-xl font-bold text-white">FocusLock</span>
+          <Link href="/" className="flex items-center group">
+            <svg width="180" height="45" viewBox="0 0 180 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="5" y="30" className="font-black" style={{ fontSize: '26px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
+                FocusLock
+              </text>
+              <defs>
+                <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#60a5fa', stopOpacity: 1 }} />
+                  <stop offset="100%" style={{ stopColor: '#22d3ee', stopOpacity: 1 }} />
+                </linearGradient>
+              </defs>
+            </svg>
           </Link>
           <div className="flex items-center gap-4">
             <a href="https://github.com/manusiele/focuslock-ai" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
