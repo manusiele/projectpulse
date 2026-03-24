@@ -12,6 +12,7 @@ interface Props {
 
 export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLiked = false }: Props) {
   const [animateLike, setAnimateLike] = useState(false);
+  const [animateButton, setAnimateButton] = useState(false);
   const [prevLikes, setPrevLikes] = useState(idea.likes || 0);
 
   // Trigger animation when like count changes
@@ -23,6 +24,12 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
       return () => clearTimeout(timer);
     }
   }, [idea.likes, prevLikes]);
+
+  const handleLikeClick = () => {
+    setAnimateButton(true);
+    setTimeout(() => setAnimateButton(false), 400);
+    onLike?.(idea.id);
+  };
 
   const stackItems = idea.stack
     ? idea.stack.split(/\s*\+\s*/).filter(Boolean)
@@ -92,10 +99,10 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
                 </button>
               )}
               <button
-                onClick={() => onLike?.(idea.id)}
+                onClick={handleLikeClick}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${
-                  isLiked ? 'bg-blue-500/20 text-blue-400 animate-like-bounce' : 'bg-[#252525] text-slate-400 hover:text-blue-400 hover:scale-105'
-                }`}
+                  isLiked ? 'bg-blue-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
+                } ${animateButton ? 'animate-like-bounce' : 'hover:scale-105'}`}
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
@@ -147,10 +154,10 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
               </button>
             )}
             <button
-              onClick={() => onLike?.(idea.id)}
+              onClick={handleLikeClick}
               className={`flex items-center gap-1 px-2 py-1.5 rounded-lg transition-all ${
-                isLiked ? 'bg-blue-500/20 text-blue-400 animate-like-bounce' : 'bg-[#252525] text-slate-400 hover:text-blue-400 hover:scale-105'
-              }`}
+                isLiked ? 'bg-blue-500/20 text-blue-400' : 'bg-[#252525] text-slate-400 hover:text-blue-400'
+              } ${animateButton ? 'animate-like-bounce' : 'hover:scale-105'}`}
             >
               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
