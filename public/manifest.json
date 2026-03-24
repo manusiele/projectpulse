@@ -1,0 +1,26 @@
+{
+  "name": "FocusLock - Daily AI Project Ideas",
+  "short_name": "FocusLock",
+  "description": "Get a fresh AI-generated project idea delivered daily. Real problems. Shippable solutions. Exact tech stack.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "education", "developer tools"],
+  "screenshots": []
+}

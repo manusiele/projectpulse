@@ -10,6 +10,19 @@ export const metadata: Metadata = {
     shortcut: '/logo.webp',
     apple: '/logo.webp',
   },
+  manifest: '/manifest.json',
+  themeColor: '#3b82f6',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'FocusLock',
+  },
 };
 
 export default function RootLayout({
