@@ -522,7 +522,7 @@ export default function DashboardPage() {
                       onClick={() => setActiveView('ideas')}
                       className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
                         activeView === 'ideas' 
-                          ? 'text-white bg-cyan-500/20 border border-cyan-500/30' 
+                          ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30' 
                           : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
                       }`}
                     >
@@ -538,7 +538,7 @@ export default function DashboardPage() {
                       onClick={() => setActiveView('allIdeas')}
                       className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
                         activeView === 'allIdeas' 
-                          ? 'text-white bg-cyan-500/20 border border-cyan-500/30' 
+                          ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30' 
                           : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
                       }`}
                     >
@@ -548,14 +548,14 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">All Ideas</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-400 text-xs font-bold">{ideas.length}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{ideas.length}</span>
                     </button>
                     
                     <button 
                       onClick={() => setActiveView('thisMonth')}
                       className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
                         activeView === 'thisMonth' 
-                          ? 'text-white bg-cyan-500/20 border border-cyan-500/30' 
+                          ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30' 
                           : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
                       }`}
                     >
@@ -568,14 +568,14 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">This Month</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-400 text-xs font-bold">{thisMonth}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{thisMonth}</span>
                     </button>
                     
                     <button 
                       onClick={() => setActiveView('domains')}
                       className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
                         activeView === 'domains' 
-                          ? 'text-white bg-cyan-500/20 border border-cyan-500/30' 
+                          ? 'text-white bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30' 
                           : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80'
                       }`}
                     >
@@ -588,7 +588,7 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">Domains</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-400 text-xs font-bold">25</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">25</span>
                     </button>
                   </nav>
                 </div>
