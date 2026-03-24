@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { NotificationPrompt } from "@/components/NotificationPrompt";
+import { RegisterServiceWorker } from "./register-sw";
 
 export const metadata: Metadata = {
   title: "FocusLock — Daily Project Ideas",
@@ -34,8 +36,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen bg-[#0a0a0a] text-gray-100 antialiased">
+        <RegisterServiceWorker />
         {children}
         <InstallPrompt />
+        <NotificationPrompt />
       </body>
     </html>
   );
