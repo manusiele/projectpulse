@@ -925,6 +925,96 @@ export default function DashboardPage() {
 
               {/* Key Details */}
               <div className="space-y-5">
+                {/* Parse and display raw content if structured fields are missing */}
+                {selectedIdea.raw && !selectedIdea.stack && (() => {
+                  const raw = selectedIdea.raw;
+                  const sections: { [key: string]: string } = {};
+                  
+                  // Extract sections from raw text
+                  const problemMatch = raw.match(/PROBLEM STATEMENT[:\s]+([\s\S]*?)(?=\n\nProject|Project:|STACK|$)/i);
+                  const projectMatch = raw.match(/Project[:\s]+([\s\S]*?)(?=\n\nStack|Stack:|DEPLOY|$)/i);
+                  const stackMatch = raw.match(/Stack[:\s]+([\s\S]*?)(?=\n\nDeploy|Deploy:|DOCS|WHY NOW|$)/i);
+                  const deployMatch = raw.match(/Deploy[:\s]+([\s\S]*?)(?=\n\nDocs|Docs & Links|WHY NOW|POTENTIAL|$)/i);
+                  const docsMatch = raw.match(/Docs & Links[:\s]+([\s\S]*?)(?=\n\nWhy now|Why Now|POTENTIAL|$)/i);
+                  const whyNowMatch = raw.match(/Why now[:\s]+([\s\S]*?)(?=\n\nPotential|POTENTIAL|TARGET|$)/i);
+                  const potentialMatch = raw.match(/Potential[:\s]+([\s\S]*?)(?=\n\nTarget|TARGET AUDIENCE|$)/i);
+                  
+                  if (problemMatch) sections.problem = problemMatch[1].trim();
+                  if (projectMatch) sections.project = projectMatch[1].trim();
+                  if (stackMatch) sections.stack = stackMatch[1].trim();
+                  if (deployMatch) sections.deploy = deployMatch[1].trim();
+                  if (docsMatch) sections.docs = docsMatch[1].trim();
+                  if (whyNowMatch) sections.whyNow = whyNowMatch[1].trim();
+                  if (potentialMatch) sections.potential = potentialMatch[1].trim();
+                  
+                  return (
+                    <>
+                      {sections.stack && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
+                            Tech Stack
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed">{sections.stack}</p>
+                        </div>
+                      )}
+                      
+                      {sections.problem && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
+                            Problem Statement
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.problem}</p>
+                        </div>
+                      )}
+                      
+                      {sections.project && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2">
+                            Project
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.project}</p>
+                        </div>
+                      )}
+                      
+                      {sections.deploy && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                            Deployment
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed">{sections.deploy}</p>
+                        </div>
+                      )}
+                      
+                      {sections.docs && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3">
+                            Docs & Links
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.docs}</p>
+                        </div>
+                      )}
+                      
+                      {sections.whyNow && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-2">
+                            Why Now
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.whyNow}</p>
+                        </div>
+                      )}
+                      
+                      {sections.potential && (
+                        <div>
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-green-400 mb-2">
+                            Market Potential
+                          </h3>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.potential}</p>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+
                 {/* Stack */}
                 {selectedIdea.stack && (
                   <div>
@@ -951,7 +1041,7 @@ export default function DashboardPage() {
                 )}
 
                 {/* Problem Statement - parse from raw if available */}
-                {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && (
+                {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && selectedIdea.stack && (
                   <div>
                     <h3 className="text-xs font-bold uppercase tracking-wider text-red-400 mb-2">
                       Problem Statement
