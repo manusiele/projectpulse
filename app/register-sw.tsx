@@ -13,7 +13,12 @@ export function RegisterServiceWorker() {
           // Register periodic background sync (Chrome/Edge only)
           if ('periodicSync' in registration) {
             try {
-              await (registration as any).periodicSync.register('check-new-ideas', {
+              const periodicSync = registration as unknown as {
+                periodicSync: {
+                  register: (tag: string, options: { minInterval: number }) => Promise<void>;
+                };
+              };
+              await periodicSync.periodicSync.register('check-new-ideas', {
                 minInterval: 30 * 60 * 1000, // 30 minutes
               });
               console.log('Periodic background sync registered');
@@ -23,7 +28,12 @@ export function RegisterServiceWorker() {
               // Fallback: Register regular background sync
               if ('sync' in registration) {
                 try {
-                  await (registration as any).sync.register('check-new-ideas');
+                  const bgSync = registration as unknown as {
+                    sync: {
+                      register: (tag: string) => Promise<void>;
+                    };
+                  };
+                  await bgSync.sync.register('check-new-ideas');
                   console.log('Background sync registered');
                 } catch (syncError) {
                   console.log('Background sync not available:', syncError);
