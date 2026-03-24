@@ -353,7 +353,7 @@ export default function DashboardPage() {
               />
               
               {/* Bottom Nav Bar */}
-              <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#1a1a1a]/95 backdrop-blur-xl border-t border-[#2a2a2a] p-4 animate-slideUp">
+              <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden p-4 animate-slideUp">
                 <div className="flex items-center justify-around max-w-md mx-auto">
                   <button
                     onClick={() => { setActiveView('ideas'); setMobileNavOpen(false); }}
