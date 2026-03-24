@@ -20,13 +20,13 @@ export default function Home() {
             <div className="w-10 h-10 rounded-lg overflow-hidden">
               <Image 
                 src="/logo.webp" 
-                alt="Nexus" 
+                alt="FocusLock" 
                 width={40} 
                 height={40}
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xl font-bold text-white">Nexus</span>
+            <span className="text-xl font-bold text-white">FocusLock</span>
           </Link>
           <div className="flex items-center gap-4">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
@@ -110,7 +110,7 @@ export default function Home() {
 
         {/* ── Features ────────────────────────────────────────────────────── */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">Why Nexus?</h2>
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">Why FocusLock?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -210,7 +210,7 @@ export default function Home() {
       {/* ── Footer ──────────────────────────────────────────────────────── */}
       <footer className="border-t border-[#2a2a2a]/30 py-12 mt-20 bg-[#1a1a1a]/20 backdrop-blur-2xl relative">
         <div className="max-w-6xl mx-auto px-6 text-center text-sm text-slate-500">
-          © 2026 Nexus. Serverless. Open source. Daily ideas.
+          © 2026 FocusLock. Serverless. Open source. Daily ideas.
         </div>
       </footer>
     </div>
