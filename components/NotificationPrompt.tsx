@@ -32,7 +32,12 @@ export function NotificationPrompt() {
         const registration = await navigator.serviceWorker.ready;
         if ('sync' in registration) {
           try {
-            await (registration as any).sync.register('check-new-ideas');
+            const bgSync = registration as unknown as {
+              sync: {
+                register: (tag: string) => Promise<void>;
+              };
+            };
+            await bgSync.sync.register('check-new-ideas');
           } catch (error) {
             console.log('Could not register sync:', error);
           }
