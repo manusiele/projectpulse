@@ -177,10 +177,44 @@ export default function Home() {
         <section className="mb-20">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">How It Works</h2>
           <div className="relative max-w-5xl mx-auto">
-            {/* Connecting line */}
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/20 via-cyan-500/40 to-purple-500/20 -translate-y-1/2" />
+            {/* Animated SVG path connecting all steps */}
+            <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+              <defs>
+                <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 0.6 }} />
+                  <stop offset="33%" style={{ stopColor: '#06b6d4', stopOpacity: 0.6 }} />
+                  <stop offset="66%" style={{ stopColor: '#a855f7', stopOpacity: 0.6 }} />
+                  <stop offset="100%" style={{ stopColor: '#ec4899', stopOpacity: 0.6 }} />
+                </linearGradient>
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <polygon points="0 0, 10 3, 0 6" fill="#ec4899" opacity="0.8" />
+                </marker>
+              </defs>
+              {/* Curved path connecting the steps */}
+              <path
+                d="M 80 60 Q 200 40, 320 60 T 560 60 T 800 60"
+                stroke="url(#pathGradient)"
+                strokeWidth="3"
+                fill="none"
+                strokeDasharray="8 4"
+                markerEnd="url(#arrowhead)"
+                className="animate-pulse"
+              />
+              {/* Step number circles */}
+              <circle cx="80" cy="60" r="18" fill="#3b82f6" opacity="0.2" />
+              <text x="80" y="66" textAnchor="middle" fill="#60a5fa" fontSize="16" fontWeight="bold">1</text>
+              
+              <circle cx="320" cy="60" r="18" fill="#06b6d4" opacity="0.2" />
+              <text x="320" y="66" textAnchor="middle" fill="#22d3ee" fontSize="16" fontWeight="bold">2</text>
+              
+              <circle cx="560" cy="60" r="18" fill="#a855f7" opacity="0.2" />
+              <text x="560" y="66" textAnchor="middle" fill="#c084fc" fontSize="16" fontWeight="bold">3</text>
+              
+              <circle cx="800" cy="60" r="18" fill="#ec4899" opacity="0.2" />
+              <text x="800" y="66" textAnchor="middle" fill="#f472b6" fontSize="16" fontWeight="bold">4</text>
+            </svg>
             
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative" style={{ paddingTop: '100px' }}>
               {[
                 { 
                   step: "1", 
