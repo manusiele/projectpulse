@@ -672,12 +672,22 @@ export default function DashboardPage() {
                             >
                               View
                             </button>
-                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
-                              <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <button 
+                              onClick={() => handleLike(idea.id)}
+                              className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                                likedIdeas.has(idea.id) 
+                                  ? 'bg-blue-500/20 hover:bg-blue-500/30' 
+                                  : 'bg-[#252525] hover:bg-[#2a2a2a]'
+                              }`}
+                            >
+                              <svg className={`w-4 h-4 ${likedIdeas.has(idea.id) ? 'text-blue-400' : 'text-slate-400'}`} viewBox="0 0 24 24" fill={likedIdeas.has(idea.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                               </svg>
                             </button>
-                            <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                            <button 
+                              onClick={() => handleShare(idea)}
+                              className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors"
+                            >
                               <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="18" cy="5" r="3" />
                                 <circle cx="6" cy="12" r="3" />
@@ -796,12 +806,22 @@ export default function DashboardPage() {
                                   >
                                     View
                                   </button>
-                                  <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
-                                    <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <button 
+                                    onClick={() => handleLike(idea.id)}
+                                    className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                                      likedIdeas.has(idea.id) 
+                                        ? 'bg-blue-500/20 hover:bg-blue-500/30' 
+                                        : 'bg-[#252525] hover:bg-[#2a2a2a]'
+                                    }`}
+                                  >
+                                    <svg className={`w-4 h-4 ${likedIdeas.has(idea.id) ? 'text-blue-400' : 'text-slate-400'}`} viewBox="0 0 24 24" fill={likedIdeas.has(idea.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                       <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
                                     </svg>
                                   </button>
-                                  <button className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors">
+                                  <button 
+                                    onClick={() => handleShare(idea)}
+                                    className="w-9 h-9 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] flex items-center justify-center transition-colors"
+                                  >
                                     <svg className="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                       <circle cx="18" cy="5" r="3" />
                                       <circle cx="6" cy="12" r="3" />
