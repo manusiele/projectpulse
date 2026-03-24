@@ -574,7 +574,7 @@ export default function DashboardPage() {
             ) : activeView === 'allIdeas' ? (
               <div className="space-y-6">
                 <div className="mb-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center justify-between gap-3">
                     <div>
                       <h2 className="text-2xl font-bold text-white mb-2">
                         {selectedDomain ? `${selectedDomain} Ideas` : 'All Ideas'}
@@ -588,14 +588,17 @@ export default function DashboardPage() {
                     </div>
                     {selectedDomain && (
                       <button
-                        onClick={() => setSelectedDomain(null)}
-                        className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] text-slate-400 hover:text-white text-sm transition-all flex items-center justify-center gap-2"
+                        onClick={() => {
+                          setSelectedDomain(null);
+                          setActiveView('domains');
+                        }}
+                        className="w-10 h-10 rounded-xl bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] text-slate-400 hover:text-white transition-all flex items-center justify-center flex-shrink-0"
+                        title="Back to domains"
                       >
-                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="18" y1="6" x2="6" y2="18" />
                           <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
-                        <span>Clear Filter</span>
                       </button>
                     )}
                   </div>
