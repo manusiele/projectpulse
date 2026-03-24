@@ -117,7 +117,7 @@ export default function DashboardPage() {
       } finally {
         setIsCheckingUpdates(false);
       }
-    }, 30000); // Poll every 30 seconds
+    }, 60000); // Poll every 60 seconds
 
     return () => clearInterval(pollInterval);
   }, [ideas]);
