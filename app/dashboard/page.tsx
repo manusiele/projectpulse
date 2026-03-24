@@ -463,62 +463,62 @@ export default function DashboardPage() {
               
               {/* Floating Nav Card */}
               <div className="fixed inset-x-4 bottom-4 z-40 lg:hidden animate-slideUp">
-                <div className="bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-2xl backdrop-blur-xl shadow-2xl p-3 max-w-sm mx-auto">
-                  <div className="grid grid-cols-4 gap-2">
+                <div className="bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-xl backdrop-blur-xl shadow-2xl p-2 max-w-sm mx-auto">
+                  <div className="grid grid-cols-4 gap-1">
                     <button
                       onClick={() => { setActiveView('ideas'); setMobileNavOpen(false); }}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
-                        activeView === 'ideas' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                      className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all ${
+                        activeView === 'ideas' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                       </svg>
-                      <span className="text-[10px] font-medium">Latest</span>
+                      <span className="text-[9px] font-medium">Latest</span>
                     </button>
                     
                     <button
                       onClick={() => { setActiveView('allIdeas'); setMobileNavOpen(false); }}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
-                        activeView === 'allIdeas' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                      className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all ${
+                        activeView === 'allIdeas' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                         <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
                         <line x1="12" y1="22.08" x2="12" y2="12" />
                       </svg>
-                      <span className="text-[10px] font-medium">All</span>
+                      <span className="text-[9px] font-medium">All</span>
                     </button>
                     
                     <button
                       onClick={() => { setActiveView('domains'); setMobileNavOpen(false); }}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
-                        activeView === 'domains' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                      className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all ${
+                        activeView === 'domains' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <rect x="3" y="3" width="7" height="7" />
                         <rect x="14" y="3" width="7" height="7" />
                         <rect x="14" y="14" width="7" height="7" />
                         <rect x="3" y="14" width="7" height="7" />
                       </svg>
-                      <span className="text-[10px] font-medium">Domains</span>
+                      <span className="text-[9px] font-medium">Domains</span>
                     </button>
                     
                     <button
                       onClick={() => { setActiveView('thisMonth'); setMobileNavOpen(false); }}
-                      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
-                        activeView === 'thisMonth' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 scale-105' : 'text-slate-400 hover:bg-[#252525]'
+                      className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all ${
+                        activeView === 'thisMonth' ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-cyan-500/10' : 'text-slate-400 hover:bg-[#252525]'
                       }`}
                     >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                         <line x1="16" y1="2" x2="16" y2="6" />
                         <line x1="8" y1="2" x2="8" y2="6" />
                         <line x1="3" y1="10" x2="21" y2="10" />
                       </svg>
-                      <span className="text-[10px] font-medium">Month</span>
+                      <span className="text-[9px] font-medium">Month</span>
                     </button>
                   </div>
                 </div>
