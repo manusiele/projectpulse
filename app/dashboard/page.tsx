@@ -469,21 +469,6 @@ export default function DashboardPage() {
                       </svg>
                       <span className="font-medium flex-1 text-left">Latest Spark</span>
                     </button>
-                    <button 
-                      onClick={() => setActiveView('allIdeas')}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${
-                        activeView === 'allIdeas' 
-                          ? 'text-white bg-blue-500/10 border border-blue-500/30' 
-                          : 'text-slate-400 hover:text-white hover:bg-[#1a1a1a]'
-                      }`}
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                        <line x1="12" y1="22.08" x2="12" y2="12" />
-                      </svg>
-                      <span className="font-medium flex-1 text-left">All Ideas</span>
-                    </button>
                     <Link 
                       href="/" 
                       className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a] transition-all"
