@@ -6,11 +6,28 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
-      {/* Animated background gradients */}
+      {/* LeetCode-inspired animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-40 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        {/* Gradient base layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] animate-gradient" />
+        
+        {/* Floating geometric shapes */}
+        <div className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-500/25 to-cyan-500/15 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-40 right-0 w-[500px] h-[500px] bg-gradient-to-tr from-cyan-500/20 to-blue-500/10 rounded-full blur-3xl animate-float-reverse" />
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-gradient-to-bl from-purple-500/15 to-blue-500/10 rounded-full blur-3xl animate-pulse-slow" />
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)',
+          backgroundSize: '50px 50px'
+        }} />
+        
+        {/* Accent lines */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent" />
+        
+        {/* Radial glow at center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
       </div>
 
       {/* ── Navigation ─────────────────────────────────────────────────── */}
