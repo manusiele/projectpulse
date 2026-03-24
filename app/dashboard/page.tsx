@@ -248,53 +248,52 @@ export default function DashboardPage() {
   const handleShare = async (idea: Idea) => {
     const url = `${window.location.origin}/dashboard?idea=${idea.id}`;
     
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: idea.projectName || 'FocusLock Project Idea',
-          text: idea.description || 'Check out this project idea!',
-          url: url,
-        });
-        // Show success toast
-        setToastMessage('Shared successfully!');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      } catch (error) {
-        // User cancelled or share failed
-        if ((error as Error).name !== 'AbortError') {
-          setToastMessage('Share cancelled');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 2000);
-        }
-        return; // Don't increment share count if cancelled
-      }
-    } else {
-      // Fallback: copy to clipboard
-      try {
-        await navigator.clipboard.writeText(url);
-        setToastMessage('Link copied to clipboard!');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-      } catch {
-        setToastMessage('Failed to copy link');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-        return;
-      }
+    if (!navigator.share) {
+      setToastMessage('Share not supported on this device');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      return;
     }
     
-    // Update local counts in localStorage
-    const counts = JSON.parse(localStorage.getItem('ideaCounts') || '{}');
-    if (!counts[idea.id]) counts[idea.id] = { likes: 0, shares: 0 };
-    counts[idea.id].shares += 1;
-    localStorage.setItem('ideaCounts', JSON.stringify(counts));
-    
-    // Update UI immediately
-    setIdeas(ideas.map(i => 
-      i.id === idea.id 
-        ? { ...i, shares: (i.shares || 0) + 1 }
-        : i
-    ));
+    try {
+      await navigator.share({
+        title: idea.projectName || 'FocusLock Project Idea',
+        text: idea.description || 'Check out this project idea!',
+        url: url,
+      });
+      
+      // Show success toast
+      setToastMessage('Shared successfully!');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      
+      // Update share count
+      setIdeas(prevIdeas => prevIdeas.map(i => 
+        i.id === idea.id 
+          ? { ...i, shares: (i.shares || 0) + 1 }
+          : i
+      ));
+      
+      // Call API to update server
+      try {
+        await fetch('/api/ideas/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ideaId: idea.id })
+        });
+      } catch (error) {
+        console.error('Failed to update share count:', error);
+      }
+    } catch (error) {
+      // User cancelled share
+      if ((error as Error).name === 'AbortError') {
+        return; // Silent cancel
+      }
+      
+      setToastMessage('Share cancelled');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+    }
   };
 
   // Tech stack URL mapping
