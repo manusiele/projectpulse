@@ -608,7 +608,7 @@ export default function DashboardPage() {
                     >
                       {/* Project Title */}
                       <h3 className="text-xl font-bold text-white mb-3">
-                        {idea.projectName || "Daily Project Idea"}
+                        {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
                       </h3>
 
                       {/* Pain/Description */}
@@ -722,7 +722,7 @@ export default function DashboardPage() {
                               className="bg-[#1a1a1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all"
                             >
                               <h3 className="text-xl font-bold text-white mb-3">
-                                {idea.projectName || "Daily Project Idea"}
+                                {(idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
                               </h3>
                               {(idea.pain || idea.description) && (
                                 <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-3">
@@ -857,7 +857,7 @@ export default function DashboardPage() {
             <div className="p-5 sm:p-8">
               {/* Project Title and Description */}
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 pr-8">
-                {selectedIdea.projectName || "Daily Project Idea"}
+                {(selectedIdea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '')}
               </h2>
               
               {selectedIdea.description && (
