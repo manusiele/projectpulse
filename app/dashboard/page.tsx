@@ -928,7 +928,7 @@ export default function DashboardPage() {
                 {/* Stack */}
                 {selectedIdea.stack && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3">
                       Tech Stack
                     </h3>
                     <div className="flex flex-wrap gap-2">
