@@ -1025,11 +1025,45 @@ export default function DashboardPage() {
                 {/* Docs & Links */}
                 {selectedIdea.docs && (
                   <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3">
                       Docs & Links
                     </h3>
-                    <div className="text-slate-300 leading-relaxed whitespace-pre-line">
-                      {selectedIdea.docs}
+                    <div className="flex flex-col gap-2">
+                      {selectedIdea.docs.split('•').filter(Boolean).map((doc, idx) => {
+                        // Extract the title (before the dash) and clean it
+                        const title = doc.split('-')[0]?.trim() || `Resource ${idx + 1}`;
+                        
+                        // Try to extract URL or create a search link
+                        const urlMatch = doc.match(/https?:\/\/[^\s]+/);
+                        let url = urlMatch ? urlMatch[0] : null;
+                        
+                        // If no URL found, create a Google search link from the title
+                        if (!url) {
+                          const searchTerm = title.replace(/Documentation|Guide|Docs/gi, '').trim();
+                          url = `https://www.google.com/search?q=${encodeURIComponent(searchTerm + ' documentation')}`;
+                        }
+                        
+                        return (
+                          <a
+                            key={idx}
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-2 bg-[#1a1a1a] hover:bg-[#252525] text-slate-400 hover:text-cyan-400 text-sm rounded-lg transition-colors border border-[#2a2a2a] group"
+                          >
+                            <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                              <polyline points="15 3 21 3 21 9" />
+                              <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                            <span className="flex-1">{title}</span>
+                            <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                          </a>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
