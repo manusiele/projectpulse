@@ -176,90 +176,83 @@ export default function Home() {
 
         {/* ── How It Works ────────────────────────────────────────────────── */}
         <section className="mb-20">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">How It Works</h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-              {/* Connecting arrows - desktop only */}
-              <div className="hidden md:block absolute top-10 left-0 w-full h-0.5 pointer-events-none">
-                <div className="absolute left-[12.5%] right-[12.5%] h-full bg-gradient-to-r from-blue-500/30 via-cyan-500/30 via-purple-500/30 to-pink-500/30" />
+          <h2 className="text-3xl font-bold text-white mb-16 text-center">How It Works</h2>
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="relative">
+              {/* Connecting line - desktop only */}
+              <div className="hidden md:block absolute top-[35px] left-0 right-0 h-[2px] pointer-events-none" style={{ zIndex: 0 }}>
+                <div className="absolute left-[10%] right-[10%] h-full bg-gradient-to-r from-blue-500/40 via-cyan-500/40 via-purple-500/40 to-pink-500/40" />
               </div>
               
-              {[
-                { 
-                  title: "GitHub Actions", 
-                  desc: "Workflow triggers daily at 10 AM EAT",
-                  icon: (
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                    </svg>
-                  ),
-                  color: "blue"
-                },
-                { 
-                  title: "AI Generation", 
-                  desc: "Ollama creates idea from random domain",
-                  icon: (
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                      <line x1="12" y1="19" x2="12" y2="22" />
-                    </svg>
-                  ),
-                  color: "cyan"
-                },
-                { 
-                  title: "Telegram Send", 
-                  desc: "Formatted message delivered instantly",
-                  icon: (
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m22 2-7 20-4-9-9-4Z" />
-                      <path d="M22 2 11 13" />
-                    </svg>
-                  ),
-                  color: "purple"
-                },
-                { 
-                  title: "Git Archive", 
-                  desc: "Saved to repo as permanent history",
-                  icon: (
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                  ),
-                  color: "pink"
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="relative z-10">
-                  <div className="flex flex-col items-center text-center">
-                    {/* Icon circle */}
-                    <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${
-                      item.color === 'blue' ? 'from-blue-500/20 to-blue-600/10 border-blue-500/30' :
-                      item.color === 'cyan' ? 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30' :
-                      item.color === 'purple' ? 'from-purple-500/20 to-purple-600/10 border-purple-500/30' :
-                      'from-pink-500/20 to-pink-600/10 border-pink-500/30'
-                    } border backdrop-blur-xl flex items-center justify-center mb-4 shadow-lg ${
-                      item.color === 'blue' ? 'shadow-blue-500/20' :
-                      item.color === 'cyan' ? 'shadow-cyan-500/20' :
-                      item.color === 'purple' ? 'shadow-purple-500/20' :
-                      'shadow-pink-500/20'
-                    } hover:scale-110 transition-transform`}>
-                      <div className={`${
-                        item.color === 'blue' ? 'text-blue-400' :
-                        item.color === 'cyan' ? 'text-cyan-400' :
-                        item.color === 'purple' ? 'text-purple-400' :
-                        'text-pink-400'
-                      }`}>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative" style={{ zIndex: 1 }}>
+                {[
+                  { 
+                    title: "GitHub Actions", 
+                    desc: "Workflow triggers daily at 10 AM EAT",
+                    icon: (
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                      </svg>
+                    ),
+                    bgColor: "from-blue-900/40 to-blue-950/40",
+                    borderColor: "border-blue-500/30",
+                    iconColor: "text-blue-400"
+                  },
+                  { 
+                    title: "AI Generation", 
+                    desc: "Ollama creates idea from random domain",
+                    icon: (
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="22" />
+                      </svg>
+                    ),
+                    bgColor: "from-cyan-900/40 to-cyan-950/40",
+                    borderColor: "border-cyan-500/30",
+                    iconColor: "text-cyan-400"
+                  },
+                  { 
+                    title: "Telegram Send", 
+                    desc: "Formatted message delivered instantly",
+                    icon: (
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m22 2-7 20-4-9-9-4Z" />
+                        <path d="M22 2 11 13" />
+                      </svg>
+                    ),
+                    bgColor: "from-purple-900/40 to-purple-950/40",
+                    borderColor: "border-purple-500/30",
+                    iconColor: "text-purple-400"
+                  },
+                  { 
+                    title: "Git Archive", 
+                    desc: "Saved to repo as permanent history",
+                    icon: (
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                    ),
+                    bgColor: "from-pink-900/40 to-pink-950/40",
+                    borderColor: "border-pink-500/30",
+                    iconColor: "text-pink-400"
+                  },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex flex-col items-center text-center">
+                    {/* Icon box */}
+                    <div className={`w-[70px] h-[70px] rounded-2xl bg-gradient-to-br ${item.bgColor} border ${item.borderColor} backdrop-blur-xl flex items-center justify-center mb-6 transition-transform hover:scale-105`}>
+                      <div className={item.iconColor}>
                         {item.icon}
                       </div>
                     </div>
                     
-                    <h3 className="font-bold text-white mb-2 text-lg">{item.title}</h3>
+                    <h3 className="font-bold text-white mb-2 text-base">{item.title}</h3>
                     <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
