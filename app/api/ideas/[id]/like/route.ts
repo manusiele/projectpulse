@@ -12,7 +12,7 @@ export async function POST(
     const ideas = JSON.parse(fileContents);
     
     // Find the idea and increment likes
-    const ideaIndex = ideas.findIndex((idea: any) => idea.id === params.id);
+    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === params.id);
     
     if (ideaIndex === -1) {
       return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
@@ -49,7 +49,7 @@ export async function DELETE(
     const ideas = JSON.parse(fileContents);
     
     // Find the idea and decrement likes
-    const ideaIndex = ideas.findIndex((idea: any) => idea.id === params.id);
+    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === params.id);
     
     if (ideaIndex === -1) {
       return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
