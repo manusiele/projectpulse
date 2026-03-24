@@ -91,7 +91,26 @@ export default function DashboardPage() {
             }
           }
           
-          setIdeas(freshIdeas);
+          // Merge fresh data with current state to preserve optimistic updates
+          setIdeas(prevIdeas => {
+            // Create a map of current ideas for quick lookup
+            const currentIdeasMap = new Map(prevIdeas.map(idea => [idea.id, idea]));
+            
+            // Merge fresh ideas with current state
+            return freshIdeas.map((freshIdea: Idea) => {
+              const currentIdea = currentIdeasMap.get(freshIdea.id);
+              // If we have a current version, preserve its like/share counts (optimistic updates)
+              // Only update if the fresh data is different
+              if (currentIdea) {
+                return {
+                  ...freshIdea,
+                  likes: currentIdea.likes, // Preserve optimistic like count
+                  shares: currentIdea.shares // Preserve optimistic share count
+                };
+              }
+              return freshIdea;
+            });
+          });
         }
       } catch (error) {
         console.error('Failed to refresh ideas:', error);
