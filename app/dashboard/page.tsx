@@ -1100,7 +1100,22 @@ export default function DashboardPage() {
                           <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Problem Statement
                           </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.problem}</p>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
+                            {sections.problem.split('\n').map((line, i) => {
+                              // Bold WHO:, PAIN:, GAP:, IMPACT: keywords
+                              const parts = line.split(/\b(WHO|PAIN|GAP|IMPACT):/);
+                              return (
+                                <span key={i}>
+                                  {parts.map((part, j) => 
+                                    ['WHO', 'PAIN', 'GAP', 'IMPACT'].includes(part) ? 
+                                      <strong key={j} className="text-blue-400 font-bold">{part}:</strong> : 
+                                      part
+                                  )}
+                                  {i < sections.problem.split('\n').length - 1 && <br />}
+                                </span>
+                              );
+                            })}
+                          </p>
                         </div>
                       )}
                       
@@ -1136,16 +1151,20 @@ export default function DashboardPage() {
                           <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                             Why Now
                           </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.whyNow}</p>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
+                            <strong className="text-blue-400">Why Now:</strong> {sections.whyNow}
+                          </p>
                         </div>
                       )}
                       
                       {sections.potential && (
                         <div>
                           <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Market Potential
+                            Innovation Impact
                           </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.potential}</p>
+                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
+                            <strong className="text-blue-400">Potential:</strong> {sections.potential}
+                          </p>
                         </div>
                       )}
                     </>
