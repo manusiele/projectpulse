@@ -172,7 +172,7 @@ export default function DashboardPage() {
     window.history.replaceState({}, '', url.toString());
   };
   const handleShare = async (idea: Idea) => {
-    const url = `${window.location.origin}/dashboard?idea=${idea.id}`;
+    const url = `https://projectpulse-dev.vercel.app/dashboard?idea=${idea.id}`;
     
     if (!navigator.share) {
       setToastMessage('Share not supported on this device');
