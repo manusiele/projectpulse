@@ -489,7 +489,26 @@ if __name__ == "__main__":
         idea_id = save_idea(idea, domain)
         
         # Create shareable URL
-        project_url = f"https://focuslock-ai-gzi6.vercel.app/dashboard?idea={idea_id}"
+        project_url = f"https://projectpulse-dev.vercel.app/dashboard?idea={idea_id}"
+        
+        # Shorten URL using TinyURL
+        try:
+            print("🔗 Shortening URL with TinyURL...")
+            shorten_response = requests.get(
+                f"https://tinyurl.com/api-create.php?url={requests.utils.quote(project_url)}",
+                timeout=10
+            )
+            if shorten_response.status_code == 200:
+                short_url = shorten_response.text.strip()
+                if short_url and short_url.startswith('http'):
+                    project_url = short_url
+                    print(f"✓ URL shortened: {project_url}")
+                else:
+                    print(f"⚠ TinyURL returned invalid response, using original URL")
+            else:
+                print(f"⚠ TinyURL API error {shorten_response.status_code}, using original URL")
+        except Exception as e:
+            print(f"⚠ Failed to shorten URL: {e}, using original URL")
         
         # Create detailed Telegram message (Telegram limit is 4096 chars)
         telegram_parts = []
