@@ -345,39 +345,39 @@ def generate_idea():
     # Determine domain name based on problem characteristics
     domain_name = determine_domain(problem)
     
-    prompt = f"""You are FocusLock — elite, no-fluff AI co-pilot for a developer building real apps from PC only.
+    prompt = f"""You are FocusLock — elite, no-fluff AI co-pilot for a developer building ADVANCED, cutting-edge apps that push technological boundaries.
 
 Recent vibe:
 {context}
 
-Generate exactly ONE focused project idea with this EXACT format (no extra text, no greetings):
+Generate exactly ONE ambitious, technically sophisticated project idea with this EXACT format (no extra text, no greetings):
 
 PROBLEM STATEMENT
 {problem['pain']} {problem['gap']} {problem['impact']}
 
 Project
-"[Memorable Project Name]" — A comprehensive [brief description of what the platform/app does, its unique value proposition, and how it serves the target users]. Make this 2-3 sentences that capture the essence and innovation of the solution.
+"[Memorable Project Name]" — An advanced [description of the innovative platform/app that leverages cutting-edge technology like AI/ML, blockchain, real-time processing, computer vision, or other emerging tech]. Focus on technical sophistication, scalability, and disruptive innovation. Make this 2-3 sentences that emphasize the technical complexity and market disruption potential.
 
 Stack
-[List all technologies with detailed descriptions in brackets, e.g., Next.js + Supabase (for backend and database management) + Tailwind CSS (for styling)] & [any additional frameworks or tools with their purposes]. Be specific about what each technology does in the stack.
+[List advanced technologies with detailed descriptions: Next.js 15 + Supabase (PostgreSQL with real-time subscriptions and Row Level Security) + OpenAI API (GPT-4 for intelligent features) + Stripe (payment processing with webhooks) + Vercel AI SDK (streaming responses) + Tailwind CSS + shadcn/ui components + Redis (caching and rate limiting) + WebSockets (real-time updates) + Prisma ORM + tRPC (type-safe APIs)]. Include AI/ML libraries, real-time tech, advanced databases, or blockchain if relevant. Be specific about cutting-edge features.
 
 Deploy
-[Platform name] / [Alternative platform] (explain why these platforms - e.g., "for optimized build times and easy deployment")
+Vercel (edge functions and global CDN) / Railway (for background workers and cron jobs) / Cloudflare Workers (for edge computing) — explain the distributed architecture and why these platforms enable advanced features like real-time processing, global scale, or AI inference at the edge.
 
 Docs & Links
-• [Technology Name] Documentation - [2-3 sentences explaining what developers will learn from this documentation, why it's essential for this project, and what specific features or capabilities it enables]
-• [Technology Name] Documentation - [2-3 sentences explaining the value and specific use case for this project]
-• [Technology Name] Guide - [2-3 sentences about implementation details and why this matters for the project]
-• [Technology Name] Documentation - [2-3 sentences covering integration steps and benefits]
+• [Advanced Technology] Documentation - [2-3 sentences explaining advanced implementation patterns, API integration, real-time features, or AI/ML model deployment that makes this project technically impressive]
+• [Framework/Library] Documentation - [2-3 sentences covering advanced features like streaming, webhooks, edge computing, or distributed systems]
+• [Database/Infrastructure] Guide - [2-3 sentences about scalability patterns, caching strategies, or performance optimization]
+• [AI/ML or Advanced Tech] Documentation - [2-3 sentences about model integration, prompt engineering, or advanced algorithms]
 
 Why now
-[Write 2-4 sentences explaining the market timing, current trends, technological readiness, user behavior shifts, competitive landscape, and why this exact moment is critical for launching this solution. Make it compelling and data-driven where possible.]
+[Write 2-4 sentences emphasizing technological breakthroughs (AI advancements, new APIs, infrastructure improvements), market timing, regulatory changes, or user behavior shifts that make this advanced solution possible NOW. Reference specific technologies like GPT-4, Stable Diffusion, WebGPU, or emerging platforms. Make it feel like a once-in-a-decade opportunity.]
 
 Potential
-[Write 2-4 sentences covering realistic revenue projections for year 1, user growth targets, market size, monetization strategy (commission, subscriptions, ads, etc.), and long-term vision for community building or market impact. Include specific numbers like "$10M revenue" or "100k users".]
+[Write 2-4 sentences with AMBITIOUS projections: "$50M+ revenue potential", "unicorn trajectory", "10M+ users in 18 months", "disrupting a $100B industry". Include aggressive monetization (high-value subscriptions, enterprise deals, API access), network effects, and vision for becoming a category-defining platform. Think Stripe, Notion, or Figma scale.]
 
 Target audience: {problem['who']}
-Make every section detailed, actionable, and inspiring. Use natural language, not bullet points except in Docs & Links."""
+Make every section technically impressive, ambitious, and focused on building something that could become a billion-dollar company. Use advanced terminology and cutting-edge tech stacks."""
 
     response = ollama.generate(model=MODEL, prompt=prompt)
     return response["response"], domain_name
