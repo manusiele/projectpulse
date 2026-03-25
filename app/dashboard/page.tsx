@@ -693,7 +693,7 @@ export default function DashboardPage() {
                     </Link>
                     
                     <a 
-                      href="https://github.com/manusiele/focuslock-ai" 
+                      href="https://github.com/manusiele/projectpulse" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-400 hover:text-white hover:bg-[#1a1a1a]/80 transition-all"
