@@ -26,8 +26,11 @@ The like and share counts are now stored globally in Upstash Redis instead of lo
 After creating the database:
 1. Vercel will automatically add environment variables to your project
 2. The following variables will be added:
-   - `UPSTASH_REDIS_REST_URL`
-   - `UPSTASH_REDIS_REST_TOKEN`
+   - `KV_REST_API_URL`
+   - `KV_REST_API_TOKEN`
+   - `KV_REST_API_READ_ONLY_TOKEN`
+   - `KV_URL`
+   - `REDIS_URL`
 
 ### 3. Deploy
 
@@ -65,11 +68,11 @@ Uses `@upstash/redis` package:
 
 To test locally, you need to set up environment variables:
 
-1. Get your Upstash Redis credentials from Vercel dashboard (Settings → Environment Variables)
+1. Get your Redis credentials from Vercel dashboard (Settings → Environment Variables)
 2. Create `.env.local` file:
 ```bash
-UPSTASH_REDIS_REST_URL="your_upstash_redis_rest_url"
-UPSTASH_REDIS_REST_TOKEN="your_upstash_redis_rest_token"
+KV_REST_API_URL="your_kv_rest_api_url"
+KV_REST_API_TOKEN="your_kv_rest_api_token"
 ```
 
 3. Run dev server:

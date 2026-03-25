@@ -30,8 +30,11 @@
 
 Vercel will automatically:
 - Add environment variables to your project:
-  - `UPSTASH_REDIS_REST_URL`
-  - `UPSTASH_REDIS_REST_TOKEN`
+  - `KV_REST_API_URL`
+  - `KV_REST_API_TOKEN`
+  - `KV_REST_API_READ_ONLY_TOKEN`
+  - `KV_URL`
+  - `REDIS_URL`
 - Connect the Redis database to your deployment
 - No manual configuration needed!
 
@@ -67,8 +70,8 @@ Vercel will automatically:
 3. Check environment variables:
    - Go to Settings → Environment Variables
    - Verify these exist:
-     - `UPSTASH_REDIS_REST_URL`
-     - `UPSTASH_REDIS_REST_TOKEN`
+     - `KV_REST_API_URL`
+     - `KV_REST_API_TOKEN`
    - If missing, reconnect the Upstash integration
 
 4. Redeploy if needed:
