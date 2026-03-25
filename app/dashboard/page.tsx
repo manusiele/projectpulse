@@ -257,8 +257,8 @@ export default function DashboardPage() {
     
     try {
       await navigator.share({
-        title: idea.projectName || 'FocusLock Project Idea',
-        text: idea.description || 'Check out this project idea!',
+        title: `${idea.projectName || 'Project Idea'} - ProjectPulse`,
+        text: `Check out this project idea: ${idea.projectName || 'New Project'}`,
         url: url,
       });
       
