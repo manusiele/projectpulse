@@ -172,7 +172,7 @@ export default function DashboardPage() {
     window.history.replaceState({}, '', url.toString());
   };
   const handleShare = async (idea: Idea) => {
-    const url = `https://projectpulse-dev.vercel.app/dashboard?idea=${idea.id}`;
+    const longUrl = `https://projectpulse-dev.vercel.app/dashboard?idea=${idea.id}`;
     
     if (!navigator.share) {
       setToastMessage('Share not supported on this device');
@@ -182,6 +182,23 @@ export default function DashboardPage() {
     }
     
     try {
+      // Show loading toast while shortening URL
+      setToastMessage('Preparing share link...');
+      setShowToast(true);
+      
+      // Shorten the URL
+      const shortenResponse = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: longUrl })
+      });
+      
+      let url = longUrl; // Fallback to long URL
+      if (shortenResponse.ok) {
+        const data = await shortenResponse.json();
+        url = data.shortUrl || longUrl;
+      }
+      
       await navigator.share({
         title: `${idea.projectName || 'Project Idea'} - ProjectPulse`,
         text: `Check out this project idea: ${idea.projectName || 'New Project'}`,
@@ -223,6 +240,7 @@ export default function DashboardPage() {
     } catch (error) {
       // User cancelled share
       if ((error as Error).name === 'AbortError') {
+        setShowToast(false);
         return; // Silent cancel
       }
       
