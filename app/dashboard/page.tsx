@@ -500,22 +500,6 @@ export default function DashboardPage() {
                   <p className="text-xs text-slate-500 text-center mt-1">AI Project Ideas</p>
                 </div>
 
-                {/* Dashboard Section */}
-                <div className="mb-6">
-                  <Link 
-                    href="/" 
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold text-white hover:bg-[#1a1a1a]/80 transition-all"
-                  >
-                    <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="3" width="7" height="7" />
-                      <rect x="14" y="3" width="7" height="7" />
-                      <rect x="14" y="14" width="7" height="7" />
-                      <rect x="3" y="14" width="7" height="7" />
-                    </svg>
-                    <span>Dashboard</span>
-                  </Link>
-                </div>
-
                 {/* Ideas Section */}
                 <div className="mb-6">
                   <h3 className="text-xs text-slate-600 uppercase tracking-wider font-bold mb-3 px-4">Ideas</h3>
