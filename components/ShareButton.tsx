@@ -18,7 +18,7 @@ export function ShareButton({ idea }: { idea: Idea }) {
     const url =
       typeof window !== "undefined"
         ? window.location.origin + "/dashboard"
-        : "https://focuslock.vercel.app/dashboard";
+        : "https://projectpulse-dev.vercel.app/dashboard";
 
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
