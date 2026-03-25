@@ -353,7 +353,10 @@ Recent vibe:
 Generate exactly ONE ambitious, technically sophisticated project idea with this EXACT format (no extra text, no greetings):
 
 PROBLEM STATEMENT
-{problem['pain']} {problem['gap']} {problem['impact']}
+WHO: {problem['who']}
+PAIN: {problem['pain']}
+GAP: {problem['gap']}
+IMPACT: {problem['impact']}
 
 Project
 "[Memorable Project Name]" — An advanced [description of the innovative platform/app that leverages cutting-edge technology like AI/ML, blockchain, real-time processing, computer vision, or other emerging tech]. Focus on technical sophistication, scalability, and disruptive innovation. Make this 2-3 sentences that emphasize the technical complexity and market disruption potential.
