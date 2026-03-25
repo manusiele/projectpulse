@@ -371,10 +371,10 @@ Docs & Links
 • [AI/ML or Advanced Tech] Documentation - [2-3 sentences about model integration, prompt engineering, or advanced algorithms]
 
 Why now
-[Write 2-4 sentences emphasizing technological breakthroughs (AI advancements, new APIs, infrastructure improvements), market timing, regulatory changes, or user behavior shifts that make this advanced solution possible NOW. Reference specific technologies like GPT-4, Stable Diffusion, WebGPU, or emerging platforms. Make it feel like a once-in-a-decade opportunity.]
+[Write 2-4 sentences emphasizing technological breakthroughs (AI advancements, new APIs, infrastructure improvements), market timing, regulatory changes, or user behavior shifts that make this advanced solution possible NOW. Reference specific technologies like GPT-4, Stable Diffusion, WebGPU, or emerging platforms. Focus on why this innovation is technically feasible now but wasn't possible 2 years ago.]
 
 Potential
-[Write 2-4 sentences with AMBITIOUS projections: "$50M+ revenue potential", "unicorn trajectory", "10M+ users in 18 months", "disrupting a $100B industry". Include aggressive monetization (high-value subscriptions, enterprise deals, API access), network effects, and vision for becoming a category-defining platform. Think Stripe, Notion, or Figma scale.]
+[Write 2-4 sentences focusing on INNOVATION IMPACT and TECHNICAL POSSIBILITIES: How this could fundamentally change how people work/live, what new capabilities it unlocks, how it combines technologies in novel ways, and the ripple effects of solving this problem. Think about paradigm shifts, not just profit. What becomes possible that wasn't before? How does this push the boundaries of what technology can do?]
 
 Target audience: {problem['who']}
 Make every section technically impressive, ambitious, and focused on building something that could become a billion-dollar company. Use advanced terminology and cutting-edge tech stacks."""
