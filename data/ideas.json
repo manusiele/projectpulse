@@ -32,7 +32,7 @@
     "potential": "$500M+ TAM in freelance management tools",
     "docs": "",
     "description": "",
-    "likes": 1
+    "likes": 2
   },
   {
     "id": "idea_1710700260",
@@ -99,7 +99,7 @@
     "potential": "",
     "docs": "",
     "description": "A dedicated real estate management platform streamlining property showings to leads with automated communication pipelines ensuring no deals slip through, providing market insights directly into the workflow and simplifying document signing digitally—transforms chaotic experiences of agents today by offering an all-encompassing tool.",
-    "likes": 1
+    "likes": 2
   },
   {
     "id": "idea_1774078437",
@@ -133,7 +133,8 @@
     "impact": "",
     "whyNow": "",
     "potential": "",
-    "docs": "• Supabase Documentation - Developers will learn to set up authentication, database interactions for real-time data syncing across devices using React Native SDK; this is essential as it enables users' access control management while keeping their client information updated in one place.\n• Tailwind CSS Guide – Understanding the utility-first approach of tailoring styles directly within code enhances aesthetics and responsiveness, vital for maintaining consistent brand visuals across all platform screens; this helps consultants focus more on service delivery rather than UI design intricacies.\n• Zustand Documentation - Explore state management with examples specific to session scheduling logic in ClientFlow Master ensures quick updates of client statuses and availability, directly improving user experience by minimizing latency between backend changes and frontend reflection; this becomes crucial when managing multiple clients concurrently.\n• Supabase Documentation - Guide through API calls for each feature (onboarding forms completion to invoice payments) highlights how client data flow is seamless, enabling consultants to spend time on meaningful engagements instead of administrative tasks; this facilitates quicker adoption and better customer feedback cycles."
+    "docs": "• Supabase Documentation - Developers will learn to set up authentication, database interactions for real-time data syncing across devices using React Native SDK; this is essential as it enables users' access control management while keeping their client information updated in one place.\n• Tailwind CSS Guide – Understanding the utility-first approach of tailoring styles directly within code enhances aesthetics and responsiveness, vital for maintaining consistent brand visuals across all platform screens; this helps consultants focus more on service delivery rather than UI design intricacies.\n• Zustand Documentation - Explore state management with examples specific to session scheduling logic in ClientFlow Master ensures quick updates of client statuses and availability, directly improving user experience by minimizing latency between backend changes and frontend reflection; this becomes crucial when managing multiple clients concurrently.\n• Supabase Documentation - Guide through API calls for each feature (onboarding forms completion to invoice payments) highlights how client data flow is seamless, enabling consultants to spend time on meaningful engagements instead of administrative tasks; this facilitates quicker adoption and better customer feedback cycles.",
+    "likes": 1
   },
   {
     "id": "idea_1774276662",
@@ -294,7 +295,7 @@
     "whyNow": "",
     "potential": "",
     "docs": "• GraphQL Documentation — Learning querying and mutating graph structures is essential, this project specifically needs understanding of resolving complex family schedule queries with nested resources such as school activities or medical appointments that require strong relationships between entities (e.g., \"How to write a request for AI-generated reminders based on specific events in the child's timetable?\").\n• AWS Lambda Documentation — Essential knowledge of writing serverless functions is critical, implementation details matter as they dictate performance and scalability necessary when handling real time data from diverse sources (e.g., \"What are best practices for setting up a trigger-based system to push notifications based on user input?\").\n• AWS DynamoDB Documentation — Integrating this NoSQL database is key due to its low latency which can directly impact the timely synchronization of schedules across devices and services, crucial when tracking critical appointments in real time (e.g., \"How do I implement a cache system using AWS DAX for frequently accessed family calendar data?\").\n• Auth0 Documentation — Implementing security measures is non-negotiable to protect sensitive information such as medical records; understanding how to use user management and access controls with JSON Web Tokens (JWT) will ensure parents' trust through robust authentication methods.",
-    "likes": 2,
-    "shares": 1
+    "likes": 3,
+    "shares": 2
   }
 ]
