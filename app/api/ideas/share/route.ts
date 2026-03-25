@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { incrementShares } from '@/lib/kv';
 
 // Rate limiting map
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -44,27 +43,10 @@ export async function POST(request: Request) {
       );
     }
     
-    const filePath = path.join(process.cwd(), 'data', 'ideas.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const ideas = JSON.parse(fileContents);
+    // Increment shares in KV store
+    const shares = await incrementShares(ideaId);
     
-    const idea = ideas.find((i: { id: string }) => i.id === ideaId);
-    if (!idea) {
-      return NextResponse.json(
-        { success: false, error: 'Idea not found' },
-        { status: 404 }
-      );
-    }
-    
-    idea.shares = (idea.shares || 0) + 1;
-    
-    fs.writeFileSync(filePath, JSON.stringify(ideas, null, 2));
-    
-    // Also update public folder
-    const publicPath = path.join(process.cwd(), 'public', 'ideas.json');
-    fs.writeFileSync(publicPath, JSON.stringify(ideas, null, 2));
-    
-    return NextResponse.json({ success: true, shares: idea.shares });
+    return NextResponse.json({ success: true, shares });
   } catch (error) {
     console.error('Failed to update share:', error);
     return NextResponse.json(

@@ -91,25 +91,8 @@ export default function DashboardPage() {
             }
           }
           
-          // Merge fresh data with current state to preserve client-side counts
-          setIdeas(prevIdeas => {
-            // Create a map of current ideas for quick lookup
-            const currentIdeasMap = new Map(prevIdeas.map(idea => [idea.id, idea]));
-            
-            // Merge fresh ideas with current state
-            return freshIdeas.map((freshIdea: Idea) => {
-              const currentIdea = currentIdeasMap.get(freshIdea.id);
-              // Preserve client-side like/share counts
-              if (currentIdea) {
-                return {
-                  ...freshIdea,
-                  likes: currentIdea.likes, // Keep client-side count
-                  shares: currentIdea.shares // Keep client-side count
-                };
-              }
-              return freshIdea;
-            });
-          });
+          // Update with fresh data (includes global counts from KV)
+          setIdeas(freshIdeas);
         }
       } catch (error) {
         console.error('Failed to refresh ideas:', error);
@@ -148,12 +131,37 @@ export default function DashboardPage() {
     setLikedIdeas(newLiked);
     localStorage.setItem('likedIdeas', JSON.stringify([...newLiked]));
     
-    // Update the count in state (client-side only)
+    // Optimistically update UI
     setIdeas(prevIdeas => prevIdeas.map(idea => 
       idea.id === ideaId 
         ? { ...idea, likes: (idea.likes || 0) + (isLiked ? -1 : 1) }
         : idea
     ));
+    
+    // Call API to update global count
+    try {
+      const response = await fetch(`/api/ideas/${ideaId}/like`, {
+        method: isLiked ? 'DELETE' : 'POST',
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        // Update with actual count from server
+        setIdeas(prevIdeas => prevIdeas.map(idea => 
+          idea.id === ideaId 
+            ? { ...idea, likes: data.likes }
+            : idea
+        ));
+      }
+    } catch (error) {
+      console.error('Failed to update like:', error);
+      // Revert optimistic update on error
+      setIdeas(prevIdeas => prevIdeas.map(idea => 
+        idea.id === ideaId 
+          ? { ...idea, likes: (idea.likes || 0) + (isLiked ? 1 : -1) }
+          : idea
+      ));
+    }
   };
 
   const closeModal = () => {
@@ -185,20 +193,30 @@ export default function DashboardPage() {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
       
-      // Update share count
+      // Optimistically update share count
       setIdeas(prevIdeas => prevIdeas.map(i => 
         i.id === idea.id 
           ? { ...i, shares: (i.shares || 0) + 1 }
           : i
       ));
       
-      // Call API to update server
+      // Call API to update global count
       try {
-        await fetch('/api/ideas/share', {
+        const response = await fetch('/api/ideas/share', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ideaId: idea.id })
         });
+        
+        if (response.ok) {
+          const data = await response.json();
+          // Update with actual count from server
+          setIdeas(prevIdeas => prevIdeas.map(i => 
+            i.id === idea.id 
+              ? { ...i, shares: data.shares }
+              : i
+          ));
+        }
       } catch (error) {
         console.error('Failed to update share count:', error);
       }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getAllCounts } from '@/lib/kv';
 
 export async function GET() {
   try {
@@ -8,8 +9,21 @@ export async function GET() {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
     
+    // Get all idea IDs
+    const ideaIds = ideas.map((idea: { id: string }) => idea.id);
+    
+    // Fetch counts from KV store
+    const counts = await getAllCounts(ideaIds);
+    
+    // Merge counts with ideas
+    const ideasWithCounts = ideas.map((idea: { id: string; likes?: number; shares?: number }) => ({
+      ...idea,
+      likes: counts[idea.id]?.likes || 0,
+      shares: counts[idea.id]?.shares || 0
+    }));
+    
     // Sort by date descending (newest first)
-    const sortedIdeas = ideas.sort((a: { date: string }, b: { date: string }) => 
+    const sortedIdeas = ideasWithCounts.sort((a: { date: string }, b: { date: string }) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     
