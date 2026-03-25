@@ -1219,26 +1219,6 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                {/* Why Now */}
-                {selectedIdea.whyNow && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Why Now
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
-                  </div>
-                )}
-
-                {/* Potential */}
-                {selectedIdea.potential && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Market Potential
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
-                  </div>
-                )}
-
                 {/* Deploy */}
                 {selectedIdea.deploy && (
                   <div>
