@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { incrementLikes, decrementLikes } from '@/lib/kv';
 
 // Rate limiting map
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -46,31 +45,12 @@ export async function POST(
       );
     }
     
-    const filePath = path.join(process.cwd(), 'data', 'ideas.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const ideas = JSON.parse(fileContents);
-    
-    // Find the idea and increment likes
-    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === id);
-    
-    if (ideaIndex === -1) {
-      return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
-    }
-    
-    // Initialize likes if not present
-    if (!ideas[ideaIndex].likes) {
-      ideas[ideaIndex].likes = 0;
-    }
-    
-    // Increment likes
-    ideas[ideaIndex].likes += 1;
-    
-    // Write back to file
-    fs.writeFileSync(filePath, JSON.stringify(ideas, null, 2));
+    // Increment likes in KV store
+    const likes = await incrementLikes(id);
     
     return NextResponse.json({ 
       success: true, 
-      likes: ideas[ideaIndex].likes 
+      likes 
     });
   } catch (error) {
     console.error('Failed to update likes:', error);
@@ -102,31 +82,12 @@ export async function DELETE(
       );
     }
     
-    const filePath = path.join(process.cwd(), 'data', 'ideas.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const ideas = JSON.parse(fileContents);
-    
-    // Find the idea and decrement likes
-    const ideaIndex = ideas.findIndex((idea: { id: string }) => idea.id === id);
-    
-    if (ideaIndex === -1) {
-      return NextResponse.json({ error: 'Idea not found' }, { status: 404 });
-    }
-    
-    // Initialize likes if not present
-    if (!ideas[ideaIndex].likes) {
-      ideas[ideaIndex].likes = 0;
-    }
-    
-    // Decrement likes (don't go below 0)
-    ideas[ideaIndex].likes = Math.max(0, ideas[ideaIndex].likes - 1);
-    
-    // Write back to file
-    fs.writeFileSync(filePath, JSON.stringify(ideas, null, 2));
+    // Decrement likes in KV store
+    const likes = await decrementLikes(id);
     
     return NextResponse.json({ 
       success: true, 
-      likes: ideas[ideaIndex].likes 
+      likes 
     });
   } catch (error) {
     console.error('Failed to update likes:', error);
