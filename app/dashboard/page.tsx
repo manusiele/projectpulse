@@ -316,7 +316,7 @@ export default function DashboardPage() {
   const [latest, ...rest] = ideas;
 
   const thisMonth = ideas.filter((idea) => {
-    const d = new Date(idea.createdAt);
+    const d = new Date(idea.createdAt || idea.date || Date.now());
     const now = new Date();
     return (
       d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
@@ -737,7 +737,7 @@ export default function DashboardPage() {
                         {/* Footer */}
                         <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
                           <span className="text-sm text-slate-500">
-                            {new Date(idea.createdAt).toLocaleDateString("en-US", {
+                            {new Date(idea.createdAt || idea.date || Date.now()).toLocaleDateString("en-US", {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
@@ -815,7 +815,7 @@ export default function DashboardPage() {
                   (() => {
                     // Group ideas by week
                     const thisMonthIdeas = ideas.filter((idea) => {
-                      const d = new Date(idea.createdAt);
+                      const d = new Date(idea.createdAt || idea.date || Date.now());
                       const now = new Date();
                       return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
                     });
@@ -831,7 +831,7 @@ export default function DashboardPage() {
                     // Group by week
                     const weekGroups: { [key: number]: typeof thisMonthIdeas } = {};
                     thisMonthIdeas.forEach(idea => {
-                      const week = getWeekOfMonth(new Date(idea.createdAt));
+                      const week = getWeekOfMonth(new Date(idea.createdAt || idea.date || Date.now()));
                       if (!weekGroups[week]) weekGroups[week] = [];
                       weekGroups[week].push(idea);
                     });
@@ -873,7 +873,7 @@ export default function DashboardPage() {
                               )}
                               <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
                                 <span className="text-sm text-slate-500">
-                                  {new Date(idea.createdAt).toLocaleDateString("en-US", {
+                                  {new Date(idea.createdAt || idea.date || Date.now()).toLocaleDateString("en-US", {
                                     month: "short",
                                     day: "numeric",
                                     year: "numeric",
@@ -1025,7 +1025,7 @@ export default function DashboardPage() {
               {/* Date */}
               <div className="flex items-center gap-3 text-xs text-slate-600 mb-8">
                 <span>
-                  {new Date(selectedIdea.createdAt).toLocaleDateString("en-US", {
+                  {new Date(selectedIdea.createdAt || selectedIdea.date || Date.now()).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
