@@ -11,8 +11,8 @@ try {
       token: process.env.KV_REST_API_TOKEN,
     });
   }
-} catch (error) {
-  console.warn('Redis not configured for local development');
+} catch (err) {
+  console.warn('Redis not configured for local development', err);
 }
 
 export async function incrementLikes(ideaId: string): Promise<number> {

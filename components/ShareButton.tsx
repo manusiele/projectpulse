@@ -8,8 +8,8 @@ export function ShareButton({ idea }: { idea: Idea }) {
   const handleShare = async () => {
     const fullUrl =
       typeof window !== "undefined"
-        ? `${window.location.origin}/dashboard`
-        : "https://projectpulse-dev.vercel.app/dashboard";
+        ? `${window.location.origin}/dashboard?idea=${idea.id}`
+        : `https://projectpulse-dev.vercel.app/dashboard?idea=${idea.id}`;
 
     try {
       // Shorten the URL first
@@ -34,7 +34,7 @@ export function ShareButton({ idea }: { idea: Idea }) {
           }, 1000);
         }
       }
-    } catch (error) {
+    } catch (err) {
       // Fallback: copy the original URL if shortening fails
       try {
         await navigator.clipboard.writeText(fullUrl);

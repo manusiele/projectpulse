@@ -3,10 +3,10 @@ import { incrementViews } from '@/lib/kv';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const ideaId = params.id;
+    const { id: ideaId } = await context.params;
     const views = await incrementViews(ideaId);
     
     return NextResponse.json({ views });
