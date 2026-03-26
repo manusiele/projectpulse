@@ -382,5 +382,13 @@
     "whyNow": "",
     "potential": "",
     "docs": ""
+  },
+  {
+    "id": "idea_1774524579",
+    "createdAt": "2026-03-26T11:29:39Z",
+    "domain": "Nonprofit Management",
+    "projectName": "NonprofitNet",
+    "description": "A one-stop platform that synergizes donor data analytics, seamless volunteer management, real-time social media engagement tools and an easy-to-use impact measurement dashboard with automated grant reporting for streamlined nonprofit operations. Core technology employs Next.js 15 to build a dynamic web application optimized by server-side rendering (SSR) alongside client hydration, ensuring fast load times while providing real-time updates on donations and volunteer activities through Supabase as the backend database solution offering scalability with Redis for caching frequent queries like social media interactions.",
+    "docs": "\u2022 Stripe - Integrated payment processing within donor CRM, streamlining transactions directly on our web application using secure API endpoints; Prisma with NextAuth for authentication \u2014 Employed to manage user access and permissions efficiently through a single source of truth while providing an easy-to-integrate method into the platform's architecture.\n\u2022 Supabase - Used as backend database solution, facilitating scalable deployments via managed PostgreSQL service coupled with Redis for caching frequent social media queries to maintain performance at scale; Next.js 15 \u2014 The core framework employed in building NonprofitNet leveraging its server-side rendering capabilities and client hydration features that ensure fast load times, real-time data updates while providing a seamless experience across devices of varying screen sizes through responsive design patterns implemented with Tailwind CSS."
   }
 ]
