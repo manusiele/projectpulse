@@ -1060,115 +1060,6 @@ export default function DashboardPage() {
 
               {/* Key Details */}
               <div className="space-y-5">
-                {/* Parse and display raw content if structured fields are missing */}
-                {selectedIdea.raw && !selectedIdea.stack && (() => {
-                  const raw = selectedIdea.raw;
-                  const sections: { [key: string]: string } = {};
-                  
-                  // Extract sections from raw text
-                  const problemMatch = raw.match(/PROBLEM STATEMENT[:\s]+([\s\S]*?)(?=\n\nProject|Project:|STACK|$)/i);
-                  const projectMatch = raw.match(/Project[:\s]+([\s\S]*?)(?=\n\nStack|Stack:|DEPLOY|$)/i);
-                  const stackMatch = raw.match(/Stack[:\s]+([\s\S]*?)(?=\n\nDeploy|Deploy:|DOCS|WHY NOW|$)/i);
-                  const deployMatch = raw.match(/Deploy[:\s]+([\s\S]*?)(?=\n\nDocs|Docs & Links|WHY NOW|POTENTIAL|$)/i);
-                  const docsMatch = raw.match(/Docs & Links[:\s]+([\s\S]*?)(?=\n\nWhy now|Why Now|POTENTIAL|$)/i);
-                  const whyNowMatch = raw.match(/Why now[:\s]+([\s\S]*?)(?=\n\nPotential|POTENTIAL|TARGET|$)/i);
-                  const potentialMatch = raw.match(/Potential[:\s]+([\s\S]*?)(?=\n\nTarget|TARGET AUDIENCE|$)/i);
-                  
-                  if (problemMatch) sections.problem = problemMatch[1].trim();
-                  if (projectMatch) sections.project = projectMatch[1].trim();
-                  if (stackMatch) sections.stack = stackMatch[1].trim();
-                  if (deployMatch) sections.deploy = deployMatch[1].trim();
-                  if (docsMatch) sections.docs = docsMatch[1].trim();
-                  if (whyNowMatch) sections.whyNow = whyNowMatch[1].trim();
-                  if (potentialMatch) sections.potential = potentialMatch[1].trim();
-                  
-                  return (
-                    <>
-                      {sections.stack && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
-                            Tech Stack
-                          </span>
-                          <p className="text-slate-300 leading-relaxed">{sections.stack}</p>
-                        </div>
-                      )}
-                      
-                      {sections.problem && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Problem Statement
-                          </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-                            {sections.problem.split('\n').map((line, i) => {
-                              // Bold WHO:, PAIN:, GAP:, IMPACT: keywords
-                              const parts = line.split(/\b(WHO|PAIN|GAP|IMPACT):/);
-                              return (
-                                <span key={i}>
-                                  {parts.map((part, j) => 
-                                    ['WHO', 'PAIN', 'GAP', 'IMPACT'].includes(part) ? 
-                                      <strong key={j} className="text-blue-400 font-bold">{part}:</strong> : 
-                                      part
-                                  )}
-                                  {i < sections.problem.split('\n').length - 1 && <br />}
-                                </span>
-                              );
-                            })}
-                          </p>
-                        </div>
-                      )}
-                      
-                      {sections.project && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Project
-                          </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.project}</p>
-                        </div>
-                      )}
-                      
-                      {sections.deploy && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Deployment
-                          </span>
-                          <p className="text-slate-300 leading-relaxed">{sections.deploy}</p>
-                        </div>
-                      )}
-                      
-                      {sections.docs && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
-                            Docs & Links
-                          </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">{sections.docs}</p>
-                        </div>
-                      )}
-                      
-                      {sections.whyNow && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Why Now
-                          </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-                            <strong className="text-blue-400">Why Now:</strong> {sections.whyNow}
-                          </p>
-                        </div>
-                      )}
-                      
-                      {sections.potential && (
-                        <div>
-                          <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                            Innovation Impact
-                          </span>
-                          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-                            <strong className="text-blue-400">Potential:</strong> {sections.potential}
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
-
                 {/* Stack */}
                 {selectedIdea.stack && (
                   <div>
@@ -1194,15 +1085,26 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                {/* Problem Statement - parse from raw if available */}
-                {selectedIdea.raw && selectedIdea.raw.includes('PROBLEM STATEMENT') && selectedIdea.stack && (
+                {/* Problem Statement */}
+                {(selectedIdea.who || selectedIdea.pain || selectedIdea.gap || selectedIdea.impact) && (
                   <div>
                     <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Problem Statement
                     </span>
-                    <p className="text-slate-300 leading-relaxed whitespace-pre-line mt-2">
-                      {selectedIdea.raw.split('PROBLEM STATEMENT')[1]?.split(/PROJECT|STACK|DEPLOY|WHY NOW|POTENTIAL/)[0]?.replace(/^[:\s]+/, '').trim()}
-                    </p>
+                    <div className="text-slate-300 leading-relaxed mt-2 space-y-2">
+                      {selectedIdea.who && (
+                        <p><strong className="text-blue-400 font-bold">WHO:</strong> {selectedIdea.who}</p>
+                      )}
+                      {selectedIdea.pain && (
+                        <p><strong className="text-blue-400 font-bold">PAIN:</strong> {selectedIdea.pain}</p>
+                      )}
+                      {selectedIdea.gap && (
+                        <p><strong className="text-blue-400 font-bold">GAP:</strong> {selectedIdea.gap}</p>
+                      )}
+                      {selectedIdea.impact && (
+                        <p><strong className="text-blue-400 font-bold">IMPACT:</strong> {selectedIdea.impact}</p>
+                      )}
+                    </div>
                   </div>
                 )}
 
