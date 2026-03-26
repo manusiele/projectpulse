@@ -308,13 +308,19 @@ def save_idea(raw: str, domain: str = ""):
     try:
         parsed = parse_idea(raw)
         idea_id = f"idea_{int(datetime.now().timestamp())}"
+        
+        # Build entry with only non-empty fields
         entry = {
             "id": idea_id,
-            "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-            "raw": raw,
+            "createdAt": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),  # UTC timestamp
             "domain": domain,
-            **parsed,
         }
+        
+        # Add parsed fields only if they have content
+        for key, value in parsed.items():
+            if value and value.strip():  # Only add non-empty strings
+                entry[key] = value
+        
         ideas_store.append(entry)
         with open(IDEAS_FILE, "w") as f:
             json.dump(ideas_store, f, indent=2)
