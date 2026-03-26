@@ -323,10 +323,26 @@ def parse_idea(raw: str) -> dict:
     print(f"DEBUG: Final parsed result - projectName: '{result['projectName']}'")
     return result
 
-def save_idea(raw: str, domain: str = ""):
+def save_idea(raw: str, domain: str = "", problem: dict = None):
     """Save a structured idea entry to ideas.json for the web dashboard."""
     try:
         parsed = parse_idea(raw)
+        
+        # If parsing failed to extract problem statement fields, use the injected problem domain
+        if problem:
+            if not parsed.get('who', '').strip():
+                parsed['who'] = problem['who']
+                print(f"DEBUG: Using injected WHO from problem domain")
+            if not parsed.get('pain', '').strip():
+                parsed['pain'] = problem['pain']
+                print(f"DEBUG: Using injected PAIN from problem domain")
+            if not parsed.get('gap', '').strip():
+                parsed['gap'] = problem['gap']
+                print(f"DEBUG: Using injected GAP from problem domain")
+            if not parsed.get('impact', '').strip():
+                parsed['impact'] = problem['impact']
+                print(f"DEBUG: Using injected IMPACT from problem domain")
+        
         idea_id = f"idea_{int(datetime.now().timestamp())}"
         
         # Quality validation - ensure we have core fields
@@ -466,7 +482,7 @@ RULES:
         if len(non_empty_lines) < 10:
             raise ValueError("Output has too few meaningful lines")
         
-        return generated_text, domain_name
+        return generated_text, domain_name, problem
     except Exception as e:
         print(f"❌ Ollama generation failed: {e}")
         import traceback
@@ -570,19 +586,33 @@ def determine_domain(problem: dict) -> str:
 if __name__ == "__main__":
     try:
         print("🚀 FocusLock starting...")
-        idea, domain = generate_idea()
+        idea, domain, problem = generate_idea()
         
         # Validate AI generation
         if not idea or len(idea.strip()) < 100:
-            error_msg = f"- CRITICAL: AI generation failed or returned insufficient content (length: {len(idea) if idea else 0})"
+            error_msg = f"❌ CRITICAL: AI generation failed or returned insufficient content (length: {len(idea) if idea else 0})"
             print(error_msg)
             raise ValueError(error_msg)
         
         print(f"✓ AI generated {len(idea)} characters")
         timestamp = datetime.now().strftime('%b %d • %H:%M')
         
-        # Parse the idea to get key fields
+        # Parse the idea to get key fields (pass problem domain for fallback)
         parsed = parse_idea(idea)
+        
+        # Use injected problem domain values if parsing failed
+        if not parsed.get('who', '').strip():
+            parsed['who'] = problem['who']
+            print(f"DEBUG: Using injected WHO from problem domain")
+        if not parsed.get('pain', '').strip():
+            parsed['pain'] = problem['pain']
+            print(f"DEBUG: Using injected PAIN from problem domain")
+        if not parsed.get('gap', '').strip():
+            parsed['gap'] = problem['gap']
+            print(f"DEBUG: Using injected GAP from problem domain")
+        if not parsed.get('impact', '').strip():
+            parsed['impact'] = problem['impact']
+            print(f"DEBUG: Using injected IMPACT from problem domain")
         
         # Validate parsing results
         if not parsed.get('projectName'):
@@ -593,8 +623,8 @@ if __name__ == "__main__":
         
         print(f"✓ Parsed project: {parsed['projectName']}")
         
-        # Save full idea to JSON and get the ID
-        idea_id = save_idea(idea, domain)
+        # Save full idea to JSON and get the ID (pass problem domain for fallback)
+        idea_id = save_idea(idea, domain, problem)
         
         if not idea_id:
             error_msg = "❌ CRITICAL: Failed to save idea to JSON"
@@ -623,24 +653,19 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"⚠ Failed to shorten URL: {e}, using original URL")
         
-        # Create concise Telegram message
+        # Create minimal Telegram message (title + problem statement + link)
         telegram_parts = []
         telegram_parts.append(f"*{parsed['projectName']}*")
         
-        if parsed['description']:
-            telegram_parts.append(f"\n{parsed['description'][:300]}")
-        
-        if parsed['stack']:
-            telegram_parts.append(f"\n\n*Stack*\n{parsed['stack'][:400]}")
-        
-        if parsed['deploy']:
-            telegram_parts.append(f"\n\n*Deploy*\n{parsed['deploy'][:300]}")
-        
-        if parsed['whyNow']:
-            telegram_parts.append(f"\n\n*Why Now*\n{parsed['whyNow'][:350]}")
-        
-        if parsed['potential']:
-            telegram_parts.append(f"\n\n*Potential*\n{parsed['potential'][:350]}")
+        # Add problem statement (Who/Pain/Gap)
+        if parsed.get('who') or parsed.get('pain') or parsed.get('gap'):
+            telegram_parts.append(f"\n\n*Problem Statement*")
+            if parsed.get('who'):
+                telegram_parts.append(f"\n• Who: {parsed['who']}")
+            if parsed.get('pain'):
+                telegram_parts.append(f"\n• Pain: {parsed['pain']}")
+            if parsed.get('gap'):
+                telegram_parts.append(f"\n• Gap: {parsed['gap']}")
         
         telegram_parts.append(f"\n\n[📱 View full details on dashboard]({project_url})")
         
@@ -649,7 +674,7 @@ if __name__ == "__main__":
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
         # Validate message before sending
-        if len(message.strip()) < 200:
+        if len(message.strip()) < 100:
             error_msg = f"❌ CRITICAL: Message too short ({len(message)} chars), likely missing content"
             print(error_msg)
             print(f"Message preview: {message[:500]}")
