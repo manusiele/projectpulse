@@ -19,6 +19,7 @@ export interface Idea {
   likes?: number;
   shares?: number;
   views?: number;
+  difficulty?: "beginner" | "intermediate" | "expert";
 }
 
 /**

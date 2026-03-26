@@ -44,6 +44,25 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
     year: "numeric",
   });
 
+  // Difficulty colors
+  const getDifficultyColor = (difficulty?: string) => {
+    switch (difficulty) {
+      case "beginner": return "bg-green-500";
+      case "intermediate": return "bg-yellow-500";
+      case "expert": return "bg-red-500";
+      default: return "bg-gray-500";
+    }
+  };
+
+  const getDifficultyLabel = (difficulty?: string) => {
+    switch (difficulty) {
+      case "beginner": return "Beginner";
+      case "intermediate": return "Intermediate";
+      case "expert": return "Expert";
+      default: return "Unknown";
+    }
+  };
+
   /* ── Featured (latest spark) card ──────────────────────────────────── */
   if (featured) {
     return (
@@ -88,7 +107,24 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
-            <span className="text-xs text-slate-500">{formattedDate}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-slate-500">{formattedDate}</span>
+              {idea.difficulty && (
+                <div className="flex items-center gap-1.5">
+                  <span className={`w-2 h-2 rounded-full ${getDifficultyColor(idea.difficulty)}`} />
+                  <span className="text-xs text-slate-400">{getDifficultyLabel(idea.difficulty)}</span>
+                </div>
+              )}
+              {(idea.views || 0) > 0 && (
+                <div className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span className="text-xs text-slate-500">{idea.views}</span>
+                </div>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               {onView && (
                 <button
@@ -143,7 +179,24 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
 
         {/* Footer with date and actions */}
         <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
-          <span className="text-xs text-slate-500">{formattedDate}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-500">{formattedDate}</span>
+            {idea.difficulty && (
+              <div className="flex items-center gap-1">
+                <span className={`w-1.5 h-1.5 rounded-full ${getDifficultyColor(idea.difficulty)}`} />
+                <span className="text-xs text-slate-400">{getDifficultyLabel(idea.difficulty)}</span>
+              </div>
+            )}
+            {(idea.views || 0) > 0 && (
+              <div className="flex items-center gap-1">
+                <svg className="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span className="text-xs text-slate-500">{idea.views}</span>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-1.5">
             {onView && (
               <button

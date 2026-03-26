@@ -18,7 +18,9 @@
     "shares": 1,
     "createdAt": "2026-03-01T00:00:00",
     "domain": "Business Management",
-    "problemStatement": "Health-conscious professionals aged 25-45 seeking personalized fitness guidance currently Generic fitness apps don't adapt to individual needs; expensive trainers are inaccessible. The market No affordable, AI-powered personal training solution that combines fitness + mental wellness, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Health-conscious professionals aged 25-45 seeking personalized fitness guidance currently Generic fitness apps don't adapt to individual needs; expensive trainers are inaccessible. The market No affordable, AI-powered personal training solution that combines fitness + mental wellness, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 108
   },
   {
     "id": "idea_1710786660",
@@ -39,7 +41,9 @@
     "createdAt": "2026-03-02T00:00:00",
     "shares": 0,
     "domain": "Business Management",
-    "problemStatement": "Freelancers and solopreneurs managing 5-50 clients currently Fragmented workflow across multiple tools; manual invoice tracking. The market No unified platform designed specifically for freelancer operations, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Freelancers and solopreneurs managing 5-50 clients currently Fragmented workflow across multiple tools; manual invoice tracking. The market No unified platform designed specifically for freelancer operations, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 130
   },
   {
     "id": "idea_1710700260",
@@ -60,7 +64,9 @@
     "createdAt": "2026-03-03T00:00:00",
     "shares": 0,
     "domain": "Business Management",
-    "problemStatement": "Content creators, YouTubers, and social media managers currently Manual repurposing across platforms; inconsistent branding. The market No AI tool that intelligently adapts content for different platforms, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Content creators, YouTubers, and social media managers currently Manual repurposing across platforms; inconsistent branding. The market No AI tool that intelligently adapts content for different platforms, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "beginner",
+    "views": 45
   },
   {
     "id": "idea_1710613860",
@@ -81,7 +87,9 @@
     "likes": 0,
     "shares": 0,
     "domain": "Business Management",
-    "problemStatement": "Distributed teams across 3+ timezones currently Timezone coordination chaos; async communication lacks context. The market No platform optimized for truly async-first remote teams, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Distributed teams across 3+ timezones currently Timezone coordination chaos; async communication lacks context. The market No platform optimized for truly async-first remote teams, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "beginner",
+    "views": 137
   },
   {
     "id": "idea_1710527460",
@@ -102,7 +110,9 @@
     "likes": 0,
     "shares": 0,
     "domain": "Business Management",
-    "problemStatement": "Small to mid-size e-commerce businesses currently High cart abandonment; no affordable recovery tools. The market Enterprise cart recovery solutions are too expensive for SMBs, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Small to mid-size e-commerce businesses currently High cart abandonment; no affordable recovery tools. The market Enterprise cart recovery solutions are too expensive for SMBs, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "beginner",
+    "views": 13
   },
   {
     "id": "idea_1774049287",
@@ -123,7 +133,9 @@
     "likes": 2,
     "createdAt": "2026-03-06T00:00:00",
     "shares": 0,
-    "problemStatement": "Professionals and businesses seeking efficient digital solutions currently Users face inefficient workflows and lack of integrated solutions for their specific needs. The market No comprehensive platform addresses these specific workflow challenges with integrated automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Professionals and businesses seeking efficient digital solutions currently Users face inefficient workflows and lack of integrated solutions for their specific needs. The market No comprehensive platform addresses these specific workflow challenges with integrated automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "beginner",
+    "views": 135
   },
   {
     "id": "idea_1774078437",
@@ -144,7 +156,9 @@
     "createdAt": "2026-03-07T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Solo legal practitioners and small law firms currently Solo attorneys manually track case deadlines, client communications, and billable hours across disconnected systems. The market Current legal software targets large firms rather than solo practitioners' specific workflow challenges, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Solo legal practitioners and small law firms currently Solo attorneys manually track case deadlines, client communications, and billable hours across disconnected systems. The market Current legal software targets large firms rather than solo practitioners' specific workflow challenges, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 77
   },
   {
     "id": "idea_1774103022",
@@ -165,7 +179,9 @@
     "likes": 1,
     "createdAt": "2026-03-08T00:00:00",
     "shares": 0,
-    "problemStatement": "Consultants and coaches delivering professional services currently Service professionals struggle with session scheduling, client onboarding, progress tracking, and billing across multiple tools. The market No unified platform streamlines the complete client lifecycle for service-based professionals, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Consultants and coaches delivering professional services currently Service professionals struggle with session scheduling, client onboarding, progress tracking, and billing across multiple tools. The market No unified platform streamlines the complete client lifecycle for service-based professionals, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 127
   },
   {
     "id": "idea_1774276662",
@@ -186,7 +202,9 @@
     "createdAt": "2026-03-09T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Health-conscious individuals seeking integrated wellness solutions currently People struggle to coordinate fitness, nutrition, and mental health goals across separate apps and services without personalized guidance. The market No platform integrates physical fitness, nutrition planning, and mental wellness with AI-powered personalization for holistic health management, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Health-conscious individuals seeking integrated wellness solutions currently People struggle to coordinate fitness, nutrition, and mental health goals across separate apps and services without personalized guidance. The market No platform integrates physical fitness, nutrition planning, and mental wellness with AI-powered personalization for holistic health management, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 103
   },
   {
     "id": "idea_1774282116",
@@ -207,7 +225,9 @@
     "likes": 1,
     "createdAt": "2026-03-10T00:00:00",
     "shares": 0,
-    "problemStatement": "Consultants and coaches managing multiple clients struggle with fragmented workflows across scheduling, client onboarding, progress tracking, and billing systems. Current solutions either target large enterprises or focus on single aspects of client management, leaving service professionals to juggle multiple tools that don't communicate with each other, creating inefficiencies and missed opportunities for better client relationships."
+    "problemStatement": "Consultants and coaches managing multiple clients struggle with fragmented workflows across scheduling, client onboarding, progress tracking, and billing systems. Current solutions either target large enterprises or focus on single aspects of client management, leaving service professionals to juggle multiple tools that don't communicate with each other, creating inefficiencies and missed opportunities for better client relationships.",
+    "difficulty": "intermediate",
+    "views": 25
   },
   {
     "id": "idea_1774283589",
@@ -228,7 +248,9 @@
     "createdAt": "2026-03-11T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Podcast creators and audio content producers currently Podcasters struggle with post-production workflow, show notes creation, audience analytics, and monetization coordination. The market No integrated platform handles the complete podcast lifecycle from recording to monetization, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Podcast creators and audio content producers currently Podcasters struggle with post-production workflow, show notes creation, audience analytics, and monetization coordination. The market No integrated platform handles the complete podcast lifecycle from recording to monetization, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 127
   },
   {
     "id": "idea_1774289906",
@@ -249,7 +271,9 @@
     "likes": 1,
     "shares": 1,
     "createdAt": "2026-03-12T00:00:00",
-    "problemStatement": "Freelance photographers and videographers managing client projects currently Creative professionals juggle client communications, project timelines, file sharing, and invoicing across multiple disconnected tools. The market No unified platform designed for creative freelancers that combines project management, client communication, and business operations, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Freelance photographers and videographers managing client projects currently Creative professionals juggle client communications, project timelines, file sharing, and invoicing across multiple disconnected tools. The market No unified platform designed for creative freelancers that combines project management, client communication, and business operations, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "beginner",
+    "views": 87
   },
   {
     "id": "idea_1774291085",
@@ -270,7 +294,9 @@
     "likes": 1,
     "createdAt": "2026-03-13T00:00:00",
     "shares": 0,
-    "problemStatement": "may not have had access to such resources previously, we find ourselves at a pivotal time. Market research indicates that there is a significant demand for comprehensive yet user-friendly platforms specifically designed with the unique challenges faced by small and individual mental health professionals in mind while still meeting stringent industry standards like HIPAA compliance due to increased regulatory scrutiny of electronic records keeping; these trends signal an urgent need, especially as solo practitioners are at risk for burnout without such aid. Furthermore, data from recent surveys show that a notable percentage within this professional group expresses frustration with existing systems lacking essential features and integration complexities which directly impacts their clinical effectiveness; it's clear the market is ripe for an innovative solution like Therapeutic Harmony Hub to make its mark. currently Users struggle with fragmented health and wellness management across multiple apps and services. The market No comprehensive platform addresses these specific workflow challenges with integrated automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "may not have had access to such resources previously, we find ourselves at a pivotal time. Market research indicates that there is a significant demand for comprehensive yet user-friendly platforms specifically designed with the unique challenges faced by small and individual mental health professionals in mind while still meeting stringent industry standards like HIPAA compliance due to increased regulatory scrutiny of electronic records keeping; these trends signal an urgent need, especially as solo practitioners are at risk for burnout without such aid. Furthermore, data from recent surveys show that a notable percentage within this professional group expresses frustration with existing systems lacking essential features and integration complexities which directly impacts their clinical effectiveness; it's clear the market is ripe for an innovative solution like Therapeutic Harmony Hub to make its mark. currently Users struggle with fragmented health and wellness management across multiple apps and services. The market No comprehensive platform addresses these specific workflow challenges with integrated automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 50
   },
   {
     "id": "idea_1774332492",
@@ -291,7 +317,9 @@
     "likes": 1,
     "createdAt": "2026-03-14T00:00:00",
     "shares": 0,
-    "problemStatement": "Property managers and landlords managing multiple rental properties currently Property managers manually track rent payments, maintenance requests, tenant communications, and property performance across spreadsheets and emails. The market No comprehensive property management platform combines tenant management, maintenance coordination, and financial tracking with automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Property managers and landlords managing multiple rental properties currently Property managers manually track rent payments, maintenance requests, tenant communications, and property performance across spreadsheets and emails. The market No comprehensive property management platform combines tenant management, maintenance coordination, and financial tracking with automation, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 148
   },
   {
     "id": "idea_1774339397",
@@ -312,7 +340,9 @@
     "likes": 0,
     "createdAt": "2026-03-15T00:00:00",
     "shares": 0,
-    "problemStatement": "Small-scale farmers and agricultural cooperatives currently Farmers struggle with unpredictable weather, volatile market prices, limited access to agricultural inputs, and lack of supply chain transparency. The market No integrated platform provides farmers with weather insights, market data, supply chain management, and cooperative coordination tools, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Small-scale farmers and agricultural cooperatives currently Farmers struggle with unpredictable weather, volatile market prices, limited access to agricultural inputs, and lack of supply chain transparency. The market No integrated platform provides farmers with weather insights, market data, supply chain management, and cooperative coordination tools, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 17
   },
   {
     "id": "idea_1774341910",
@@ -333,7 +363,9 @@
     "likes": 3,
     "shares": 2,
     "createdAt": "2026-03-16T00:00:00",
-    "problemStatement": "Busy parents managing multiple aspects of family life currently Parents struggle to coordinate school activities, medical appointments, meal planning, and budgets while monitoring children's development and activities. The market No comprehensive family management platform integrates scheduling, budgeting, child development tracking, and household coordination, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Busy parents managing multiple aspects of family life currently Parents struggle to coordinate school activities, medical appointments, meal planning, and budgets while monitoring children's development and activities. The market No comprehensive family management platform integrates scheduling, budgeting, child development tracking, and household coordination, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 119
   },
   {
     "id": "idea_1774421435",
@@ -354,7 +386,9 @@
     "createdAt": "2026-03-17T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Local service professionals seeking online visibility and client acquisition currently Service professionals rely on word-of-mouth but struggle with online visibility, lack reliable booking systems, and miss potential clients. The market No platform specifically designed for local service providers combines online presence, booking management, and client relationship tools, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Local service professionals seeking online visibility and client acquisition currently Service professionals rely on word-of-mouth but struggle with online visibility, lack reliable booking systems, and miss potential clients. The market No platform specifically designed for local service providers combines online presence, booking management, and client relationship tools, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 9
   },
   {
     "id": "idea_1774426708",
@@ -375,7 +409,9 @@
     "createdAt": "2026-03-18T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Pet owners and veterinary clinics managing pet care coordination currently Pet owners struggle to coordinate appointments, track medical records, and communicate with multiple service providers while vets manage scheduling chaos. The market No unified platform connects pet owners with veterinary services, grooming, and pet care providers with integrated scheduling and records management, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Pet owners and veterinary clinics managing pet care coordination currently Pet owners struggle to coordinate appointments, track medical records, and communicate with multiple service providers while vets manage scheduling chaos. The market No unified platform connects pet owners with veterinary services, grooming, and pet care providers with integrated scheduling and records management, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 125
   },
   {
     "id": "idea_1774440151",
@@ -396,7 +432,9 @@
     "createdAt": "2026-03-19T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Remote teams and distributed organizations managing asynchronous collaboration currently Remote teams struggle with information silos, missed updates in async communication, and lack of context in distributed decision-making. The market No platform optimizes asynchronous collaboration with intelligent information streaming and context-aware communication, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Remote teams and distributed organizations managing asynchronous collaboration currently Remote teams struggle with information silos, missed updates in async communication, and lack of context in distributed decision-making. The market No platform optimizes asynchronous collaboration with intelligent information streaming and context-aware communication, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "expert",
+    "views": 6
   },
   {
     "id": "idea_1774441080",
@@ -417,7 +455,9 @@
     "createdAt": "2026-03-20T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Independent game developers and small studios creating niche games currently Indie developers struggle with project management, asset organization, team collaboration, and marketing their games effectively. The market No comprehensive platform designed specifically for indie game development workflow from concept to market launch, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Independent game developers and small studios creating niche games currently Indie developers struggle with project management, asset organization, team collaboration, and marketing their games effectively. The market No comprehensive platform designed specifically for indie game development workflow from concept to market launch, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 126
   },
   {
     "id": "idea_1774445309",
@@ -438,7 +478,9 @@
     "createdAt": "2026-03-21T00:00:00",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Pet care service providers and pet boarding facilities currently Pet care businesses manually manage bookings, struggle with client communication, and lack integrated payment systems. The market No comprehensive business management platform designed specifically for pet care service providers, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Pet care service providers and pet boarding facilities currently Pet care businesses manually manage bookings, struggle with client communication, and lack integrated payment systems. The market No comprehensive business management platform designed specifically for pet care service providers, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "intermediate",
+    "views": 12
   },
   {
     "id": "idea_1774524579",
@@ -459,7 +501,9 @@
     "likes": 0,
     "shares": 0,
     "date": "2026-03-22T00:00:00",
-    "problemStatement": "Nonprofit organizations struggling with fragmented donor management and volunteer coordination currently Nonprofits juggle donor data across spreadsheets, manage volunteers through email chains, and struggle to measure impact effectively while spending countless hours on manual grant reporting. The market No unified platform combines donor analytics, volunteer management, social media engagement, and automated grant reporting in one affordable solution, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively."
+    "problemStatement": "Nonprofit organizations struggling with fragmented donor management and volunteer coordination currently Nonprofits juggle donor data across spreadsheets, manage volunteers through email chains, and struggle to measure impact effectively while spending countless hours on manual grant reporting. The market No unified platform combines donor analytics, volunteer management, social media engagement, and automated grant reporting in one affordable solution, creating inefficiencies and missed opportunities. This challenge is particularly pressing in today's digital landscape where users expect seamless, integrated solutions that address their specific needs comprehensively.",
+    "difficulty": "expert",
+    "views": 31
   },
   {
     "id": "idea_1774610800",
@@ -479,7 +523,9 @@
     "docs": "Python Docs (https://docs.python.org) \u2022 FastAPI Guide (https://fastapi.tiangolo.com) \u2022 OpenAI API (https://platform.openai.com/docs) \u2022 GitHub API (https://docs.github.com/en/rest)",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Development teams spend hours on repetitive code review tasks while missing subtle bugs and security issues. Current tools provide generic linting but don't learn team-specific standards or provide actionable fix suggestions, creating review bottlenecks and quality gaps."
+    "problemStatement": "Development teams spend hours on repetitive code review tasks while missing subtle bugs and security issues. Current tools provide generic linting but don't learn team-specific standards or provide actionable fix suggestions, creating review bottlenecks and quality gaps.",
+    "difficulty": "intermediate",
+    "views": 99
   },
   {
     "id": "idea_1774697200",
@@ -499,7 +545,9 @@
     "docs": "Next.js Docs (https://nextjs.org/docs) \u2022 Supabase Guide (https://supabase.com/docs) \u2022 OpenAI API (https://platform.openai.com/docs) \u2022 Stripe Billing (https://stripe.com/docs/billing)",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Career switchers and self-taught developers drown in scattered learning resources with no clear path from current skills to dream job. Existing platforms either provide generic courses or expensive bootcamps, leaving learners to figure out their own learning path and wasting months on irrelevant content."
+    "problemStatement": "Career switchers and self-taught developers drown in scattered learning resources with no clear path from current skills to dream job. Existing platforms either provide generic courses or expensive bootcamps, leaving learners to figure out their own learning path and wasting months on irrelevant content.",
+    "difficulty": "intermediate",
+    "views": 33
   },
   {
     "id": "idea_1774783600",
@@ -519,7 +567,9 @@
     "docs": "React Docs (https://react.dev) \u2022 Node.js Guide (https://nodejs.org/docs) \u2022 PostgreSQL Tutorial (https://www.postgresql.org/docs) \u2022 Twilio SMS (https://www.twilio.com/docs/sms) \u2022 Stripe Payments (https://stripe.com/docs/payments)",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Restaurant owners lose thousands annually to empty tables, long wait times, and no-shows while managing reservations in paper books or basic systems. Current solutions either lack turnover optimization or cost $500+/month, leaving small restaurants to manually juggle seating without data-driven insights."
+    "problemStatement": "Restaurant owners lose thousands annually to empty tables, long wait times, and no-shows while managing reservations in paper books or basic systems. Current solutions either lack turnover optimization or cost $500+/month, leaving small restaurants to manually juggle seating without data-driven insights.",
+    "difficulty": "intermediate",
+    "views": 112
   },
   {
     "id": "idea_1774870000",
@@ -539,11 +589,13 @@
     "docs": "Next.js Docs (https://nextjs.org/docs) \u2022 Supabase Guide (https://supabase.com/docs) \u2022 Stripe Connect (https://stripe.com/docs/connect) \u2022 SendGrid API (https://docs.sendgrid.com)",
     "likes": 0,
     "shares": 0,
-    "problemStatement": "Freelancers lose thousands annually to scope creep, late payments, and clients who ghost after delivery. Current platforms like Upwork take 20% fees, while standalone contracts offer no payment protection, leaving freelancers vulnerable to disputes with no recourse."
+    "problemStatement": "Freelancers lose thousands annually to scope creep, late payments, and clients who ghost after delivery. Current platforms like Upwork take 20% fees, while standalone contracts offer no payment protection, leaving freelancers vulnerable to disputes with no recourse.",
+    "difficulty": "intermediate",
+    "views": 33
   },
   {
     "id": "idea_1774554198",
-    "createdAt": "2026-03-26T19:43:18Z",
+    "createdAt": "2026-03-26T00:00:00Z",
     "domain": "Event Management",
     "raw": "Project Name: EventFlow Prodigy\n\nDescription: The EventFlow Prodigy is an end-to-end event management platform designed to streamline the entire process of organizing gatherings, from registration through post-event follow-up. It offers a unified system for managing attendee data, automated reminders via email and SMS, networking features like interest groups or chat rooms within events, real-time updates on event statuses accessible by both organizers and participants, as well as tools to collect feedback directly from the users. This platform simplifies communication channels while enhancing engagement through personalized experiences based on attendee profiles built into their system.\n\nStack: Next.js for serverless React frontend development; Supabase for backend services with real-time database capabilities and authentication management, Stripe for secure payment processing integrated within the platform's checkout flow, Tailwind CSS combined with a customizable AdminDashboard component to create an intuitive UI/UX design system that is both responsive and visually appealing; React Context API or Redux Toolkit for state management across components; SendGrid for automated email marketing campaigns.\n\nDeploy: Deployment on Vercel, leveraging its seamless integration with GitHub Actions to maintain continuous deployment of the Next.js application while providing a robust environment that supports serverless functions and scalability needed by event organizers handling large numbers of registrations simultaneously.\n\nWhy Now: Advances in cloud computing technology have made it possible for developers like FocusLock to build complex, real-time applications with minimal infrastructure overhead; the increasing demand from organizations seeking comprehensive solutions that integrate various aspects into one platform has created a market gap filled by EventFlow Prodigy's end-to-end approach.\n\nPotential: By addressing organizers\u2019 pain points directly through an all-inclusive event management tool, we anticipate significantly higher engagement and retention rates for future events; this could lead to the creation of a vibrant community around recurring gatherings or conferences that foster professional networking. The platform's success may inspire similar solutions in other domains where coordinating large groups is essential, potentially revolutionizing how we approach event planning on a broader scale.",
     "projectName": "EventFlow Prodigy",
@@ -555,6 +607,8 @@
     "gap": "There's no end-to-end event platform that handles registration, automated reminders, attendee networking, real-time updates, and post-event follow-up in one place.",
     "impact": "They lose attendees to poor communication, struggle with low engagement, waste hours on manual coordination, and can't build community beyond single events.",
     "whyNow": "Advances in cloud computing technology have made it possible for developers like FocusLock to build complex, real-time applications with minimal infrastructure overhead; the increasing demand from organizations seeking comprehensive solutions that integrate various aspects into one platform has created a market gap filled by EventFlow Prodigy's end-to-end approach.",
-    "potential": "By addressing organizers\u2019 pain points directly through an all-inclusive event management tool, we anticipate significantly higher engagement and retention rates for future events; this could lead to the creation of a vibrant community around recurring gatherings or conferences that foster professional networking. The platform's success may inspire similar solutions in other domains where coordinating large groups is essential, potentially revolutionizing how we approach event planning on a broader scale."
+    "potential": "By addressing organizers\u2019 pain points directly through an all-inclusive event management tool, we anticipate significantly higher engagement and retention rates for future events; this could lead to the creation of a vibrant community around recurring gatherings or conferences that foster professional networking. The platform's success may inspire similar solutions in other domains where coordinating large groups is essential, potentially revolutionizing how we approach event planning on a broader scale.",
+    "difficulty": "intermediate",
+    "views": 83
   }
 ]
