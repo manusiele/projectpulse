@@ -357,7 +357,8 @@ def save_idea(raw: str, domain: str = "", problem: dict = None):
         idea_id = f"idea_{int(datetime.now().timestamp())}"
         
         # Quality validation - ensure we have core fields
-        required_fields = ['projectName', 'who', 'pain', 'gap', 'stack']
+        # Stack is optional since LLM often doesn't format it correctly
+        required_fields = ['projectName', 'who', 'pain', 'gap']
         missing_core = [field for field in required_fields if not parsed.get(field, '').strip()]
         
         if missing_core:
