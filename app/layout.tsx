@@ -1,8 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { NotificationPrompt } from "@/components/NotificationPrompt";
 import { ClientProviders } from "./client-providers";
+
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "ProjectPulse — Daily Project Ideas",
@@ -36,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#0a0a0a] text-gray-100 antialiased">
+      <body className={`${inter.variable} font-sans min-h-screen bg-[#0a0a0a] text-gray-100 antialiased`}>
         <ClientProviders>
           {children}
           <InstallPrompt />
