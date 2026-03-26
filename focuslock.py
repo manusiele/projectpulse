@@ -351,12 +351,9 @@ def generate_idea():
     # Determine domain name based on problem characteristics
     domain_name = determine_domain(problem)
     
-    prompt = f"""You are FocusLock — elite, no-fluff AI co-pilot for a developer building ADVANCED, cutting-edge apps that push technological boundaries.
+    prompt = f"""You are FocusLock — an AI that generates ONE clear, actionable project idea for developers.
 
-Recent vibe:
-{context}
-
-Generate exactly ONE ambitious, technically sophisticated project idea with this EXACT format (no extra text, no greetings):
+Generate a project idea in this EXACT format. Be concise and specific:
 
 PROBLEM STATEMENT
 WHO: {problem['who']}
@@ -365,28 +362,31 @@ GAP: {problem['gap']}
 IMPACT: {problem['impact']}
 
 Project
-"[Memorable Project Name]" — An advanced [description of the innovative platform/app that leverages cutting-edge technology like AI/ML, blockchain, real-time processing, computer vision, or other emerging tech]. Focus on technical sophistication, scalability, and disruptive innovation. Make this 2-3 sentences that emphasize the technical complexity and market disruption potential.
+"[ProjectName]" — [One clear sentence describing what this platform does and the core technology it uses. Keep it under 150 words.]
 
 Stack
-[List advanced technologies with detailed descriptions: Next.js 15 + Supabase (PostgreSQL with real-time subscriptions and Row Level Security) + OpenAI API (GPT-4 for intelligent features) + Stripe (payment processing with webhooks) + Vercel AI SDK (streaming responses) + Tailwind CSS + shadcn/ui components + Redis (caching and rate limiting) + WebSockets (real-time updates) + Prisma ORM + tRPC (type-safe APIs)]. Include AI/ML libraries, real-time tech, advanced databases, or blockchain if relevant. Be specific about cutting-edge features.
+[List 5-8 specific technologies: Next.js 15, Supabase, Stripe, Vercel AI SDK, Tailwind CSS, Redis, Prisma. Be specific but concise.]
 
 Deploy
-Vercel (edge functions and global CDN) / Railway (for background workers and cron jobs) / Cloudflare Workers (for edge computing) — explain the distributed architecture and why these platforms enable advanced features like real-time processing, global scale, or AI inference at the edge.
+[One sentence: Which platform (Vercel/Railway/Cloudflare) and why it fits this project.]
 
 Docs & Links
-• [Advanced Technology] Documentation - [2-3 sentences explaining advanced implementation patterns, API integration, real-time features, or AI/ML model deployment that makes this project technically impressive]
-• [Framework/Library] Documentation - [2-3 sentences covering advanced features like streaming, webhooks, edge computing, or distributed systems]
-• [Database/Infrastructure] Guide - [2-3 sentences about scalability patterns, caching strategies, or performance optimization]
-• [AI/ML or Advanced Tech] Documentation - [2-3 sentences about model integration, prompt engineering, or advanced algorithms]
+• [Technology 1] - [One sentence on key implementation detail]
+• [Technology 2] - [One sentence on integration approach]
+• [Technology 3] - [One sentence on scalability consideration]
 
 Why now
-[Write 2-4 sentences emphasizing technological breakthroughs (AI advancements, new APIs, infrastructure improvements), market timing, regulatory changes, or user behavior shifts that make this advanced solution possible NOW. Reference specific technologies like GPT-4, Stable Diffusion, WebGPU, or emerging platforms. Focus on why this innovation is technically feasible now but wasn't possible 2 years ago.]
+[2-3 sentences: What recent technology advancement or market shift makes this possible now. Be specific about timing.]
 
 Potential
-[Write 2-4 sentences focusing on INNOVATION IMPACT and TECHNICAL POSSIBILITIES: How this could fundamentally change how people work/live, what new capabilities it unlocks, how it combines technologies in novel ways, and the ripple effects of solving this problem. Think about paradigm shifts, not just profit. What becomes possible that wasn't before? How does this push the boundaries of what technology can do?]
+[2-3 sentences: What impact this could have and what new possibilities it creates. Focus on transformation, not revenue.]
 
-Target audience: {problem['who']}
-Make every section technically impressive, ambitious, and focused on building something that could become a billion-dollar company. Use advanced terminology and cutting-edge tech stacks."""
+RULES:
+- Keep Project description under 150 words
+- Use real, specific technologies
+- No repetition or rambling
+- Clear, direct language
+- Focus on ONE core innovation"""
 
     try:
         print(f"🤖 Calling Ollama with model: {MODEL}")
@@ -520,7 +520,7 @@ if __name__ == "__main__":
         
         # Validate AI generation
         if not idea or len(idea.strip()) < 100:
-            error_msg = f"❌ CRITICAL: AI generation failed or returned insufficient content (length: {len(idea) if idea else 0})"
+            error_msg = f"- CRITICAL: AI generation failed or returned insufficient content (length: {len(idea) if idea else 0})"
             print(error_msg)
             raise ValueError(error_msg)
         
