@@ -207,71 +207,89 @@ def parse_idea(raw: str) -> dict:
     
     print(f"DEBUG: Parsing idea with {len(raw)} characters")
     
+    # Extract PROBLEM STATEMENT fields (WHO, PAIN, GAP, IMPACT)
+    problem_section = re.search(r'PROBLEM STATEMENT\s*\n(.*?)(?=\n\s*Project|\n\s*PROJECT|$)', raw, re.IGNORECASE | re.DOTALL)
+    if problem_section:
+        problem_text = problem_section.group(1)
+        
+        # Extract WHO
+        who_match = re.search(r'WHO:\s*(.+?)(?=\nPAIN:|\nGAP:|\nIMPACT:|$)', problem_text, re.IGNORECASE | re.DOTALL)
+        if who_match:
+            result["who"] = who_match.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found WHO: '{result['who'][:50]}...'")
+        
+        # Extract PAIN
+        pain_match = re.search(r'PAIN:\s*(.+?)(?=\nGAP:|\nIMPACT:|\nWHO:|$)', problem_text, re.IGNORECASE | re.DOTALL)
+        if pain_match:
+            result["pain"] = pain_match.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found PAIN: '{result['pain'][:50]}...'")
+        
+        # Extract GAP
+        gap_match = re.search(r'GAP:\s*(.+?)(?=\nIMPACT:|\nWHO:|\nPAIN:|$)', problem_text, re.IGNORECASE | re.DOTALL)
+        if gap_match:
+            result["gap"] = gap_match.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found GAP: '{result['gap'][:50]}...'")
+        
+        # Extract IMPACT
+        impact_match = re.search(r'IMPACT:\s*(.+?)(?=\nWHO:|\nPAIN:|\nGAP:|$)', problem_text, re.IGNORECASE | re.DOTALL)
+        if impact_match:
+            result["impact"] = impact_match.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found IMPACT: '{result['impact'][:50]}...'")
+    
     # Extract project name and description from various formats
-    # Format: Project "ProjectName" – Description (handles all dash types)
     project_patterns = [
-        r'Project Name:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
-        r'Project Name:\s*["\u201c]([^"\u201d]+)["\u201d]',
-        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
-        r'Project\s+["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
+        r'Project\s*\n\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
+        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
+        r'Project\s+["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
+        r'Project\s*\n\s*["\u201c]([^"\u201d]+)["\u201d]',
         r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]',
         r'Project\s+["\u201c]([^"\u201d]+)["\u201d]',
-        r'PROJECT\s*\u2192\s*(.+?)(?:\n|$)',
-        r'Project\s*\u2192\s*(.+?)(?:\n|$)',
     ]
+    
     for pattern in project_patterns:
         match = re.search(pattern, raw, re.IGNORECASE | re.DOTALL)
         if match:
-            if len(match.groups()) == 2:
-                result["projectName"] = match.group(1).strip()
-                result["description"] = match.group(2).strip()
-            else:
-                full_text = match.group(1).strip()
-                # Try to split on - or — or em dash
-                if ' - ' in full_text or ' — ' in full_text or ' \u2014 ' in full_text:
-                    parts = re.split(r'\s*[-\u2014—]\s*', full_text, 1)
-                    result["projectName"] = parts[0].strip().strip('""\u201c\u201d')
-                    result["description"] = parts[1].strip() if len(parts) > 1 else ""
-                else:
-                    result["projectName"] = full_text.strip('""\u201c\u201d')
+            result["projectName"] = match.group(1).strip()
+            if len(match.groups()) >= 2 and match.group(2):
+                result["description"] = match.group(2).strip().replace('\n', ' ')
             print(f"DEBUG: Found project name: '{result['projectName']}'")
             if result["description"]:
                 print(f"DEBUG: Found description: '{result['description'][:50]}...'")
             break
     
-    # Extract Stack section (handles multi-line, case-insensitive section headers, with or without colon)
-    stack_match = re.search(r'(?:Stack|STACK)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Deploy|DEPLOY|Docs|DOCS|Why now|WHY NOW|Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Stack section
+    stack_match = re.search(r'Stack\s*\n\s*(.+?)(?=\n\s*Deploy|\n\s*DEPLOY|\n\s*Docs|\n\s*DOCS|\n\s*Why now|\n\s*WHY NOW|$)', raw, re.IGNORECASE | re.DOTALL)
     if stack_match:
         result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
-        print(f"DEBUG: Found stack")
+        print(f"DEBUG: Found stack: '{result['stack'][:50]}...'")
     
-    # Extract Deploy section (handles multi-line, case-insensitive section headers, with or without colon)
-    deploy_match = re.search(r'(?:Deploy|DEPLOY)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Docs|DOCS|Why now|WHY NOW|Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Deploy section
+    deploy_match = re.search(r'Deploy\s*\n\s*(.+?)(?=\n\s*Docs|\n\s*DOCS|\n\s*Why now|\n\s*WHY NOW|\n\s*Potential|\n\s*POTENTIAL|$)', raw, re.IGNORECASE | re.DOTALL)
     if deploy_match:
         result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
-        print(f"DEBUG: Found deploy")
+        print(f"DEBUG: Found deploy: '{result['deploy'][:50]}...'")
     
-    # Extract docs section (with or without colon)
-    docs_match = re.search(r'(?:Docs & Links|DOCS & LINKS)\s*:?\s*\n\s*((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
+    # Extract Docs & Links section
+    docs_match = re.search(r'Docs & Links\s*\n\s*((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
     if docs_match:
         result["docs"] = docs_match.group(1).strip()
         print(f"DEBUG: Found docs section")
     
-    # Extract Why now section (handles multi-line, case-insensitive, with or without colon)
-    why_match = re.search(r'(?:Why now|WHY NOW)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Potential|POTENTIAL|Target|TARGET)|$)', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Why now section
+    why_match = re.search(r'Why now\s*\n\s*(.+?)(?=\n\s*Potential|\n\s*POTENTIAL|\n\s*Target|\n\s*TARGET|$)', raw, re.IGNORECASE | re.DOTALL)
     if why_match:
         result["whyNow"] = why_match.group(1).strip().replace('\n', ' ')
-        print(f"DEBUG: Found why now")
+        print(f"DEBUG: Found why now: '{result['whyNow'][:50]}...'")
     
-    # Extract Potential section (handles multi-line, case-insensitive, with or without colon)
-    potential_match = re.search(r'(?:Potential|POTENTIAL)\s*:?\s*\n\s*(.+?)(?=\n\s*(?:Target audience|TARGET AUDIENCE|Next idea|NEXT IDEA)|$)', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Potential section
+    potential_match = re.search(r'Potential\s*\n\s*(.+?)(?=\n\s*Target|\n\s*TARGET|$)', raw, re.IGNORECASE | re.DOTALL)
     if potential_match:
         result["potential"] = potential_match.group(1).strip().replace('\n', ' ')
-        print(f"DEBUG: Found potential")
+        print(f"DEBUG: Found potential: '{result['potential'][:50]}...'")
     
+    # Fallback: Look for arrow format (legacy support)
     for line in raw.split("\n"):
         line = line.strip()
-        # Support both → and -> separators
         sep = "\u2192" if "\u2192" in line else ("->" if "->" in line else None)
         if not sep:
             continue
@@ -283,26 +301,26 @@ def parse_idea(raw: str) -> dict:
         if not value:
             continue
             
-        print(f"DEBUG: Found key='{key}', value='{value[:50]}...'")
+        print(f"DEBUG: Found legacy arrow format - key='{key}', value='{value[:50]}...'")
         
         if key == "stack" and not result["stack"]:
             result["stack"] = value
         elif key == "deploy" and not result["deploy"]:
             result["deploy"] = value
-        elif key == "who":
+        elif key == "who" and not result["who"]:
             result["who"] = value
-        elif key == "pain":
+        elif key == "pain" and not result["pain"]:
             result["pain"] = value
-        elif key == "gap":
+        elif key == "gap" and not result["gap"]:
             result["gap"] = value
-        elif key in ("impact if unsolved", "impact"):
+        elif key in ("impact if unsolved", "impact") and not result["impact"]:
             result["impact"] = value
         elif key == "why now" and not result["whyNow"]:
             result["whyNow"] = value
         elif key == "potential" and not result["potential"]:
             result["potential"] = value
     
-    print(f"DEBUG: Parsed result - projectName: '{result['projectName']}'")
+    print(f"DEBUG: Final parsed result - projectName: '{result['projectName']}'")
     return result
 
 def save_idea(raw: str, domain: str = ""):
@@ -311,11 +329,26 @@ def save_idea(raw: str, domain: str = ""):
         parsed = parse_idea(raw)
         idea_id = f"idea_{int(datetime.now().timestamp())}"
         
-        # Build entry with only non-empty fields
+        # Quality validation - ensure we have core fields
+        required_fields = ['projectName', 'who', 'pain', 'gap', 'stack']
+        missing_core = [field for field in required_fields if not parsed.get(field, '').strip()]
+        
+        if missing_core:
+            raise ValueError(f"Parsed idea missing core fields: {missing_core}")
+        
+        # Check for reasonable field lengths (not empty, not too long)
+        if len(parsed['projectName']) < 3 or len(parsed['projectName']) > 100:
+            raise ValueError(f"Project name length invalid: {len(parsed['projectName'])} chars")
+        
+        if len(parsed['description']) < 50 or len(parsed['description']) > 500:
+            raise ValueError(f"Description length invalid: {len(parsed['description'])} chars")
+        
+        # Build entry with raw text always included
         entry = {
             "id": idea_id,
             "createdAt": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),  # UTC timestamp
             "domain": domain,
+            "raw": raw,  # Always save the raw text for debugging
         }
         
         # Add parsed fields only if they have content
@@ -328,9 +361,12 @@ def save_idea(raw: str, domain: str = ""):
             json.dump(ideas_store, f, indent=2)
         print(f"✓ Idea saved to {IDEAS_FILE}")
         print(f"✓ Parsed project name: {parsed.get('projectName', 'N/A')}")
+        print(f"✓ Raw text length: {len(raw)} chars")
+        print(f"✓ Parsed {len([k for k, v in parsed.items() if v and v.strip()])} fields successfully")
         return idea_id
     except Exception as e:
         print(f"✗ Failed to save idea: {e}")
+        print(f"✗ Raw text preview: {raw[:200]}...")
         import traceback
         traceback.print_exc()
         return None
@@ -399,8 +435,9 @@ RULES:
             model=MODEL, 
             prompt=prompt,
             options={
-                "temperature": 0.7,
-                "num_predict": 2000,  # Limit output length
+                "temperature": 0.4,  # Lower temperature for more consistent structure
+                "num_predict": 1500,  # Stricter length limit
+                "top_p": 0.9,  # Focus on high-probability tokens
             }
         )
         
@@ -410,9 +447,24 @@ RULES:
         generated_text = response["response"]
         print(f"✓ Ollama generated {len(generated_text)} characters")
         
-        # Validate that output contains required sections
-        if 'Project' not in generated_text or 'Stack' not in generated_text:
-            raise ValueError(f"Ollama output missing required sections. First 500 chars: {generated_text[:500]}")
+        # Validate structure and quality
+        required_sections = ['PROBLEM STATEMENT', 'Project', 'Stack', 'Deploy', 'Why now', 'Potential']
+        missing_sections = [section for section in required_sections if section not in generated_text]
+        
+        if missing_sections:
+            raise ValueError(f"Missing required sections: {missing_sections}")
+        
+        # Check for reasonable length (not too short, not too long)
+        if len(generated_text) < 500:
+            raise ValueError(f"Output too short ({len(generated_text)} chars)")
+        if len(generated_text) > 3000:
+            raise ValueError(f"Output too long ({len(generated_text)} chars) - likely rambling")
+        
+        # Quick quality check - ensure it's not repetitive garbage
+        lines = generated_text.split('\n')
+        non_empty_lines = [line.strip() for line in lines if line.strip()]
+        if len(non_empty_lines) < 10:
+            raise ValueError("Output has too few meaningful lines")
         
         return generated_text, domain_name
     except Exception as e:
