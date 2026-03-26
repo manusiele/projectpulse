@@ -210,6 +210,8 @@ def parse_idea(raw: str) -> dict:
     # Extract project name and description from various formats
     # Format: Project "ProjectName" – Description (handles all dash types)
     project_patterns = [
+        r'Project Name:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
+        r'Project Name:\s*["\u201c]([^"\u201d]+)["\u201d]',
         r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
         r'Project\s+["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\n|\nStack)',
         r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]',
