@@ -1052,19 +1052,19 @@ export default function DashboardPage() {
                     <div className="space-y-3 mt-3">
                       {selectedIdea.who && (
                         <div className="flex gap-3">
-                          <span className="text-purple-400 font-bold text-sm flex-shrink-0">Who:</span>
+                          <span className="text-blue-400 font-bold text-sm flex-shrink-0">Who:</span>
                           <p className="text-slate-300 leading-relaxed">{selectedIdea.who}</p>
                         </div>
                       )}
                       {selectedIdea.pain && (
                         <div className="flex gap-3">
-                          <span className="text-red-400 font-bold text-sm flex-shrink-0">Pain:</span>
+                          <span className="text-blue-400 font-bold text-sm flex-shrink-0">Pain:</span>
                           <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
                         </div>
                       )}
                       {selectedIdea.gap && (
                         <div className="flex gap-3">
-                          <span className="text-orange-400 font-bold text-sm flex-shrink-0">Gap:</span>
+                          <span className="text-blue-400 font-bold text-sm flex-shrink-0">Gap:</span>
                           <p className="text-slate-300 leading-relaxed">{selectedIdea.gap}</p>
                         </div>
                       )}
@@ -1075,7 +1075,7 @@ export default function DashboardPage() {
                 {/* Why Now */}
                 {selectedIdea.whyNow && (
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Why Now
                     </span>
                     <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
@@ -1085,7 +1085,7 @@ export default function DashboardPage() {
                 {/* Potential */}
                 {selectedIdea.potential && (
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Potential
                     </span>
                     <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
@@ -1095,7 +1095,7 @@ export default function DashboardPage() {
                 {/* Impact */}
                 {selectedIdea.impact && (
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
                       Impact
                     </span>
                     <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.impact}</p>
