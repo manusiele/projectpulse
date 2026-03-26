@@ -16,10 +16,11 @@ export async function GET() {
     const counts = await getAllCounts(ideaIds);
     
     // Merge counts with ideas
-    const ideasWithCounts = ideas.map((idea: { id: string; likes?: number; shares?: number }) => ({
+    const ideasWithCounts = ideas.map((idea: { id: string; likes?: number; shares?: number; views?: number }) => ({
       ...idea,
       likes: counts[idea.id]?.likes || 0,
-      shares: counts[idea.id]?.shares || 0
+      shares: counts[idea.id]?.shares || 0,
+      views: counts[idea.id]?.views || 0
     }));
     
     // Sort by createdAt descending (newest first)

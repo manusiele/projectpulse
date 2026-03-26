@@ -84,7 +84,7 @@ export default function DashboardPage() {
     return () => clearInterval(pollInterval);
   }, [ideas]);
 
-  // Check URL for shared idea parameter
+  // Check URL for shared idea parameter and track view
   useEffect(() => {
     if (ideas.length > 0) {
       const params = new URLSearchParams(window.location.search);
@@ -93,10 +93,38 @@ export default function DashboardPage() {
         const idea = ideas.find(i => i.id === ideaId);
         if (idea) {
           setSelectedIdea(idea);
+          // Track view
+          fetch(`/api/ideas/${ideaId}/view`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+              // Update view count in state
+              setIdeas(prevIdeas => prevIdeas.map(i => 
+                i.id === ideaId ? { ...i, views: data.views } : i
+              ));
+            })
+            .catch(err => console.error('Failed to track view:', err));
         }
       }
     }
   }, [ideas]);
+
+  const handleView = async (idea: Idea) => {
+    setSelectedIdea(idea);
+    
+    // Track view
+    try {
+      const response = await fetch(`/api/ideas/${idea.id}/view`, { method: 'POST' });
+      if (response.ok) {
+        const data = await response.json();
+        // Update view count in state
+        setIdeas(prevIdeas => prevIdeas.map(i => 
+          i.id === idea.id ? { ...i, views: data.views } : i
+        ));
+      }
+    } catch (error) {
+      console.error('Failed to track view:', error);
+    }
+  };
 
   const handleLike = async (ideaId: string) => {
     const isLiked = likedIdeas.has(ideaId);
@@ -745,7 +773,7 @@ export default function DashboardPage() {
                           </span>
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={() => setSelectedIdea(idea)}
+                              onClick={() => handleView(idea)}
                               className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
                             >
                               View
@@ -881,7 +909,7 @@ export default function DashboardPage() {
                                 </span>
                                 <div className="flex items-center gap-2">
                                   <button
-                                    onClick={() => setSelectedIdea(idea)}
+                                    onClick={() => handleView(idea)}
                                     className="px-4 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-sm font-medium transition-all"
                                   >
                                     View
@@ -953,7 +981,7 @@ export default function DashboardPage() {
                     <IdeaCard 
                       idea={latest} 
                       featured 
-                      onView={() => setSelectedIdea(latest)}
+                      onView={() => handleView(latest)}
                       onLike={handleLike}
                       onShare={handleShare}
                       isLiked={likedIdeas.has(latest.id)}
@@ -973,7 +1001,7 @@ export default function DashboardPage() {
                         <IdeaCard 
                           key={idea.id} 
                           idea={idea} 
-                          onView={() => setSelectedIdea(idea)}
+                          onView={() => handleView(idea)}
                           onLike={handleLike}
                           onShare={handleShare}
                           isLiked={likedIdeas.has(idea.id)}

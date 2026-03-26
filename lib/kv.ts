@@ -54,6 +54,19 @@ export async function incrementShares(ideaId: string): Promise<number> {
   }
 }
 
+export async function incrementViews(ideaId: string): Promise<number> {
+  if (!redis) return 0;
+  
+  try {
+    const key = `idea:${ideaId}:views`;
+    const views = await redis.incr(key);
+    return views;
+  } catch (error) {
+    console.error('Redis error:', error);
+    return 0;
+  }
+}
+
 export async function getLikes(ideaId: string): Promise<number> {
   if (!redis) return 0;
   
@@ -80,30 +93,44 @@ export async function getShares(ideaId: string): Promise<number> {
   }
 }
 
-export async function getAllCounts(ideaIds: string[]): Promise<Record<string, { likes: number; shares: number }>> {
-  const counts: Record<string, { likes: number; shares: number }> = {};
+export async function getViews(ideaId: string): Promise<number> {
+  if (!redis) return 0;
+  
+  try {
+    const key = `idea:${ideaId}:views`;
+    const views = await redis.get<number>(key);
+    return views || 0;
+  } catch (error) {
+    console.error('Redis error:', error);
+    return 0;
+  }
+}
+
+export async function getAllCounts(ideaIds: string[]): Promise<Record<string, { likes: number; shares: number; views: number }>> {
+  const counts: Record<string, { likes: number; shares: number; views: number }> = {};
   
   if (!redis) {
     // Return default counts for local development
     for (const ideaId of ideaIds) {
-      counts[ideaId] = { likes: 0, shares: 0 };
+      counts[ideaId] = { likes: 0, shares: 0, views: 0 };
     }
     return counts;
   }
   
   try {
     for (const ideaId of ideaIds) {
-      const [likes, shares] = await Promise.all([
+      const [likes, shares, views] = await Promise.all([
         getLikes(ideaId),
-        getShares(ideaId)
+        getShares(ideaId),
+        getViews(ideaId)
       ]);
-      counts[ideaId] = { likes, shares };
+      counts[ideaId] = { likes, shares, views };
     }
   } catch (error) {
     console.error('Redis error:', error);
     // Return default counts on error
     for (const ideaId of ideaIds) {
-      counts[ideaId] = { likes: 0, shares: 0 };
+      counts[ideaId] = { likes: 0, shares: 0, views: 0 };
     }
   }
   
