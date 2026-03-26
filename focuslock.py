@@ -365,11 +365,16 @@ def save_idea(raw: str, domain: str = "", problem: dict = None):
             raise ValueError(f"Parsed idea missing core fields: {missing_core}")
         
         # Check for reasonable field lengths (not empty, not too long)
-        if len(parsed['projectName']) < 3 or len(parsed['projectName']) > 100:
+        if len(parsed['projectName']) < 3 or len(parsed['projectName']) > 150:
             raise ValueError(f"Project name length invalid: {len(parsed['projectName'])} chars")
         
-        if len(parsed['description']) < 50 or len(parsed['description']) > 500:
-            raise ValueError(f"Description length invalid: {len(parsed['description'])} chars")
+        # Description is optional since LLM often doesn't format it correctly
+        if parsed.get('description') and (len(parsed['description']) < 20 or len(parsed['description']) > 1000):
+            print(f"⚠ Description length unusual: {len(parsed['description'])} chars, but continuing")
+        
+        if not parsed.get('description'):
+            print(f"⚠ No description found, using project name as fallback")
+            parsed['description'] = f"A platform for {parsed['projectName']}"
         
         # Build entry with raw text always included
         entry = {
