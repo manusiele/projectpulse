@@ -22,10 +22,12 @@ export async function GET() {
       shares: counts[idea.id]?.shares || 0
     }));
     
-    // Sort by date descending (newest first)
-    const sortedIdeas = ideasWithCounts.sort((a: { date: string }, b: { date: string }) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // Sort by createdAt descending (newest first)
+    const sortedIdeas = ideasWithCounts.sort((a: { createdAt?: string; date?: string }, b: { createdAt?: string; date?: string }) => {
+      const dateA = a.createdAt || a.date || '';
+      const dateB = b.createdAt || b.date || '';
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
     
     return NextResponse.json(sortedIdeas, {
       headers: {
