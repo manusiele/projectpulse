@@ -1,10 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ProjectPulse",
+    "description": "Daily AI-powered project idea engine for developers. Get one shippable project idea with problem statement, tech stack, and deployment guide every day.",
+    "url": "https://projectpulse-dev.vercel.app",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "ProjectPulse"
+    },
+    "featureList": [
+      "Daily AI-generated project ideas",
+      "Problem statements with real pain points",
+      "Complete tech stack recommendations",
+      "Deployment guides",
+      "Project inspiration for developers"
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
+    <>
+      <Script
+        id="json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
       {/* LeetCode-inspired animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Gradient base layer */}
@@ -332,5 +365,6 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

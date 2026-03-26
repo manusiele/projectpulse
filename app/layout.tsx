@@ -12,9 +12,62 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ProjectPulse — Daily Project Ideas",
+  title: "ProjectPulse — Daily AI-Generated Project Ideas for Developers",
   description:
-    "Your daily AI-powered project idea engine. One brutally honest problem statement, one shippable project, exact stack, real potential.",
+    "Get one AI-powered project idea daily. Real problem statements, shippable projects, exact tech stacks, and deployment guides. Perfect for developers looking for their next side project.",
+  keywords: [
+    "project ideas",
+    "developer projects",
+    "side project ideas",
+    "coding projects",
+    "AI project generator",
+    "tech stack recommendations",
+    "startup ideas",
+    "web development projects",
+    "app ideas",
+    "programming projects",
+    "developer inspiration",
+    "build in public",
+  ],
+  authors: [{ name: "ProjectPulse" }],
+  creator: "ProjectPulse",
+  publisher: "ProjectPulse",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://projectpulse-dev.vercel.app",
+    title: "ProjectPulse — Daily AI-Generated Project Ideas",
+    description:
+      "Your daily AI-powered project idea engine. One brutally honest problem statement, one shippable project, exact stack, real potential.",
+    siteName: "ProjectPulse",
+    images: [
+      {
+        url: "/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: "ProjectPulse Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ProjectPulse — Daily AI-Generated Project Ideas",
+    description:
+      "Get one AI-powered project idea daily. Real problem statements, shippable projects, exact tech stacks.",
+    images: ["/icon-512.png"],
+    creator: "@projectpulse",
+  },
   icons: {
     icon: '/icon-512.png',
     shortcut: '/icon-512.png',
@@ -26,6 +79,10 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'ProjectPulse',
   },
+  alternates: {
+    canonical: "https://projectpulse-dev.vercel.app",
+  },
+  category: "technology",
 };
 
 export const viewport: Viewport = {

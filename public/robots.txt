@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://projectpulse-dev.vercel.app/sitemap.xml
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
