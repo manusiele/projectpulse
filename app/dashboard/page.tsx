@@ -200,8 +200,7 @@ export default function DashboardPage() {
       }
       
       await navigator.share({
-        title: `${idea.projectName || 'Project Idea'} - ProjectPulse`,
-        text: `Check out this project idea: ${idea.projectName || 'New Project'}`,
+        title: idea.projectName || 'Project Idea',
         url: url,
       });
       
