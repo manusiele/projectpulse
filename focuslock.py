@@ -457,7 +457,7 @@ RULES:
         # Check for reasonable length (not too short, not too long)
         if len(generated_text) < 500:
             raise ValueError(f"Output too short ({len(generated_text)} chars)")
-        if len(generated_text) > 3000:
+        if len(generated_text) > 5000:
             raise ValueError(f"Output too long ({len(generated_text)} chars) - likely rambling")
         
         # Quick quality check - ensure it's not repetitive garbage
