@@ -10,6 +10,10 @@ export function RegisterServiceWorker() {
         .then(async (registration) => {
           console.log('Service Worker registered:', registration);
           
+          // Wait for service worker to be active
+          await navigator.serviceWorker.ready;
+          console.log('Service Worker is active');
+          
           // Register periodic background sync (Chrome/Edge only)
           if ('periodicSync' in registration) {
             try {
@@ -24,21 +28,21 @@ export function RegisterServiceWorker() {
               console.log('Periodic background sync registered');
             } catch (error) {
               console.log('Periodic sync not available:', error);
-              
-              // Fallback: Register regular background sync
-              if ('sync' in registration) {
-                try {
-                  const bgSync = registration as unknown as {
-                    sync: {
-                      register: (tag: string) => Promise<void>;
-                    };
-                  };
-                  await bgSync.sync.register('check-new-ideas');
-                  console.log('Background sync registered');
-                } catch (syncError) {
-                  console.log('Background sync not available:', syncError);
-                }
-              }
+            }
+          }
+          
+          // Register regular background sync as fallback
+          if ('sync' in registration) {
+            try {
+              const bgSync = registration as unknown as {
+                sync: {
+                  register: (tag: string) => Promise<void>;
+                };
+              };
+              await bgSync.sync.register('check-new-ideas');
+              console.log('Background sync registered');
+            } catch (syncError) {
+              console.log('Background sync not available:', syncError);
             }
           }
           
