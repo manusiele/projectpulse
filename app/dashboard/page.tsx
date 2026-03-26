@@ -1067,24 +1067,13 @@ export default function DashboardPage() {
                 )}
 
                 {/* Problem Statement */}
-                {(selectedIdea.who || selectedIdea.pain || selectedIdea.gap || selectedIdea.impact) && (
+                {selectedIdea.problemStatement && (
                   <div>
                     <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                       Problem Statement
                     </span>
-                    <div className="text-slate-300 leading-relaxed mt-3 space-y-3">
-                      {selectedIdea.who && (
-                        <p><strong className="text-blue-400 font-bold">WHO:</strong> {selectedIdea.who}</p>
-                      )}
-                      {selectedIdea.pain && (
-                        <p><strong className="text-blue-400 font-bold">PAIN:</strong> {selectedIdea.pain}</p>
-                      )}
-                      {selectedIdea.gap && (
-                        <p><strong className="text-blue-400 font-bold">GAP:</strong> {selectedIdea.gap}</p>
-                      )}
-                      {selectedIdea.impact && (
-                        <p><strong className="text-blue-400 font-bold">IMPACT:</strong> {selectedIdea.impact}</p>
-                      )}
+                    <div className="text-slate-300 leading-relaxed mt-3">
+                      <p>{selectedIdea.problemStatement}</p>
                     </div>
                   </div>
                 )}
