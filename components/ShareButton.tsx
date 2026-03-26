@@ -2,44 +2,52 @@
 
 import { Share2 } from "lucide-react";
 import type { Idea } from "@/lib/ideas";
+import { shortenUrl } from "@/lib/url-shortener";
 
 export function ShareButton({ idea }: { idea: Idea }) {
   const handleShare = async () => {
-    const title = idea.projectName || "FocusLock Daily Idea";
-    const text = [
-      title,
-      idea.stack ? `Stack: ${idea.stack}` : null,
-      idea.pain || null,
-      "\nvia @focuslock_bot",
-    ]
-      .filter(Boolean)
-      .join("\n\n");
-
-    const url =
+    const fullUrl =
       typeof window !== "undefined"
-        ? window.location.origin + "/dashboard"
+        ? `${window.location.origin}/dashboard`
         : "https://projectpulse-dev.vercel.app/dashboard";
 
     try {
+      // Shorten the URL first
+      const shortUrl = await shortenUrl(fullUrl);
+
       if (typeof navigator !== "undefined" && navigator.share) {
-        await navigator.share({ title, text, url });
+        // Use native share with just the shortened URL
+        await navigator.share({ 
+          text: shortUrl
+        });
       } else {
-        const tweet = encodeURIComponent(`${title}\n\nStack: ${idea.stack}\n\n${url}`);
-        window.open(
-          `https://x.com/intent/tweet?text=${tweet}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        // Copy to clipboard as fallback
+        await navigator.clipboard.writeText(shortUrl);
+        
+        // Optional: Show a brief success indicator
+        const button = document.activeElement as HTMLElement;
+        if (button) {
+          const originalTitle = button.title;
+          button.title = "Copied!";
+          setTimeout(() => {
+            button.title = originalTitle;
+          }, 1000);
+        }
       }
-    } catch {
-      // User cancelled or share not supported — silently ignore
+    } catch (error) {
+      // Fallback: copy the original URL if shortening fails
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+      } catch {
+        // If clipboard also fails, silently ignore
+      }
     }
   };
 
   return (
     <button
       onClick={handleShare}
-      title="Share idea"
+      title="Share link"
       className="p-1.5 rounded-full text-gray-600 hover:text-gray-400 transition-colors"
     >
       <Share2 className="w-4 h-4" />
