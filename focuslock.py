@@ -391,13 +391,26 @@ Make every section technically impressive, ambitious, and focused on building so
     try:
         print(f"🤖 Calling Ollama with model: {MODEL}")
         print(f"   Prompt length: {len(prompt)} chars")
-        response = ollama.generate(model=MODEL, prompt=prompt)
+        
+        # Add timeout to prevent hanging
+        response = ollama.generate(
+            model=MODEL, 
+            prompt=prompt,
+            options={
+                "temperature": 0.7,
+                "num_predict": 2000,  # Limit output length
+            }
+        )
         
         if not response or 'response' not in response:
             raise ValueError("Ollama returned empty or invalid response")
         
         generated_text = response["response"]
         print(f"✓ Ollama generated {len(generated_text)} characters")
+        
+        # Validate that output contains required sections
+        if 'Project' not in generated_text or 'Stack' not in generated_text:
+            raise ValueError(f"Ollama output missing required sections. First 500 chars: {generated_text[:500]}")
         
         return generated_text, domain_name
     except Exception as e:
