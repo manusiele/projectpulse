@@ -1183,18 +1183,6 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-slideUp">
-          <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-4 py-3 shadow-2xl backdrop-blur-xl flex items-center gap-3">
-            <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span className="text-sm text-white font-medium">{toastMessage}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
