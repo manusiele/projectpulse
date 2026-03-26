@@ -1,7 +1,6 @@
 export interface Idea {
   id: string;
-  date: string;
-  raw: string;
+  createdAt: string;
   domain?: string;
   projectName?: string;
   description?: string;
