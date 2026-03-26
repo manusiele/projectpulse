@@ -38,7 +38,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
   // Remove brackets from project name (all brackets, not just at start/end)
   const displayName = (idea.projectName || "Daily Project Idea").replace(/[\[\]]/g, '');
 
-  const formattedDate = new Date(idea.createdAt || idea.date).toLocaleDateString("en-US", {
+  const formattedDate = new Date(idea.createdAt || idea.date || Date.now()).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
