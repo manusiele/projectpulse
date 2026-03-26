@@ -483,12 +483,6 @@ Keep it under 1000 words total. Be specific and concise."""
             print(f"⚠ Output long ({len(generated_text)} chars), truncating...")
             generated_text = generated_text[:6000]
         
-        # Quick quality check - ensure it's not repetitive garbage
-        lines = generated_text.split('\n')
-        non_empty_lines = [line.strip() for line in lines if line.strip()]
-        if len(non_empty_lines) < 10:
-            raise ValueError("Output has too few meaningful lines")
-        
         return generated_text, domain_name, problem
     except Exception as e:
         print(f"❌ Ollama generation failed: {e}")
