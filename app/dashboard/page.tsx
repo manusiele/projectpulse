@@ -1069,10 +1069,10 @@ export default function DashboardPage() {
                 {/* Problem Statement */}
                 {(selectedIdea.who || selectedIdea.pain || selectedIdea.gap || selectedIdea.impact) && (
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                       Problem Statement
                     </span>
-                    <div className="text-slate-300 leading-relaxed mt-2 space-y-2">
+                    <div className="text-slate-300 leading-relaxed mt-3 space-y-3">
                       {selectedIdea.who && (
                         <p><strong className="text-blue-400 font-bold">WHO:</strong> {selectedIdea.who}</p>
                       )}
@@ -1089,33 +1089,23 @@ export default function DashboardPage() {
                   </div>
                 )}
 
-                {/* Who */}
-                {selectedIdea.who && (
+                {/* Why Now */}
+                {selectedIdea.whyNow && (
                   <div>
                     <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Target Audience
+                      Why Now
                     </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.who}</p>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
                   </div>
                 )}
 
-                {/* Pain Point */}
-                {selectedIdea.pain && (
+                {/* Potential */}
+                {selectedIdea.potential && (
                   <div>
                     <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Problem
+                      Potential Impact
                     </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.pain}</p>
-                  </div>
-                )}
-
-                {/* Gap */}
-                {selectedIdea.gap && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Market Gap
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.gap}</p>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
                   </div>
                 )}
 
