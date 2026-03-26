@@ -382,8 +382,23 @@ Potential
 Target audience: {problem['who']}
 Make every section technically impressive, ambitious, and focused on building something that could become a billion-dollar company. Use advanced terminology and cutting-edge tech stacks."""
 
-    response = ollama.generate(model=MODEL, prompt=prompt)
-    return response["response"], domain_name
+    try:
+        print(f"🤖 Calling Ollama with model: {MODEL}")
+        print(f"   Prompt length: {len(prompt)} chars")
+        response = ollama.generate(model=MODEL, prompt=prompt)
+        
+        if not response or 'response' not in response:
+            raise ValueError("Ollama returned empty or invalid response")
+        
+        generated_text = response["response"]
+        print(f"✓ Ollama generated {len(generated_text)} characters")
+        
+        return generated_text, domain_name
+    except Exception as e:
+        print(f"❌ Ollama generation failed: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 def send_telegram(message: str):
     if not TOKEN or not CHAT_ID:
@@ -483,13 +498,35 @@ if __name__ == "__main__":
     try:
         print("🚀 FocusLock starting...")
         idea, domain = generate_idea()
+        
+        # Validate AI generation
+        if not idea or len(idea.strip()) < 100:
+            error_msg = f"❌ CRITICAL: AI generation failed or returned insufficient content (length: {len(idea) if idea else 0})"
+            print(error_msg)
+            raise ValueError(error_msg)
+        
+        print(f"✓ AI generated {len(idea)} characters")
         timestamp = datetime.now().strftime('%b %d • %H:%M')
         
         # Parse the idea to get key fields
         parsed = parse_idea(idea)
         
+        # Validate parsing results
+        if not parsed.get('projectName'):
+            error_msg = f"❌ CRITICAL: Failed to parse project name from AI output"
+            print(error_msg)
+            print(f"First 500 chars of AI output: {idea[:500]}")
+            raise ValueError(error_msg)
+        
+        print(f"✓ Parsed project: {parsed['projectName']}")
+        
         # Save full idea to JSON and get the ID
         idea_id = save_idea(idea, domain)
+        
+        if not idea_id:
+            error_msg = "❌ CRITICAL: Failed to save idea to JSON"
+            print(error_msg)
+            raise ValueError(error_msg)
         
         # Create shareable URL
         project_url = f"https://projectpulse-dev.vercel.app/dashboard?idea={idea_id}"
@@ -568,9 +605,36 @@ if __name__ == "__main__":
         
         message = f"*FocusLock • Daily Spark*\n{timestamp} EAT\n\n{short_idea}\n\n_Next idea: Tomorrow at 10:00 AM EAT_"
         
-        send_telegram(message)
+        # Validate message before sending
+        if len(message.strip()) < 200:
+            error_msg = f"❌ CRITICAL: Message too short ({len(message)} chars), likely missing content"
+            print(error_msg)
+            print(f"Message preview: {message[:500]}")
+            raise ValueError(error_msg)
+        
+        print(f"✓ Message ready ({len(message)} chars)")
+        
+        telegram_success = send_telegram(message)
+        if not telegram_success:
+            error_msg = "❌ CRITICAL: Failed to send message to Telegram"
+            print(error_msg)
+            raise RuntimeError(error_msg)
+        
         log_activity("Delivered project with Problem Statement + clean stack")
         print("✅ FocusLock complete")
     except Exception as e:
         print(f"❌ FocusLock crashed: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        # Send error notification to Telegram
+        if TOKEN and CHAT_ID:
+            error_time = datetime.now().strftime('%b %d • %H:%M')
+            error_message = f"*FocusLock • Error Report*\n{error_time} EAT\n\n❌ Failed to generate daily idea\n\nError: {str(e)[:500]}\n\n_Will retry tomorrow at 10:00 AM EAT_"
+            try:
+                send_telegram(error_message)
+                print("✓ Error notification sent to Telegram")
+            except:
+                print("✗ Failed to send error notification")
+        
         raise
