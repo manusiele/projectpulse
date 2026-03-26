@@ -4,26 +4,7 @@ import { useEffect, useState } from "react";
 import { IdeaCard } from "@/components/IdeaCard";
 import Link from "next/link";
 import { Loader } from "@/components/Loader";
-
-interface Idea {
-  id: string;
-  createdAt: string;
-  domain?: string;
-  projectName?: string;
-  description?: string;
-  stack?: string;
-  deploy?: string;
-  who?: string;
-  pain?: string;
-  gap?: string;
-  impact?: string;
-  whyNow?: string;
-  potential?: string;
-  docs?: string;
-  likes?: number;
-  shares?: number;
-  views?: number;
-}
+import type { Idea } from "@/lib/ideas";
 
 export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
