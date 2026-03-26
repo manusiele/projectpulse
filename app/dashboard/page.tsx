@@ -1022,8 +1022,16 @@ export default function DashboardPage() {
                 </p>
               )}
 
-              {/* Date */}
+              {/* Domain and Date */}
               <div className="flex items-center gap-3 text-xs text-slate-600 mb-8">
+                {selectedIdea.domain && (
+                  <>
+                    <span className="px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 font-medium">
+                      {selectedIdea.domain}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-slate-700" />
+                  </>
+                )}
                 <span>
                   {new Date(selectedIdea.createdAt || selectedIdea.date || Date.now()).toLocaleDateString("en-US", {
                     month: "short",
@@ -1031,16 +1039,70 @@ export default function DashboardPage() {
                     year: "numeric",
                   })}
                 </span>
-                {selectedIdea.deploy && (
-                  <>
-                    <span className="w-1 h-1 rounded-full bg-slate-700" />
-                    <span>{selectedIdea.deploy}</span>
-                  </>
-                )}
               </div>
 
-              {/* Key Details */}
+              {/* Key Details - Reordered for developer flow */}
               <div className="space-y-5">
+                {/* Who */}
+                {selectedIdea.who && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Who
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.who}</p>
+                  </div>
+                )}
+
+                {/* Pain */}
+                {selectedIdea.pain && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Pain
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.pain}</p>
+                  </div>
+                )}
+
+                {/* Gap */}
+                {selectedIdea.gap && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Gap
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.gap}</p>
+                  </div>
+                )}
+
+                {/* Why Now */}
+                {selectedIdea.whyNow && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Why Now
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
+                  </div>
+                )}
+
+                {/* Potential */}
+                {selectedIdea.potential && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Potential
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
+                  </div>
+                )}
+
+                {/* Impact */}
+                {selectedIdea.impact && (
+                  <div>
+                    <span className="inline-block px-3 py-1 rounded-md bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-2">
+                      Impact
+                    </span>
+                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.impact}</p>
+                  </div>
+                )}
+
                 {/* Stack */}
                 {selectedIdea.stack && (
                   <div>
@@ -1048,7 +1110,7 @@ export default function DashboardPage() {
                       Tech Stack
                     </span>
                     <div className="flex flex-wrap gap-2 mt-3">
-                      {selectedIdea.stack.split(/\s*\+\s*/).filter(Boolean).map((tech, techIdx) => {
+                      {selectedIdea.stack.split(/[,+]/).filter(Boolean).map((tech, techIdx) => {
                         const cleanTech = tech.replace(/\|.*$/, '').trim();
                         return (
                           <a
@@ -1063,38 +1125,6 @@ export default function DashboardPage() {
                         );
                       })}
                     </div>
-                  </div>
-                )}
-
-                {/* Problem Statement */}
-                {selectedIdea.problemStatement && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
-                      Problem Statement
-                    </span>
-                    <div className="text-slate-300 leading-relaxed mt-3">
-                      <p>{selectedIdea.problemStatement}</p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Why Now */}
-                {selectedIdea.whyNow && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Why Now
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.whyNow}</p>
-                  </div>
-                )}
-
-                {/* Potential */}
-                {selectedIdea.potential && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Potential Impact
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.potential}</p>
                   </div>
                 )}
 
@@ -1114,16 +1144,12 @@ export default function DashboardPage() {
                     <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
                       Docs & Links
                     </span>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 mt-3">
                       {selectedIdea.docs.split('•').filter(Boolean).map((doc, idx) => {
-                        // Extract the title (before the dash) and clean it
                         const title = doc.split('-')[0]?.trim() || `Resource ${idx + 1}`;
-                        
-                        // Try to extract URL or create a search link
                         const urlMatch = doc.match(/https?:\/\/[^\s]+/);
                         let url = urlMatch ? urlMatch[0] : null;
                         
-                        // If no URL found, create a Google search link from the title
                         if (!url) {
                           const searchTerm = title.replace(/Documentation|Guide|Docs/gi, '').trim();
                           url = `https://www.google.com/search?q=${encodeURIComponent(searchTerm + ' documentation')}`;
@@ -1151,16 +1177,6 @@ export default function DashboardPage() {
                         );
                       })}
                     </div>
-                  </div>
-                )}
-
-                {/* Impact */}
-                {selectedIdea.impact && (
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">
-                      Impact
-                    </h3>
-                    <p className="text-slate-300 leading-relaxed">{selectedIdea.impact}</p>
                   </div>
                 )}
               </div>
