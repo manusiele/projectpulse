@@ -262,18 +262,29 @@ def parse_idea(raw: str) -> dict:
     if stack_match:
         result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found stack: '{result['stack'][:50]}...'")
+    else:
+        print(f"DEBUG: Stack section not found in output")
+        # Try alternative pattern without strict section boundaries
+        alt_stack = re.search(r'Stack[:\s]*\n(.+?)(?=\n[A-Z][a-z]+\s*\n|\n\n|$)', raw, re.IGNORECASE | re.DOTALL)
+        if alt_stack:
+            result["stack"] = alt_stack.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found stack with alternative pattern: '{result['stack'][:50]}...'")
     
     # Extract Deploy section
     deploy_match = re.search(r'Deploy\s*\n\s*(.+?)(?=\n\s*Docs|\n\s*DOCS|\n\s*Why now|\n\s*WHY NOW|\n\s*Potential|\n\s*POTENTIAL|$)', raw, re.IGNORECASE | re.DOTALL)
     if deploy_match:
         result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found deploy: '{result['deploy'][:50]}...'")
+    else:
+        print(f"DEBUG: Deploy section not found")
     
     # Extract Docs & Links section
     docs_match = re.search(r'Docs & Links\s*\n\s*((?:\u2022.+(?:\n|$))+)', raw, re.IGNORECASE)
     if docs_match:
         result["docs"] = docs_match.group(1).strip()
         print(f"DEBUG: Found docs section")
+    else:
+        print(f"DEBUG: Docs section not found")
     
     # Extract Why now section
     why_match = re.search(r'Why now\s*\n\s*(.+?)(?=\n\s*Potential|\n\s*POTENTIAL|\n\s*Target|\n\s*TARGET|$)', raw, re.IGNORECASE | re.DOTALL)
