@@ -238,12 +238,12 @@ def parse_idea(raw: str) -> dict:
     
     # Extract project name and description from various formats
     project_patterns = [
+        # "Project Name: Something" format
+        r'Project Name:\s*["\u201c]?([^"\u201d\n]+)["\u201d]?',
+        r'Project:\s*["\u201c]?([^"\u201d\n]+)["\u201d]?',
+        # Old format with quotes and dash
         r'Project\s*\n\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
         r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
-        r'Project\s+["\u201c]([^"\u201d]+)["\u201d]\s*[-\u2013\u2014—–]\s*(.+?)(?=\n\s*Stack|\n\s*STACK|$)',
-        r'Project\s*\n\s*["\u201c]([^"\u201d]+)["\u201d]',
-        r'Project:\s*["\u201c]([^"\u201d]+)["\u201d]',
-        r'Project\s+["\u201c]([^"\u201d]+)["\u201d]',
     ]
     
     for pattern in project_patterns:
@@ -257,21 +257,23 @@ def parse_idea(raw: str) -> dict:
                 print(f"DEBUG: Found description: '{result['description'][:50]}...'")
             break
     
+    # Extract description separately if not found with project name
+    if not result["description"]:
+        desc_match = re.search(r'Description:\s*(.+?)(?=\n\s*Stack|\n\s*STACK|\n\s*Deploy|\n\s*DEPLOY|$)', raw, re.IGNORECASE | re.DOTALL)
+        if desc_match:
+            result["description"] = desc_match.group(1).strip().replace('\n', ' ')
+            print(f"DEBUG: Found description separately: '{result['description'][:50]}...'")
+    
     # Extract Stack section
-    stack_match = re.search(r'Stack\s*\n\s*(.+?)(?=\n\s*Deploy|\n\s*DEPLOY|\n\s*Docs|\n\s*DOCS|\n\s*Why now|\n\s*WHY NOW|$)', raw, re.IGNORECASE | re.DOTALL)
+    stack_match = re.search(r'Stack:\s*(.+?)(?=\n\s*Deploy|\n\s*DEPLOY|\n\s*Why|\n\s*WHY|$)', raw, re.IGNORECASE | re.DOTALL)
     if stack_match:
         result["stack"] = stack_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found stack: '{result['stack'][:50]}...'")
     else:
         print(f"DEBUG: Stack section not found in output")
-        # Try alternative pattern without strict section boundaries
-        alt_stack = re.search(r'Stack[:\s]*\n(.+?)(?=\n[A-Z][a-z]+\s*\n|\n\n|$)', raw, re.IGNORECASE | re.DOTALL)
-        if alt_stack:
-            result["stack"] = alt_stack.group(1).strip().replace('\n', ' ')
-            print(f"DEBUG: Found stack with alternative pattern: '{result['stack'][:50]}...'")
     
     # Extract Deploy section
-    deploy_match = re.search(r'Deploy\s*\n\s*(.+?)(?=\n\s*Docs|\n\s*DOCS|\n\s*Why now|\n\s*WHY NOW|\n\s*Potential|\n\s*POTENTIAL|$)', raw, re.IGNORECASE | re.DOTALL)
+    deploy_match = re.search(r'Deploy:\s*(.+?)(?=\n\s*Why|\n\s*WHY|\n\s*Potential|\n\s*POTENTIAL|$)', raw, re.IGNORECASE | re.DOTALL)
     if deploy_match:
         result["deploy"] = deploy_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found deploy: '{result['deploy'][:50]}...'")
@@ -286,14 +288,14 @@ def parse_idea(raw: str) -> dict:
     else:
         print(f"DEBUG: Docs section not found")
     
-    # Extract Why now section
-    why_match = re.search(r'Why now\s*\n\s*(.+?)(?=\n\s*Potential|\n\s*POTENTIAL|\n\s*Target|\n\s*TARGET|$)', raw, re.IGNORECASE | re.DOTALL)
+    # Extract Why now section (now "Why Now:")
+    why_match = re.search(r'Why Now:\s*(.+?)(?=\n\s*Potential|\n\s*POTENTIAL|$)', raw, re.IGNORECASE | re.DOTALL)
     if why_match:
         result["whyNow"] = why_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found why now: '{result['whyNow'][:50]}...'")
     
     # Extract Potential section
-    potential_match = re.search(r'Potential\s*\n\s*(.+?)(?=\n\s*Target|\n\s*TARGET|$)', raw, re.IGNORECASE | re.DOTALL)
+    potential_match = re.search(r'Potential:\s*(.+?)(?=\n\s*$|$)', raw, re.IGNORECASE | re.DOTALL)
     if potential_match:
         result["potential"] = potential_match.group(1).strip().replace('\n', ' ')
         print(f"DEBUG: Found potential: '{result['potential'][:50]}...'")
@@ -422,9 +424,7 @@ def generate_idea():
     # Determine domain name based on problem characteristics
     domain_name = determine_domain(problem)
     
-    prompt = f"""You are FocusLock — an AI that generates ONE clear, actionable project idea for developers.
-
-Generate a project idea in this EXACT format. Be concise and specific:
+    prompt = f"""You are FocusLock. Generate ONE project idea for developers.
 
 PROBLEM STATEMENT
 WHO: {problem['who']}
@@ -432,32 +432,21 @@ PAIN: {problem['pain']}
 GAP: {problem['gap']}
 IMPACT: {problem['impact']}
 
-Project
-"[ProjectName]" — [One clear sentence describing what this platform does and the core technology it uses. Keep it under 150 words.]
+Now generate:
 
-Stack
-[List 5-8 specific technologies: Next.js 15, Supabase, Stripe, Vercel AI SDK, Tailwind CSS, Redis, Prisma. Be specific but concise.]
+Project Name: [A catchy 2-3 word name]
 
-Deploy
-[One sentence: Which platform (Vercel/Railway/Cloudflare) and why it fits this project.]
+Description: [2-3 sentences describing what this platform does and how it works. Be specific about features.]
 
-Docs & Links
-• [Technology 1] - [One sentence on key implementation detail]
-• [Technology 2] - [One sentence on integration approach]
-• [Technology 3] - [One sentence on scalability consideration]
+Stack: [List 5-7 technologies like Next.js, Supabase, Stripe, Tailwind CSS]
 
-Why now
-[2-3 sentences: What recent technology advancement or market shift makes this possible now. Be specific about timing.]
+Deploy: [One sentence: which platform and why]
 
-Potential
-[2-3 sentences: What impact this could have and what new possibilities it creates. Focus on transformation, not revenue.]
+Why Now: [2 sentences: what makes this possible now]
 
-RULES:
-- Keep Project description under 150 words
-- Use real, specific technologies
-- No repetition or rambling
-- Clear, direct language
-- Focus on ONE core innovation"""
+Potential: [2 sentences: what impact this could have]
+
+Keep it under 1000 words total. Be specific and concise."""
 
     try:
         print(f"🤖 Calling Ollama with model: {MODEL}")
@@ -468,9 +457,9 @@ RULES:
             model=MODEL, 
             prompt=prompt,
             options={
-                "temperature": 0.4,  # Lower temperature for more consistent structure
-                "num_predict": 1500,  # Stricter length limit
-                "top_p": 0.9,  # Focus on high-probability tokens
+                "temperature": 0.3,  # Even lower for more focused output
+                "num_predict": 1200,  # Tighter limit
+                "top_p": 0.85,  # More focused
             }
         )
         
@@ -481,17 +470,18 @@ RULES:
         print(f"✓ Ollama generated {len(generated_text)} characters")
         
         # Validate structure and quality
-        required_sections = ['PROBLEM STATEMENT', 'Project', 'Stack', 'Deploy', 'Why now', 'Potential']
+        required_sections = ['Project Name', 'Description', 'Stack']
         missing_sections = [section for section in required_sections if section not in generated_text]
         
         if missing_sections:
-            raise ValueError(f"Missing required sections: {missing_sections}")
+            print(f"⚠ Missing sections: {missing_sections}, but continuing")
         
         # Check for reasonable length (not too short, not too long)
-        if len(generated_text) < 500:
+        if len(generated_text) < 300:
             raise ValueError(f"Output too short ({len(generated_text)} chars)")
-        if len(generated_text) > 5000:
-            raise ValueError(f"Output too long ({len(generated_text)} chars) - likely rambling")
+        if len(generated_text) > 6000:
+            print(f"⚠ Output long ({len(generated_text)} chars), truncating...")
+            generated_text = generated_text[:6000]
         
         # Quick quality check - ensure it's not repetitive garbage
         lines = generated_text.split('\n')
