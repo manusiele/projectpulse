@@ -1043,33 +1043,32 @@ export default function DashboardPage() {
 
               {/* Key Details - Reordered for developer flow */}
               <div className="space-y-5">
-                {/* Who */}
-                {selectedIdea.who && (
+                {/* Problem Statement - Combined Who/Pain/Gap */}
+                {(selectedIdea.who || selectedIdea.pain || selectedIdea.gap) && (
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Who
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
+                      Problem Statement
                     </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.who}</p>
-                  </div>
-                )}
-
-                {/* Pain */}
-                {selectedIdea.pain && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Pain
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.pain}</p>
-                  </div>
-                )}
-
-                {/* Gap */}
-                {selectedIdea.gap && (
-                  <div>
-                    <span className="inline-block px-3 py-1 rounded-md bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">
-                      Gap
-                    </span>
-                    <p className="text-slate-300 leading-relaxed mt-2">{selectedIdea.gap}</p>
+                    <div className="space-y-3 mt-3">
+                      {selectedIdea.who && (
+                        <div className="flex gap-3">
+                          <span className="text-purple-400 font-bold text-sm flex-shrink-0">Who:</span>
+                          <p className="text-slate-300 leading-relaxed">{selectedIdea.who}</p>
+                        </div>
+                      )}
+                      {selectedIdea.pain && (
+                        <div className="flex gap-3">
+                          <span className="text-red-400 font-bold text-sm flex-shrink-0">Pain:</span>
+                          <p className="text-slate-300 leading-relaxed">{selectedIdea.pain}</p>
+                        </div>
+                      )}
+                      {selectedIdea.gap && (
+                        <div className="flex gap-3">
+                          <span className="text-orange-400 font-bold text-sm flex-shrink-0">Gap:</span>
+                          <p className="text-slate-300 leading-relaxed">{selectedIdea.gap}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
 
