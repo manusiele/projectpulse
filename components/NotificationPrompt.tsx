@@ -18,9 +18,7 @@ export function NotificationPrompt() {
         
         // Auto-dismiss after 10 seconds
         setTimeout(() => {
-          if (showPrompt) {
-            handleDismiss();
-          }
+          handleDismiss();
         }, 10000);
       }, 5000);
       

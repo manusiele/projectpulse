@@ -14,8 +14,13 @@ export function Loader({ onLoadComplete, isLoading = true }: LoaderProps) {
   useEffect(() => {
     // Estimate connection speed based on browser performance API
     if (typeof window !== 'undefined' && 'connection' in navigator) {
-      const connection = (navigator as any).connection;
-      if (connection) {
+      const nav = navigator as Navigator & {
+        connection?: {
+          effectiveType?: string;
+        };
+      };
+      const connection = nav.connection;
+      if (connection && connection.effectiveType) {
         // Adjust estimated time based on effective connection type
         const speedMap: Record<string, number> = {
           'slow-2g': 8000,
