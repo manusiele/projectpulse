@@ -332,6 +332,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function fetchIdeas() {
+      const startTime = performance.now();
       try {
         const response = await fetch('/api/ideas');
         if (!response.ok) {
@@ -339,18 +340,26 @@ export default function DashboardPage() {
         }
         const data = await response.json();
         setIdeas(data);
+        
+        // Calculate actual load time
+        const loadTime = performance.now() - startTime;
+        
+        // Ensure minimum display time for smooth UX (at least 800ms)
+        const minDisplayTime = 800;
+        const remainingTime = Math.max(0, minDisplayTime - loadTime);
+        
+        setTimeout(() => setLoading(false), remainingTime);
       } catch (err) {
         console.error('Failed to fetch ideas:', err);
-      } finally {
-        // Minimum loading time for smooth animation
-        setTimeout(() => setLoading(false), 1500);
+        // On error, still hide loader after a delay
+        setTimeout(() => setLoading(false), 1000);
       }
     }
     fetchIdeas();
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return <Loader isLoading={loading} />;
   }
 
   const [latest, ...rest] = ideas;
