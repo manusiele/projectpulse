@@ -110,9 +110,9 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
             <div className="flex items-center gap-3">
               <span className="text-xs text-slate-500">{formattedDate}</span>
               {idea.difficulty && (
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <span className={`w-2 h-2 rounded-full ${getDifficultyColor(idea.difficulty)}`} />
-                  <span className="text-xs text-slate-400">{getDifficultyLabel(idea.difficulty)}</span>
+                  <span className="text-[10px] font-medium text-slate-300">{getDifficultyLabel(idea.difficulty)}</span>
                 </div>
               )}
               {(idea.views || 0) > 0 && (
@@ -184,7 +184,7 @@ export function IdeaCard({ idea, featured = false, onView, onLike, onShare, isLi
             {idea.difficulty && (
               <div className="flex items-center gap-1">
                 <span className={`w-1.5 h-1.5 rounded-full ${getDifficultyColor(idea.difficulty)}`} />
-                <span className="text-xs text-slate-400">{getDifficultyLabel(idea.difficulty)}</span>
+                <span className="text-[9px] font-medium text-slate-300">{getDifficultyLabel(idea.difficulty)}</span>
               </div>
             )}
             {(idea.views || 0) > 0 && (
