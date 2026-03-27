@@ -384,7 +384,34 @@ def save_idea(raw: str, domain: str = "", problem: dict = None):
             "createdAt": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),  # UTC timestamp
             "domain": domain,
             "raw": raw,  # Always save the raw text for debugging
+            "views": 0,  # Initialize views to 0
+            "likes": 0,  # Initialize likes to 0
+            "shares": 0,  # Initialize shares to 0
         }
+        
+        # Assign difficulty level based on stack complexity
+        stack_text = parsed.get('stack', '').lower()
+        if stack_text:
+            # Count advanced technologies
+            advanced_tech = ['kubernetes', 'docker', 'microservices', 'graphql', 'redis', 'elasticsearch', 
+                           'kafka', 'rabbitmq', 'terraform', 'aws', 'gcp', 'azure', 'blockchain', 
+                           'machine learning', 'ai', 'neural', 'tensorflow', 'pytorch']
+            intermediate_tech = ['react', 'vue', 'angular', 'node.js', 'express', 'fastapi', 'django', 
+                               'flask', 'postgresql', 'mongodb', 'prisma', 'nextauth', 'stripe', 
+                               'websocket', 'rest api', 'oauth']
+            
+            advanced_count = sum(1 for tech in advanced_tech if tech in stack_text)
+            intermediate_count = sum(1 for tech in intermediate_tech if tech in stack_text)
+            
+            if advanced_count >= 2:
+                entry['difficulty'] = 'expert'
+            elif advanced_count >= 1 or intermediate_count >= 3:
+                entry['difficulty'] = 'intermediate'
+            else:
+                entry['difficulty'] = 'beginner'
+        else:
+            # Default to intermediate if no stack info
+            entry['difficulty'] = 'intermediate'
         
         # Add parsed fields only if they have content
         for key, value in parsed.items():
