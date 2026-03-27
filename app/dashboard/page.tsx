@@ -111,15 +111,22 @@ export default function DashboardPage() {
   const handleView = async (idea: Idea) => {
     setSelectedIdea(idea);
     
-    // Track view
+    // Optimistically increment view count
+    setIdeas(prevIdeas => prevIdeas.map(i => 
+      i.id === idea.id ? { ...i, views: (i.views || 0) + 1 } : i
+    ));
+    
+    // Track view with API
     try {
       const response = await fetch(`/api/ideas/${idea.id}/view`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
-        // Update view count in state
-        setIdeas(prevIdeas => prevIdeas.map(i => 
-          i.id === idea.id ? { ...i, views: data.views } : i
-        ));
+        // Only update if server returned a non-zero count (Redis is configured)
+        if (data.views > 0) {
+          setIdeas(prevIdeas => prevIdeas.map(i => 
+            i.id === idea.id ? { ...i, views: data.views } : i
+          ));
+        }
       }
     } catch (error) {
       console.error('Failed to track view:', error);
@@ -154,12 +161,15 @@ export default function DashboardPage() {
       
       if (response.ok) {
         const data = await response.json();
-        // Update with actual count from server
-        setIdeas(prevIdeas => prevIdeas.map(idea => 
-          idea.id === ideaId 
-            ? { ...idea, likes: data.likes }
-            : idea
-        ));
+        // Only update if server returned a non-zero count (Redis is configured)
+        // This preserves optimistic updates in local development
+        if (data.likes > 0 || isLiked) {
+          setIdeas(prevIdeas => prevIdeas.map(idea => 
+            idea.id === ideaId 
+              ? { ...idea, likes: data.likes }
+              : idea
+          ));
+        }
       }
     } catch (error) {
       console.error('Failed to update like:', error);
@@ -234,12 +244,14 @@ export default function DashboardPage() {
         
         if (response.ok) {
           const data = await response.json();
-          // Update with actual count from server
-          setIdeas(prevIdeas => prevIdeas.map(i => 
-            i.id === idea.id 
-              ? { ...i, shares: data.shares }
-              : i
-          ));
+          // Only update if server returned a non-zero count (Redis is configured)
+          if (data.shares > 0) {
+            setIdeas(prevIdeas => prevIdeas.map(i => 
+              i.id === idea.id 
+                ? { ...i, shares: data.shares }
+                : i
+            ));
+          }
         }
       } catch (error) {
         console.error('Failed to update share count:', error);
