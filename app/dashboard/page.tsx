@@ -472,7 +472,7 @@ export default function DashboardPage() {
                 <div className="bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-xl backdrop-blur-xl shadow-2xl p-2 max-w-sm mx-auto">
                   <div className="grid grid-cols-5 gap-1">
                     {/* Home Icon */}
-                    <a
+                    <Link
                       href="/"
                       className="flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all text-slate-400 hover:bg-[#252525]"
                     >
@@ -481,7 +481,7 @@ export default function DashboardPage() {
                         <polyline points="9 22 9 12 15 12 15 22" />
                       </svg>
                       <span className="text-[9px] font-medium">Home</span>
-                    </a>
+                    </Link>
                     
                     <button
                       onClick={() => { setActiveView('ideas'); setMobileNavOpen(false); }}
