@@ -4,6 +4,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { Brain, Zap, Rocket } from "lucide-react";
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -185,48 +186,72 @@ export default function Home() {
         {/* ── Features ────────────────────────────────────────────────────── */}
         <section className="mb-20">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Why ProjectPulse?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: (
-                  <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-                    <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-                  </svg>
-                ),
+                icon: Brain,
                 title: "AI-Powered",
                 description: "Powered by Ollama and phi3:mini. Runs locally on GitHub Actions—no external API calls.",
+                gradient: "from-blue-500/20 via-blue-500/10 to-transparent",
+                iconBg: "from-blue-500/20 to-blue-600/20",
+                iconColor: "text-blue-400",
+                borderColor: "border-blue-500/30",
+                glowColor: "shadow-blue-500/20"
               },
               {
-                icon: (
-                  <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                  </svg>
-                ),
+                icon: Zap,
                 title: "Daily Delivery",
                 description: "One fresh idea every day at 10 AM EAT, delivered straight to your Telegram.",
+                gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent",
+                iconBg: "from-cyan-500/20 to-cyan-600/20",
+                iconColor: "text-cyan-400",
+                borderColor: "border-cyan-500/30",
+                glowColor: "shadow-cyan-500/20"
               },
               {
-                icon: (
-                  <svg className="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                  </svg>
-                ),
+                icon: Rocket,
                 title: "Shippable",
                 description: "Every idea includes exact tech stack, deployment strategy, and market potential.",
+                gradient: "from-purple-500/20 via-purple-500/10 to-transparent",
+                iconBg: "from-purple-500/20 to-purple-600/20",
+                iconColor: "text-purple-400",
+                borderColor: "border-purple-500/30",
+                glowColor: "shadow-purple-500/20"
               },
-            ].map((feature) => (
-                <div key={feature.title} className="p-8 rounded-2xl bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 hover:border-[#3a3a3a] backdrop-blur-2xl transition-all hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 group">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    {feature.icon}
+            ].map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <div 
+                  key={feature.title} 
+                  className="group relative p-6 rounded-2xl bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 hover:border-[#3a3a3a] backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Animated gradient background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  {/* Glow effect on hover */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${feature.glowColor} blur-xl`} />
+                  
+                  <div className="relative z-10">
+                    {/* Icon container with animated border */}
+                    <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${feature.iconBg} border ${feature.borderColor} flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                      {/* Pulse effect */}
+                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${feature.iconBg} animate-ping opacity-20`} />
+                      <Icon className={`w-6 h-6 ${feature.iconColor} relative z-10`} strokeWidth={2} />
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 group-hover:bg-clip-text transition-all duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-slate-400 leading-relaxed text-sm group-hover:text-slate-300 transition-colors duration-300">
+                      {feature.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+                  
+                  {/* Corner accent */}
+                  <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${feature.iconBg} blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`} />
                 </div>
-              ))}
+              );
+            })}
           </div>
         </section>
 
