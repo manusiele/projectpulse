@@ -2,22 +2,37 @@
 
 import { useEffect, useState } from "react";
 
-export function Loader() {
+export function Loader({ onLoadComplete }: { onLoadComplete?: () => void }) {
   const [progress, setProgress] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    // Slower, more realistic progress
     const interval = setInterval(() => {
       setProgress((prev) => {
+        if (prev >= 95 && !isComplete) {
+          // Slow down at 95% and wait for actual load
+          return prev;
+        }
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        return prev + 2;
+        // Slower increment: 1% every 50ms = ~5 seconds to reach 95%
+        return prev + 1;
       });
-    }, 20);
+    }, 50);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isComplete]);
+
+  // Call this when data is actually loaded
+  useEffect(() => {
+    if (onLoadComplete && progress >= 95) {
+      setIsComplete(true);
+      setProgress(100);
+    }
+  }, [progress, onLoadComplete]);
 
   return (
     <div className="fixed inset-0 bg-[#0a0a0a] z-50 flex items-center justify-center">
@@ -54,7 +69,7 @@ export function Loader() {
         {/* Progress bar */}
         <div className="w-64 h-1 bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-full overflow-hidden backdrop-blur-xl">
           <div 
-            className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300 ease-out"
+            className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
