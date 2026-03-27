@@ -12,10 +12,12 @@ interface BeforeInstallPromptEvent extends Event {
 export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [stats, setStats] = useState({
-    totalIdeas: "365+",
+    totalIdeas: "27",
     domains: "15",
     delivery: "Daily"
   });
+  const [latestIdea, setLatestIdea] = useState<any>(null);
+  const [sampleIdea, setSampleIdea] = useState<any>(null);
 
   useEffect(() => {
     // Capture the install prompt event
@@ -54,10 +56,21 @@ export default function Home() {
           const ideas = await response.json();
           const uniqueDomains = new Set(ideas.map((idea: { domain: string }) => idea.domain).filter(Boolean));
           setStats({
-            totalIdeas: `${ideas.length}+`,
+            totalIdeas: ideas.length.toString(),
             domains: uniqueDomains.size.toString(),
             delivery: "Daily"
           });
+          
+          // Set latest idea (first in array)
+          if (ideas.length > 0) {
+            setLatestIdea(ideas[0]);
+          }
+          
+          // Set a sample idea (pick a good one for showcase)
+          const sampleIndex = Math.min(2, ideas.length - 1);
+          if (ideas.length > sampleIndex) {
+            setSampleIdea(ideas[sampleIndex]);
+          }
         }
       } catch (error) {
         console.error('Failed to fetch stats:', error);
@@ -201,7 +214,7 @@ export default function Home() {
               Explore Ideas
             </Link>
             <a
-              href="https://github.com"
+              href="https://github.com/manusiele/projectpulse"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3 rounded-xl border border-[#2a2a2a]/30 hover:border-slate-600 bg-[#1a1a1a]/20 backdrop-blur-2xl text-slate-300 hover:text-white font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
@@ -213,6 +226,79 @@ export default function Home() {
             </a>
           </div>
         </section>
+
+        {/* ── Sample Idea Preview ─────────────────────────────────────────── */}
+        {sampleIdea && (
+          <section className="mb-20">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">See What You Get</h2>
+              <p className="text-slate-400 text-lg">Every idea includes problem statement, tech stack, and deployment guide</p>
+            </div>
+            
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl p-6 backdrop-blur-xl hover:border-[#3a3a3a] transition-all">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium">
+                        {sampleIdea.domain || 'Sample'}
+                      </span>
+                      {sampleIdea.difficulty && (
+                        <div className="flex items-center gap-1">
+                          <span className={`w-2 h-2 rounded-full ${
+                            sampleIdea.difficulty === 'beginner' ? 'bg-green-500' :
+                            sampleIdea.difficulty === 'intermediate' ? 'bg-yellow-500' : 'bg-red-500'
+                          }`} />
+                          <span className="text-[10px] font-medium text-slate-300 capitalize">{sampleIdea.difficulty}</span>
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3">{sampleIdea.projectName}</h3>
+                    <p className="text-slate-300 leading-relaxed mb-4">{sampleIdea.description}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-3 mb-4">
+                  <div>
+                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">Problem</span>
+                    <p className="text-sm text-slate-400 mt-1">{sampleIdea.pain}</p>
+                  </div>
+                  
+                  {sampleIdea.stack && (
+                    <div>
+                      <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider">Tech Stack</span>
+                      <p className="text-sm text-slate-300 mt-1">{sampleIdea.stack}</p>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-[#2a2a2a]">
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <div className="flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      {sampleIdea.views || 0}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                      </svg>
+                      {sampleIdea.likes || 0}
+                    </div>
+                  </div>
+                  <Link
+                    href="/dashboard"
+                    className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                  >
+                    View Full Details →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Stats ───────────────────────────────────────────────────────── */}
         <section className="grid grid-cols-3 gap-6 mb-20 max-w-2xl mx-auto">
@@ -360,6 +446,147 @@ export default function Home() {
                     <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Latest Idea ──────────────────────────────────────────────────── */}
+        {latestIdea && (
+          <section className="mb-20">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-sm text-green-400 font-medium">Today's Idea</span>
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">Latest Project Idea</h2>
+              <p className="text-slate-400">Fresh from today's generation</p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-gradient-to-br from-[#1a1a1a]/60 to-[#0f0f1a]/60 border border-[#2a2a2a]/50 rounded-2xl p-8 backdrop-blur-xl hover:border-blue-500/30 transition-all">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium">
+                        {latestIdea.domain}
+                      </span>
+                      {latestIdea.difficulty && (
+                        <div className="flex items-center gap-1.5">
+                          <span className={`w-2 h-2 rounded-full ${
+                            latestIdea.difficulty === 'beginner' ? 'bg-green-500' :
+                            latestIdea.difficulty === 'intermediate' ? 'bg-yellow-500' : 'bg-red-500'
+                          }`} />
+                          <span className="text-xs font-medium text-slate-300 capitalize">{latestIdea.difficulty}</span>
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="text-3xl font-bold text-white mb-4">{latestIdea.projectName}</h3>
+                    <p className="text-lg text-slate-300 leading-relaxed mb-6">{latestIdea.description}</p>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider block mb-2">Who Needs This</span>
+                      <p className="text-sm text-slate-300">{latestIdea.who}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs font-semibold text-red-400 uppercase tracking-wider block mb-2">Pain Point</span>
+                      <p className="text-sm text-slate-300">{latestIdea.pain}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block mb-2">Tech Stack</span>
+                      <p className="text-sm text-slate-300">{latestIdea.stack}</p>
+                    </div>
+                    {latestIdea.deploy && (
+                      <div>
+                        <span className="text-xs font-semibold text-green-400 uppercase tracking-wider block mb-2">Deployment</span>
+                        <p className="text-sm text-slate-300">{latestIdea.deploy}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between pt-6 border-t border-[#2a2a2a]">
+                  <div className="flex items-center gap-4 text-sm text-slate-400">
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      {latestIdea.views || 0} views
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                      </svg>
+                      {latestIdea.likes || 0} likes
+                    </div>
+                  </div>
+                  <Link
+                    href="/dashboard"
+                    className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/30"
+                  >
+                    Explore More Ideas
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── Telegram Setup ───────────────────────────────────────────────── */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Get Ideas on Telegram</h2>
+            <p className="text-slate-400 text-lg">Receive daily project ideas directly in your Telegram</p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 rounded-2xl p-8 backdrop-blur-xl">
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-bold text-blue-400">1</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Fork the Repo</h3>
+                  <p className="text-sm text-slate-400">Clone the GitHub repository to your account</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-bold text-cyan-400">2</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Create Bot</h3>
+                  <p className="text-sm text-slate-400">Talk to @BotFather on Telegram to get your bot token</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-bold text-purple-400">3</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">Add Secrets</h3>
+                  <p className="text-sm text-slate-400">Configure GitHub Actions with your bot token and chat ID</p>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-8 border-t border-[#2a2a2a] text-center">
+                <a
+                  href="https://github.com/manusiele/projectpulse#telegram-setup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2a2a2a]/50 hover:bg-[#3a3a3a]/50 text-white font-medium transition-all"
+                >
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  View Full Setup Guide
+                </a>
               </div>
             </div>
           </div>
