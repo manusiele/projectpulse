@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Script from "next/script";
+import { InstallPrompt } from "@/components/InstallPrompt";
 
 export default function Home() {
   const jsonLd = {
@@ -365,6 +366,7 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    <InstallPrompt />
     </>
   );
 }

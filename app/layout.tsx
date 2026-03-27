@@ -103,7 +103,6 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans min-h-screen bg-[#0a0a0a] text-gray-100 antialiased`}>
         <ClientProviders>
           {children}
-          <InstallPrompt />
           <NotificationPrompt />
         </ClientProviders>
       </body>
