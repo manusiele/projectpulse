@@ -470,7 +470,19 @@ export default function DashboardPage() {
               {/* Floating Nav Card */}
               <div className="fixed inset-x-4 bottom-4 z-40 lg:hidden animate-slideUp">
                 <div className="bg-[#1a1a1a]/95 border border-[#2a2a2a] rounded-xl backdrop-blur-xl shadow-2xl p-2 max-w-sm mx-auto">
-                  <div className="grid grid-cols-4 gap-1">
+                  <div className="grid grid-cols-5 gap-1">
+                    {/* Home Icon */}
+                    <a
+                      href="/"
+                      className="flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all text-slate-400 hover:bg-[#252525]"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                      </svg>
+                      <span className="text-[9px] font-medium">Home</span>
+                    </a>
+                    
                     <button
                       onClick={() => { setActiveView('ideas'); setMobileNavOpen(false); }}
                       className={`flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all ${
