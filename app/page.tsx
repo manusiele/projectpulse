@@ -3,8 +3,36 @@
 import Link from "next/link";
 import Script from "next/script";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [stats, setStats] = useState({
+    totalIdeas: "365+",
+    domains: "15",
+    delivery: "Daily"
+  });
+
+  useEffect(() => {
+    // Fetch actual stats from API
+    async function fetchStats() {
+      try {
+        const response = await fetch('/api/ideas');
+        if (response.ok) {
+          const ideas = await response.json();
+          const uniqueDomains = new Set(ideas.map((idea: { domain: string }) => idea.domain).filter(Boolean));
+          setStats({
+            totalIdeas: `${ideas.length}+`,
+            domains: uniqueDomains.size.toString(),
+            delivery: "Daily"
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      }
+    }
+    fetchStats();
+  }, []);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -145,9 +173,9 @@ export default function Home() {
         {/* ── Stats ───────────────────────────────────────────────────────── */}
         <section className="grid grid-cols-3 gap-6 mb-20 max-w-2xl mx-auto">
           {[
-            { value: "365+", label: "Ideas" },
-            { value: "15", label: "Domains" },
-            { value: "Daily", label: "Delivery" },
+            { value: stats.totalIdeas, label: "Ideas" },
+            { value: stats.domains, label: "Domains" },
+            { value: stats.delivery, label: "Delivery" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
