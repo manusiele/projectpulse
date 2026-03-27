@@ -34,7 +34,7 @@ export function ShareButton({ idea }: { idea: Idea }) {
           }, 1000);
         }
       }
-    } catch (err) {
+    } catch (error) {
       // Fallback: copy the original URL if shortening fails
       try {
         await navigator.clipboard.writeText(fullUrl);
