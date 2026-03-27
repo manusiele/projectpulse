@@ -148,14 +148,14 @@ export default function Home() {
             </a>
             <button
               onClick={handleInstall}
-              className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-xl text-white text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-500/20 overflow-hidden group"
+              className="relative flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600/10 to-cyan-600/10 hover:from-blue-600/20 hover:to-cyan-600/20 border border-blue-500/20 backdrop-blur-xl text-blue-400 text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-500/20 overflow-hidden group"
             >
               {/* Waterdrop effect */}
-              <span className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-cyan-400/20 to-transparent animate-pulse" />
+              <span className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-cyan-400/10 to-transparent animate-pulse" />
               <span className="absolute top-0 left-0 w-full h-full">
-                <span className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/30 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
-                <span className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-white/20 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
-                <span className="absolute bottom-1/3 left-1/2 w-1 h-1 bg-white/25 rounded-full animate-ping" style={{ animationDuration: '5s', animationDelay: '2s' }} />
+                <span className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/30 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
+                <span className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-cyan-400/20 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+                <span className="absolute bottom-1/3 left-1/2 w-1 h-1 bg-blue-400/25 rounded-full animate-ping" style={{ animationDuration: '5s', animationDelay: '2s' }} />
               </span>
               
               <svg className="w-4 h-4 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
