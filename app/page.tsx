@@ -4,14 +4,48 @@ import Link from "next/link";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 import { InstallPrompt } from "@/components/InstallPrompt";
-import { Brain, Zap, Rocket } from "lucide-react";
+import { Brain, Zap, Rocket, Download } from "lucide-react";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
 
 export default function Home() {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [stats, setStats] = useState({
     totalIdeas: "27",
     domains: "15",
     delivery: "Daily"
   });
+
+  useEffect(() => {
+    // Capture the install prompt event
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) {
+      alert('Install not available. Please use Chrome, Edge, or Safari on mobile.');
+      return;
+    }
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+    }
+    
+    setDeferredPrompt(null);
+  };
 
   useEffect(() => {
     // Fetch actual stats from API
@@ -67,34 +101,23 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden">
-      {/* LeetCode-inspired animated background */}
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#0d0d0d] to-[#0a0a0a] text-slate-100 relative overflow-hidden">
+      {/* Refined animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient base layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1a] to-[#0a0a0a] animate-gradient" />
+        {/* Subtle gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] animate-float" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[100px] animate-float-reverse" />
         
-        {/* Floating geometric shapes */}
-        <div className="absolute top-0 -left-40 w-96 h-96 bg-gradient-to-br from-blue-500/25 to-cyan-500/15 rounded-full blur-3xl animate-float" />
-        <div className="absolute top-40 right-0 w-[500px] h-[500px] bg-gradient-to-tr from-cyan-500/20 to-blue-500/10 rounded-full blur-3xl animate-float-reverse" />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-gradient-to-bl from-purple-500/15 to-blue-500/10 rounded-full blur-3xl animate-pulse-slow" />
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)',
-          backgroundSize: '50px 50px'
+        {/* Minimal grid */}
+        <div className="absolute inset-0 opacity-[0.015]" style={{
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
+          backgroundSize: '80px 80px'
         }} />
-        
-        {/* Accent lines */}
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
-        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent" />
-        
-        {/* Radial glow at center */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-3xl" />
       </div>
 
       {/* ── Navigation ─────────────────────────────────────────────────── */}
-      <nav className="border-b border-[#2a2a2a]/50 bg-[#1a1a1a]/30 backdrop-blur-xl sticky top-0 z-40 relative">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+      <nav className="border-b border-white/5 bg-black/20 backdrop-blur-2xl sticky top-0 z-40 relative">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center group">
             <svg width="180" height="45" viewBox="0 0 180 45" fill="none" xmlns="http://www.w3.org/2000/svg">
               <text x="5" y="30" className="font-black" style={{ fontSize: '24px', fill: 'url(#textGradient)', letterSpacing: '-0.02em' }}>
@@ -108,18 +131,27 @@ export default function Home() {
               </defs>
             </svg>
           </Link>
-          <a href="https://github.com/manusiele/projectpulse" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-          </a>
+          <div className="flex items-center gap-3">
+            <a href="https://github.com/manusiele/projectpulse" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors duration-200">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <button
+              onClick={handleInstall}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-xl text-slate-300 hover:text-white text-sm font-medium transition-all duration-200"
+            >
+              <Download className="w-4 h-4" />
+              <span>Install</span>
+            </button>
+          </div>
         </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-6 py-20 relative z-10">
         {/* ── Hero Section ────────────────────────────────────────────────── */}
-        <section className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a1a1a]/20 border border-[#2a2a2a]/30 backdrop-blur-2xl mb-8 shadow-lg shadow-blue-500/10">
+        <section className="text-center max-w-4xl mx-auto mb-24 pt-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-8">
             <svg className="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
               <path d="M5 3v4" />
@@ -127,27 +159,27 @@ export default function Home() {
               <path d="M3 5h4" />
               <path d="M17 19h4" />
             </svg>
-            <span className="text-sm text-slate-400">AI-Powered Daily Ideas</span>
+            <span className="text-sm text-slate-400 font-medium">AI-Powered Daily Ideas</span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-6xl sm:text-7xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
             One Idea.
             <br />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Every Day.
             </span>
           </h1>
 
-          <p className="text-lg text-slate-400 mb-10 leading-relaxed">
+          <p className="text-xl text-slate-400 mb-12 leading-relaxed max-w-2xl mx-auto">
             Get a fresh project idea delivered daily. Real problems. Shippable solutions. Exact tech stack. No fluff.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/dashboard"
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 flex items-center gap-2"
+              className="group px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold transition-all duration-200 hover:shadow-2xl hover:shadow-blue-500/30 hover:scale-[1.02] flex items-center gap-2"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
                 <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
                 <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
@@ -159,7 +191,7 @@ export default function Home() {
               href="https://github.com/manusiele/projectpulse"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 rounded-xl border border-[#2a2a2a]/30 hover:border-slate-600 bg-[#1a1a1a]/20 backdrop-blur-xl text-slate-300 hover:text-white font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
+              className="px-8 py-4 rounded-xl border border-white/10 hover:border-white/20 bg-white/5 backdrop-blur-xl text-slate-300 hover:text-white font-semibold transition-all duration-200 hover:bg-white/10 flex items-center gap-2"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -170,85 +202,72 @@ export default function Home() {
         </section>
 
         {/* ── Stats ───────────────────────────────────────────────────────── */}
-        <section className="grid grid-cols-3 gap-6 mb-20 max-w-2xl mx-auto">
+        <section className="grid grid-cols-3 gap-8 mb-32 max-w-3xl mx-auto">
           {[
-            { value: stats.totalIdeas, label: "Ideas" },
-            { value: stats.domains, label: "Domains" },
-            { value: stats.delivery, label: "Delivery" },
+            { value: stats.totalIdeas, label: "Ideas", sublabel: "Generated" },
+            { value: stats.domains, label: "Domains", sublabel: "Covered" },
+            { value: stats.delivery, label: "Delivery", sublabel: "Schedule" },
           ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-              <p className="text-sm text-slate-500">{stat.label}</p>
+            <div key={stat.label} className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+              <p className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">{stat.value}</p>
+              <p className="text-sm font-semibold text-white mb-1">{stat.label}</p>
+              <p className="text-xs text-slate-500">{stat.sublabel}</p>
             </div>
           ))}
         </section>
 
         {/* ── Features ────────────────────────────────────────────────────── */}
-        <section className="mb-20">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">Why ProjectPulse?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <section className="mb-32">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">Why ProjectPulse?</h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">Everything you need to turn inspiration into action</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               {
                 icon: Brain,
                 title: "AI-Powered",
                 description: "Powered by Ollama and phi3:mini. Runs locally on GitHub Actions—no external API calls.",
-                gradient: "from-blue-500/20 via-blue-500/10 to-transparent",
-                iconBg: "from-blue-500/20 to-blue-600/20",
+                gradient: "from-blue-500/10 to-blue-600/5",
                 iconColor: "text-blue-400",
-                borderColor: "border-blue-500/30",
-                glowColor: "shadow-blue-500/20"
+                borderColor: "border-blue-500/20"
               },
               {
                 icon: Zap,
                 title: "Daily Delivery",
                 description: "One fresh idea every day at 10 AM EAT, delivered straight to your Telegram.",
-                gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent",
-                iconBg: "from-cyan-500/20 to-cyan-600/20",
+                gradient: "from-cyan-500/10 to-cyan-600/5",
                 iconColor: "text-cyan-400",
-                borderColor: "border-cyan-500/30",
-                glowColor: "shadow-cyan-500/20"
+                borderColor: "border-cyan-500/20"
               },
               {
                 icon: Rocket,
                 title: "Shippable",
                 description: "Every idea includes exact tech stack, deployment strategy, and market potential.",
-                gradient: "from-purple-500/20 via-purple-500/10 to-transparent",
-                iconBg: "from-purple-500/20 to-purple-600/20",
+                gradient: "from-purple-500/10 to-purple-600/5",
                 iconColor: "text-purple-400",
-                borderColor: "border-purple-500/30",
-                glowColor: "shadow-purple-500/20"
+                borderColor: "border-purple-500/20"
               },
             ].map((feature) => {
               const Icon = feature.icon;
               return (
                 <div 
                   key={feature.title} 
-                  className="group relative p-6 rounded-2xl bg-[#1a1a1a]/40 border border-[#2a2a2a]/50 hover:border-[#3a3a3a] backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden"
+                  className="group relative p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1"
                 >
-                  {/* Animated gradient background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  
-                  {/* Glow effect on hover */}
-                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${feature.glowColor} blur-xl`} />
-                  
-                  <div className="relative z-10">
-                    {/* Icon container with animated border */}
-                    <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${feature.iconBg} border ${feature.borderColor} flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-                      {/* Pulse effect */}
-                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${feature.iconBg} animate-ping opacity-20`} />
-                      <Icon className={`w-6 h-6 ${feature.iconColor} relative z-10`} strokeWidth={2} />
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 group-hover:bg-clip-text transition-all duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-slate-400 leading-relaxed text-sm group-hover:text-slate-300 transition-colors duration-300">
-                      {feature.description}
-                    </p>
+                  {/* Icon */}
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} border ${feature.borderColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className={`w-6 h-6 ${feature.iconColor}`} strokeWidth={2} />
                   </div>
                   
-                  {/* Corner accent */}
-                  <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${feature.iconBg} blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`} />
+                  {/* Content */}
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-400 leading-relaxed text-sm">
+                    {feature.description}
+                  </p>
                 </div>
               );
             })}
@@ -370,7 +389,7 @@ export default function Home() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[#2a2a2a]/30 py-12 mt-20 bg-[#1a1a1a]/20 backdrop-blur-2xl relative">
+      <footer className="border-t border-white/5 py-12 mt-32 bg-black/20 backdrop-blur-2xl relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
@@ -378,15 +397,15 @@ export default function Home() {
                 © 2026 ProjectPulse. Serverless. Open source. Daily ideas.
               </p>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs text-slate-500">
-                <Link href="/privacy" className="hover:text-blue-400 transition-colors">
+                <Link href="/privacy" className="hover:text-blue-400 transition-colors duration-200">
                   Privacy Policy
                 </Link>
                 <span>•</span>
-                <Link href="/terms" className="hover:text-blue-400 transition-colors">
+                <Link href="/terms" className="hover:text-blue-400 transition-colors duration-200">
                   Terms of Service
                 </Link>
                 <span>•</span>
-                <Link href="/about" className="hover:text-blue-400 transition-colors">
+                <Link href="/about" className="hover:text-blue-400 transition-colors duration-200">
                   About
                 </Link>
                 <span>•</span>
@@ -394,7 +413,7 @@ export default function Home() {
                   href="https://manusiele-4efb8.web.app/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-400 transition-colors duration-200"
                 >
                   Developer
                 </a>
@@ -405,7 +424,7 @@ export default function Home() {
                 href="https://github.com/manusiele/projectpulse" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2"
+                className="text-sm text-slate-400 hover:text-blue-400 transition-colors duration-200 flex items-center gap-2"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
