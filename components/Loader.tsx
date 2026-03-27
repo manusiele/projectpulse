@@ -2,37 +2,77 @@
 
 import { useEffect, useState } from "react";
 
-export function Loader({ onLoadComplete }: { onLoadComplete?: () => void }) {
+interface LoaderProps {
+  onLoadComplete?: () => void;
+  isLoading?: boolean;
+}
+
+export function Loader({ onLoadComplete, isLoading = true }: LoaderProps) {
   const [progress, setProgress] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+  const [estimatedTime, setEstimatedTime] = useState(3000); // Default 3 seconds
 
   useEffect(() => {
-    // Slower, more realistic progress
+    // Estimate connection speed based on browser performance API
+    if (typeof window !== 'undefined' && 'connection' in navigator) {
+      const connection = (navigator as any).connection;
+      if (connection) {
+        // Adjust estimated time based on effective connection type
+        const speedMap: Record<string, number> = {
+          'slow-2g': 8000,
+          '2g': 6000,
+          '3g': 4000,
+          '4g': 2000,
+          '5g': 1000,
+        };
+        setEstimatedTime(speedMap[connection.effectiveType] || 3000);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // Data loaded, complete the progress
+      setProgress(100);
+      return;
+    }
+
+    // Calculate increment speed based on estimated time
+    // We want to reach 90% by the estimated time, then slow down
+    const targetProgress = 90;
+    const incrementInterval = 50; // Update every 50ms
+    const totalIncrements = estimatedTime / incrementInterval;
+    const incrementAmount = targetProgress / totalIncrements;
+
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 95 && !isComplete) {
-          // Slow down at 95% and wait for actual load
-          return prev;
+        if (!isLoading) {
+          // If loading finished, jump to 100%
+          return 100;
+        }
+        if (prev >= 90) {
+          // Slow down significantly after 90%
+          return Math.min(prev + 0.5, 95);
         }
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        // Slower increment: 1% every 50ms = ~5 seconds to reach 95%
-        return prev + 1;
+        return Math.min(prev + incrementAmount, 90);
       });
-    }, 50);
+    }, incrementInterval);
 
     return () => clearInterval(interval);
-  }, [isComplete]);
+  }, [isLoading, estimatedTime]);
 
-  // Call this when data is actually loaded
+  // Complete when loading finishes
   useEffect(() => {
-    if (onLoadComplete && progress >= 95) {
-      setIsComplete(true);
+    if (!isLoading && progress < 100) {
       setProgress(100);
+      if (onLoadComplete) {
+        setTimeout(onLoadComplete, 300);
+      }
     }
-  }, [progress, onLoadComplete]);
+  }, [isLoading, progress, onLoadComplete]);
 
   return (
     <div className="fixed inset-0 bg-[#0a0a0a] z-50 flex items-center justify-center">
