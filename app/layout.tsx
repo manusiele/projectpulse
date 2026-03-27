@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { InstallPrompt } from "@/components/InstallPrompt";
 import { NotificationPrompt } from "@/components/NotificationPrompt";
 import { ClientProviders } from "./client-providers";
 
