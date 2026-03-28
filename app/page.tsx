@@ -216,7 +216,7 @@ export default function Home() {
             <div key={stat.label} className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-200">
               <p className={`text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent ${
                 stat.label === "Delivery" 
-                  ? "font-black tracking-tighter italic" 
+                  ? "font-['Brush_Script_MT','Segoe_Script','Lucida_Handwriting','cursive'] tracking-wide" 
                   : ""
               }`}>{stat.value}</p>
               <p className="text-sm font-semibold text-white mb-1">{stat.label}</p>
