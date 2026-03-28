@@ -6,6 +6,43 @@ import Link from "next/link";
 import { Loader } from "@/components/Loader";
 import type { Idea } from "@/lib/ideas";
 
+// Counter animation hook
+function useCountAnimation(target: number, duration: number = 1000) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (target === 0) {
+      setCount(0);
+      return;
+    }
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuad = (t: number) => t * (2 - t);
+      const currentCount = Math.floor(easeOutQuad(progress) * target);
+      
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [target, duration]);
+
+  return count;
+}
+
 export default function DashboardPage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +56,20 @@ export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
+
+  // Calculate thisMonth count
+  const thisMonth = ideas.filter((idea) => {
+    const d = new Date(idea.createdAt || idea.date || Date.now());
+    const now = new Date();
+    return (
+      d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+    );
+  }).length;
+
+  // Animated counters
+  const animatedAllIdeas = useCountAnimation(ideas.length, 800);
+  const animatedThisMonth = useCountAnimation(thisMonth, 800);
+  const animatedDomains = useCountAnimation(25, 800);
 
   // Load liked ideas from localStorage
   useEffect(() => {
@@ -364,14 +415,6 @@ export default function DashboardPage() {
 
   const [latest, ...rest] = ideas;
 
-  const thisMonth = ideas.filter((idea) => {
-    const d = new Date(idea.createdAt || idea.date || Date.now());
-    const now = new Date();
-    return (
-      d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
-    );
-  }).length;
-
   const domains = [
     { name: "Business Management", description: "Small business owners, freelancers, and solopreneurs" },
     { name: "Career Development", description: "Students, job seekers, and career switchers" },
@@ -610,7 +653,7 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">All Ideas</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{ideas.length}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{animatedAllIdeas}</span>
                     </button>
                     
                     <button 
@@ -630,7 +673,7 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">This Month</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{thisMonth}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{animatedThisMonth}</span>
                     </button>
                     
                     <button 
@@ -650,7 +693,7 @@ export default function DashboardPage() {
                         </svg>
                         <span className="font-medium">Domains</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">25</span>
+                      <span className="px-2 py-0.5 rounded-md bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 text-xs font-bold">{animatedDomains}</span>
                     </button>
                   </nav>
                 </div>
