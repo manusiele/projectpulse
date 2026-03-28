@@ -33,7 +33,12 @@ export default function Home() {
 
   const handleInstall = async () => {
     if (!deferredPrompt) {
-      alert('Install not available. Please use Chrome, Edge, or Safari on mobile.');
+      // Check if already installed
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        alert('App is already installed!');
+      } else {
+        alert('Install not available. Try visiting from your browser menu (Add to Home Screen).');
+      }
       return;
     }
 
