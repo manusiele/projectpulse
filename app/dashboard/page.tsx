@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { IdeaCard } from "@/components/IdeaCard";
 import Link from "next/link";
 import { Loader } from "@/components/Loader";
@@ -53,10 +53,38 @@ export default function DashboardPage() {
   const [likedIdeas, setLikedIdeas] = useState<Set<string>>(new Set());
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
   const [viewedInSession, setViewedInSession] = useState<Set<string>>(new Set());
+
+  // Define domains array
+  const domains = [
+    { name: "Business Management", description: "Small business owners, freelancers, and solopreneurs" },
+    { name: "Career Development", description: "Students, job seekers, and career switchers" },
+    { name: "Content Creation", description: "Content creators, influencers, and digital entrepreneurs" },
+    { name: "Remote Collaboration", description: "Remote teams and distributed startups" },
+    { name: "Health & Wellness", description: "Health-conscious individuals improving fitness and wellbeing" },
+    { name: "Family Management", description: "Parents managing family schedules and children's development" },
+    { name: "Local Services", description: "Service providers like plumbers, electricians, tutors" },
+    { name: "Knowledge Management", description: "Researchers, writers, and knowledge workers" },
+    { name: "E-commerce", description: "E-commerce sellers managing inventory and orders" },
+    { name: "Event Management", description: "Event organizers managing registrations and logistics" },
+    { name: "Nonprofit Management", description: "Nonprofit organizations managing donors and volunteers" },
+    { name: "Property Management", description: "Landlords and property managers" },
+    { name: "Personal Finance", description: "Finance enthusiasts achieving financial independence" },
+    { name: "Agriculture Tech", description: "Agritech innovators and smallholder farmers" },
+    { name: "Mental Health", description: "Mental health professionals managing practices" },
+    { name: "Podcast Production", description: "Podcast creators and audio content producers" },
+    { name: "Game Development", description: "Independent game developers and small studios" },
+    { name: "Legal Services", description: "Legal professionals and small law firms" },
+    { name: "Real Estate", description: "Real estate agents managing listings and clients" },
+    { name: "Restaurant Operations", description: "Restaurant owners and food service managers" },
+    { name: "Fitness Training", description: "Fitness trainers and gym owners" },
+    { name: "Photography & Video", description: "Photographers and videographers" },
+    { name: "Music Education", description: "Music teachers and performing arts instructors" },
+    { name: "Consulting & Coaching", description: "Consultants and coaches delivering services" },
+    { name: "Pet Care Services", description: "Pet care providers including groomers and sitters" },
+  ];
 
   // Calculate thisMonth count
   const thisMonth = ideas.filter((idea) => {
@@ -70,7 +98,7 @@ export default function DashboardPage() {
   // Animated counters
   const animatedAllIdeas = useCountAnimation(ideas.length, 800);
   const animatedThisMonth = useCountAnimation(thisMonth, 800);
-  const animatedDomains = useCountAnimation(25, 800);
+  const animatedDomains = useCountAnimation(domains.length, 800);
 
   // Load liked ideas from localStorage
   useEffect(() => {
@@ -238,13 +266,26 @@ export default function DashboardPage() {
     }
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedIdea(null);
     // Remove idea parameter from URL
     const url = new URL(window.location.href);
     url.searchParams.delete('idea');
     window.history.replaceState({}, '', url.toString());
-  };
+  }, []);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    if (!selectedIdea) return;
+    
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal();
+    };
+    
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [selectedIdea, closeModal]);
+
   const handleShare = async (idea: Idea) => {
     const longUrl = `https://projectpulse-dev.vercel.app/dashboard?idea=${idea.id}`;
     
@@ -420,34 +461,6 @@ export default function DashboardPage() {
 
   const [latest, ...rest] = ideas;
 
-  const domains = [
-    { name: "Business Management", description: "Small business owners, freelancers, and solopreneurs" },
-    { name: "Career Development", description: "Students, job seekers, and career switchers" },
-    { name: "Content Creation", description: "Content creators, influencers, and digital entrepreneurs" },
-    { name: "Remote Collaboration", description: "Remote teams and distributed startups" },
-    { name: "Health & Wellness", description: "Health-conscious individuals improving fitness and wellbeing" },
-    { name: "Family Management", description: "Parents managing family schedules and children's development" },
-    { name: "Local Services", description: "Service providers like plumbers, electricians, tutors" },
-    { name: "Knowledge Management", description: "Researchers, writers, and knowledge workers" },
-    { name: "E-commerce", description: "E-commerce sellers managing inventory and orders" },
-    { name: "Event Management", description: "Event organizers managing registrations and logistics" },
-    { name: "Nonprofit Management", description: "Nonprofit organizations managing donors and volunteers" },
-    { name: "Property Management", description: "Landlords and property managers" },
-    { name: "Personal Finance", description: "Finance enthusiasts achieving financial independence" },
-    { name: "Agriculture Tech", description: "Agritech innovators and smallholder farmers" },
-    { name: "Mental Health", description: "Mental health professionals managing practices" },
-    { name: "Podcast Production", description: "Podcast creators and audio content producers" },
-    { name: "Game Development", description: "Independent game developers and small studios" },
-    { name: "Legal Services", description: "Legal professionals and small law firms" },
-    { name: "Real Estate", description: "Real estate agents managing listings and clients" },
-    { name: "Restaurant Operations", description: "Restaurant owners and food service managers" },
-    { name: "Fitness Training", description: "Fitness trainers and gym owners" },
-    { name: "Photography & Video", description: "Photographers and videographers" },
-    { name: "Music Education", description: "Music teachers and performing arts instructors" },
-    { name: "Consulting & Coaching", description: "Consultants and coaches delivering services" },
-    { name: "Pet Care Services", description: "Pet care providers including groomers and sitters" },
-  ];
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-slate-100 relative overflow-hidden animate-fadeIn">
       {/* LeetCode-inspired animated background */}
@@ -590,14 +603,6 @@ export default function DashboardPage() {
                 </div>
               </div>
             </>
-          )}
-
-          {/* Mobile Backdrop */}
-          {sidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            />
           )}
 
           {/* ── Left Sidebar (Desktop Only) ─────────────────────────────────────────────── */}
@@ -746,7 +751,7 @@ export default function DashboardPage() {
                   <p className="text-sm text-slate-400">25 problem spaces the AI generates ideas from</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {domains.map((domain) => {
+                  {domains.map((domain, index) => {
                     const domainIdeas = ideas.filter(idea => idea.domain === domain.name);
                     return (
                       <div 
@@ -759,7 +764,7 @@ export default function DashboardPage() {
                       >
                         <div className="flex items-start gap-3 mb-3">
                           <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                            <span className="text-sm font-bold text-purple-400">{domains.indexOf(domain) + 1}</span>
+                            <span className="text-sm font-bold text-purple-400">{index + 1}</span>
                           </div>
                           <h3 className="text-base font-semibold text-white leading-tight">{domain.name}</h3>
                         </div>
