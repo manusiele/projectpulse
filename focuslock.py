@@ -395,20 +395,26 @@ def save_idea(raw: str, domain: str = "", problem: dict = None):
             # Count advanced technologies
             advanced_tech = ['kubernetes', 'docker', 'microservices', 'graphql', 'redis', 'elasticsearch', 
                            'kafka', 'rabbitmq', 'terraform', 'aws', 'gcp', 'azure', 'blockchain', 
-                           'machine learning', 'ai', 'neural', 'tensorflow', 'pytorch']
+                           'machine learning', 'ai', 'neural', 'tensorflow', 'pytorch', 'websocket']
             intermediate_tech = ['react', 'vue', 'angular', 'node.js', 'express', 'fastapi', 'django', 
-                               'flask', 'postgresql', 'mongodb', 'prisma', 'nextauth', 'stripe', 
-                               'websocket', 'rest api', 'oauth']
+                               'flask', 'postgresql', 'mongodb', 'prisma', 'nextauth', 'oauth']
+            beginner_tech = ['next.js', 'supabase', 'firebase', 'stripe', 'tailwind', 'vercel', 'netlify']
             
             advanced_count = sum(1 for tech in advanced_tech if tech in stack_text)
             intermediate_count = sum(1 for tech in intermediate_tech if tech in stack_text)
+            beginner_count = sum(1 for tech in beginner_tech if tech in stack_text)
             
+            # More balanced difficulty assignment
             if advanced_count >= 2:
                 entry['difficulty'] = 'expert'
-            elif advanced_count >= 1 or intermediate_count >= 3:
+            elif advanced_count >= 1:
+                entry['difficulty'] = 'expert'
+            elif intermediate_count >= 2:
                 entry['difficulty'] = 'intermediate'
-            else:
+            elif beginner_count >= 2 and intermediate_count == 0:
                 entry['difficulty'] = 'beginner'
+            else:
+                entry['difficulty'] = 'intermediate'
         else:
             # Default to intermediate if no stack info
             entry['difficulty'] = 'intermediate'
