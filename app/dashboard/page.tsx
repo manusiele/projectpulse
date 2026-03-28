@@ -106,6 +106,12 @@ export default function DashboardPage() {
     if (saved) {
       setLikedIdeas(new Set(JSON.parse(saved)));
     }
+    
+    // Load viewed ideas from localStorage
+    const viewedSaved = localStorage.getItem('viewedIdeas');
+    if (viewedSaved) {
+      setViewedInSession(new Set(JSON.parse(viewedSaved)));
+    }
   }, []);
 
   // Auto-refresh: Poll for new ideas every 60 seconds
@@ -172,7 +178,9 @@ export default function DashboardPage() {
         const idea = ideas.find(i => i.id === ideaId);
         if (idea) {
           setSelectedIdea(idea);
-          setViewedInSession(prev => new Set(prev).add(ideaId));
+          const newViewed = new Set(viewedInSession).add(ideaId);
+          setViewedInSession(newViewed);
+          localStorage.setItem('viewedIdeas', JSON.stringify([...newViewed]));
           // Track view
           fetch(`/api/ideas/${ideaId}/view`, { method: 'POST' })
             .then(res => res.json())
@@ -198,8 +206,10 @@ export default function DashboardPage() {
       return;
     }
     
-    // Mark as viewed
-    setViewedInSession(prev => new Set(prev).add(idea.id));
+    // Mark as viewed and persist to localStorage
+    const newViewed = new Set(viewedInSession).add(idea.id);
+    setViewedInSession(newViewed);
+    localStorage.setItem('viewedIdeas', JSON.stringify([...newViewed]));
     
     // Track view with API (no optimistic update to avoid double counting)
     try {
