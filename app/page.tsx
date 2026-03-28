@@ -248,14 +248,14 @@ export default function Home() {
         </section>
 
         {/* ── Stats ───────────────────────────────────────────────────────── */}
-        <section className="grid grid-cols-3 gap-8 mb-32 max-w-3xl mx-auto">
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mb-32 max-w-3xl mx-auto px-4">
           {[
             { value: animatedIdeas, label: "Ideas", sublabel: "Generated" },
             { value: animatedDomains, label: "Domains", sublabel: "Covered" },
             { value: stats.delivery, label: "Delivery", sublabel: "Schedule" },
           ].map((stat) => (
             <div key={stat.label} className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-200">
-              <p className={`text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent ${
+              <p className={`text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent ${
                 stat.label === "Delivery" 
                   ? "font-['Brush_Script_MT','Segoe_Script','Lucida_Handwriting','cursive'] tracking-wide" 
                   : ""
