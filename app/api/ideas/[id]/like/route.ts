@@ -28,9 +28,12 @@ export async function POST(
   const { id } = await params;
   
   try {
+    console.log(`📝 Like request for idea: ${id}`);
+    
     const ip = request.headers.get('x-forwarded-for') || 'unknown';
     
     if (!checkRateLimit(ip)) {
+      console.warn(`⚠️ Rate limit exceeded for IP: ${ip}`);
       return NextResponse.json(
         { error: 'Rate limit exceeded' },
         { status: 429 }
@@ -39,6 +42,7 @@ export async function POST(
     
     // Validate ID format
     if (!id || typeof id !== 'string' || !id.startsWith('idea_')) {
+      console.error(`❌ Invalid idea ID: ${id}`);
       return NextResponse.json(
         { error: 'Invalid idea ID' },
         { status: 400 }
@@ -47,13 +51,14 @@ export async function POST(
     
     // Increment likes in KV store
     const likes = await incrementLikes(id);
+    console.log(`✅ Like successful for ${id}: ${likes} total likes`);
     
     return NextResponse.json({ 
       success: true, 
       likes 
     });
   } catch (error) {
-    console.error('Failed to update likes:', error);
+    console.error('❌ Failed to update likes:', error);
     return NextResponse.json({ error: 'Failed to update likes' }, { status: 500 });
   }
 }

@@ -10,20 +10,30 @@ try {
       url: process.env.KV_REST_API_URL,
       token: process.env.KV_REST_API_TOKEN,
     });
+    console.log('✅ Redis initialized successfully');
+  } else {
+    console.warn('⚠️ Redis environment variables not found:', {
+      hasUrl: !!process.env.KV_REST_API_URL,
+      hasToken: !!process.env.KV_REST_API_TOKEN
+    });
   }
 } catch (err) {
-  console.warn('Redis not configured for local development', err);
+  console.error('❌ Redis initialization failed:', err);
 }
 
 export async function incrementLikes(ideaId: string): Promise<number> {
-  if (!redis) return 0;
+  if (!redis) {
+    console.warn('⚠️ Redis not available, returning 0 for likes');
+    return 0;
+  }
   
   try {
     const key = `idea:${ideaId}:likes`;
     const likes = await redis.incr(key);
+    console.log(`✅ Incremented likes for ${ideaId}: ${likes}`);
     return likes;
   } catch (error) {
-    console.error('Redis error:', error);
+    console.error('❌ Redis error incrementing likes:', error);
     return 0;
   }
 }
@@ -42,27 +52,35 @@ export async function decrementLikes(ideaId: string): Promise<number> {
 }
 
 export async function incrementShares(ideaId: string): Promise<number> {
-  if (!redis) return 0;
+  if (!redis) {
+    console.warn('⚠️ Redis not available, returning 0 for shares');
+    return 0;
+  }
   
   try {
     const key = `idea:${ideaId}:shares`;
     const shares = await redis.incr(key);
+    console.log(`✅ Incremented shares for ${ideaId}: ${shares}`);
     return shares;
   } catch (error) {
-    console.error('Redis error:', error);
+    console.error('❌ Redis error incrementing shares:', error);
     return 0;
   }
 }
 
 export async function incrementViews(ideaId: string): Promise<number> {
-  if (!redis) return 0;
+  if (!redis) {
+    console.warn('⚠️ Redis not available, returning 0 for views');
+    return 0;
+  }
   
   try {
     const key = `idea:${ideaId}:views`;
     const views = await redis.incr(key);
+    console.log(`✅ Incremented views for ${ideaId}: ${views}`);
     return views;
   } catch (error) {
-    console.error('Redis error:', error);
+    console.error('❌ Redis error incrementing views:', error);
     return 0;
   }
 }

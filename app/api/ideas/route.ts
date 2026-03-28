@@ -5,15 +5,19 @@ import { getAllCounts } from '@/lib/kv';
 
 export async function GET() {
   try {
+    console.log('📊 Fetching ideas from file system...');
     const filePath = path.join(process.cwd(), 'data', 'ideas.json');
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const ideas = JSON.parse(fileContents);
+    console.log(`✅ Loaded ${ideas.length} ideas from file`);
     
     // Get all idea IDs
     const ideaIds = ideas.map((idea: { id: string }) => idea.id);
     
     // Fetch counts from KV store
+    console.log('🔄 Fetching engagement counts from Redis...');
     const counts = await getAllCounts(ideaIds);
+    console.log(`✅ Fetched counts for ${Object.keys(counts).length} ideas`);
     
     // Merge counts with ideas
     const ideasWithCounts = ideas.map((idea: { id: string; likes?: number; shares?: number; views?: number }) => ({
@@ -30,13 +34,15 @@ export async function GET() {
       return new Date(dateB).getTime() - new Date(dateA).getTime();
     });
     
+    console.log(`✅ Returning ${sortedIdeas.length} ideas with engagement data`);
+    
     return NextResponse.json(sortedIdeas, {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate'
       }
     });
   } catch (error) {
-    console.error('Failed to read ideas:', error);
+    console.error('❌ Failed to read ideas:', error);
     return NextResponse.json([], { status: 500 });
   }
 }
