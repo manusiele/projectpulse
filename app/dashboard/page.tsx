@@ -80,7 +80,7 @@ export default function DashboardPage() {
     }
   }, []);
 
-  // Auto-refresh: Poll for new ideas every 30 seconds
+  // Auto-refresh: Poll for new ideas every 60 seconds
   useEffect(() => {
     const pollInterval = setInterval(async () => {
       try {
@@ -90,41 +90,40 @@ export default function DashboardPage() {
           const freshIdeas = await response.json();
           
           // Check if there's a new idea (compare first idea ID)
-          if (ideas.length > 0 && freshIdeas.length > 0) {
-            const latestOldId = ideas[0].id;
-            const latestNewId = freshIdeas[0].id;
-            
-            if (latestOldId !== latestNewId) {
-              // New idea detected!
-              const newIdea = freshIdeas[0];
+          setIdeas(prevIdeas => {
+            if (prevIdeas.length > 0 && freshIdeas.length > 0) {
+              const latestOldId = prevIdeas[0].id;
+              const latestNewId = freshIdeas[0].id;
               
-              // Show notification if permission granted
-              if ('Notification' in window && Notification.permission === 'granted') {
-                const notification = new Notification('🚀 New ProjectPulse Idea!', {
-                  body: newIdea.projectName || 'A fresh project idea just arrived',
-                  icon: '/icon-192.png',
-                  badge: '/icon-192.png',
-                  tag: 'new-idea',
-                  requireInteraction: false,
-                  data: { ideaId: newIdea.id }
-                });
+              if (latestOldId !== latestNewId) {
+                // New idea detected!
+                const newIdea = freshIdeas[0];
                 
-                notification.onclick = () => {
-                  window.focus();
-                  setSelectedIdea(newIdea);
-                  notification.close();
-                };
+                // Show notification if permission granted
+                if ('Notification' in window && Notification.permission === 'granted') {
+                  const notification = new Notification('🚀 New ProjectPulse Idea!', {
+                    body: newIdea.projectName || 'A fresh project idea just arrived',
+                    icon: '/icon-192.png',
+                    badge: '/icon-192.png',
+                    tag: 'new-idea',
+                  });
+                  
+                  notification.onclick = () => {
+                    window.focus();
+                    setSelectedIdea(newIdea);
+                    notification.close();
+                  };
+                }
+                
+                // Show toast notification
+                setToastMessage('🎉 New idea available!');
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 5000);
               }
-              
-              // Show toast notification
-              setToastMessage('🎉 New idea available!');
-              setShowToast(true);
-              setTimeout(() => setShowToast(false), 5000);
             }
-          }
-          
-          // Update with fresh data (includes global counts from KV)
-          setIdeas(freshIdeas);
+            
+            return freshIdeas;
+          });
         }
       } catch (error) {
         console.error('Failed to refresh ideas:', error);
@@ -134,7 +133,7 @@ export default function DashboardPage() {
     }, 60000); // Poll every 60 seconds
 
     return () => clearInterval(pollInterval);
-  }, [ideas]);
+  }, []); // Empty deps - only run once
 
   // Check URL for shared idea parameter and track view
   useEffect(() => {
