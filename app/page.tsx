@@ -11,13 +11,54 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+// Counter animation hook
+function useCountAnimation(target: number, duration: number = 1200) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (target === 0) {
+      setCount(0);
+      return;
+    }
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuad = (t: number) => t * (2 - t);
+      const currentCount = Math.floor(easeOutQuad(progress) * target);
+      
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [target, duration]);
+
+  return count;
+}
+
 export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [stats, setStats] = useState({
-    totalIdeas: "27",
-    domains: "15",
+    totalIdeas: 27,
+    domains: 25,
     delivery: "Daily"
   });
+
+  // Animated counters
+  const animatedIdeas = useCountAnimation(stats.totalIdeas, 1200);
+  const animatedDomains = useCountAnimation(stats.domains, 1200);
 
   useEffect(() => {
     // Capture the install prompt event
@@ -61,8 +102,8 @@ export default function Home() {
           const ideas = await response.json();
           const uniqueDomains = new Set(ideas.map((idea: { domain: string }) => idea.domain).filter(Boolean));
           setStats({
-            totalIdeas: ideas.length.toString(),
-            domains: uniqueDomains.size.toString(),
+            totalIdeas: ideas.length,
+            domains: uniqueDomains.size,
             delivery: "Daily"
           });
         }
@@ -209,8 +250,8 @@ export default function Home() {
         {/* ── Stats ───────────────────────────────────────────────────────── */}
         <section className="grid grid-cols-3 gap-8 mb-32 max-w-3xl mx-auto">
           {[
-            { value: stats.totalIdeas, label: "Ideas", sublabel: "Generated" },
-            { value: stats.domains, label: "Domains", sublabel: "Covered" },
+            { value: animatedIdeas, label: "Ideas", sublabel: "Generated" },
+            { value: animatedDomains, label: "Domains", sublabel: "Covered" },
             { value: stats.delivery, label: "Delivery", sublabel: "Schedule" },
           ].map((stat) => (
             <div key={stat.label} className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-200">
