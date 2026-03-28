@@ -56,6 +56,7 @@ export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
+  const [viewedInSession, setViewedInSession] = useState<Set<string>>(new Set());
 
   // Calculate thisMonth count
   const thisMonth = ideas.filter((idea) => {
@@ -140,14 +141,16 @@ export default function DashboardPage() {
     if (ideas.length > 0) {
       const params = new URLSearchParams(window.location.search);
       const ideaId = params.get('idea');
-      if (ideaId) {
+      if (ideaId && !viewedInSession.has(ideaId)) {
         const idea = ideas.find(i => i.id === ideaId);
         if (idea) {
           setSelectedIdea(idea);
+          setViewedInSession(prev => new Set(prev).add(ideaId));
           // Track view
           fetch(`/api/ideas/${ideaId}/view`, { method: 'POST' })
             .then(res => res.json())
             .then(data => {
+              console.log(`Shared view tracked: ${data.views}`);
               // Update view count in state
               setIdeas(prevIdeas => prevIdeas.map(i => 
                 i.id === ideaId ? { ...i, views: data.views } : i
@@ -157,27 +160,30 @@ export default function DashboardPage() {
         }
       }
     }
-  }, [ideas]);
+  }, [ideas, viewedInSession]);
 
   const handleView = async (idea: Idea) => {
     setSelectedIdea(idea);
     
-    // Optimistically increment view count
-    setIdeas(prevIdeas => prevIdeas.map(i => 
-      i.id === idea.id ? { ...i, views: (i.views || 0) + 1 } : i
-    ));
+    // Prevent duplicate tracking in same session
+    if (viewedInSession.has(idea.id)) {
+      console.log(`Already viewed ${idea.id} in this session`);
+      return;
+    }
     
-    // Track view with API
+    // Mark as viewed
+    setViewedInSession(prev => new Set(prev).add(idea.id));
+    
+    // Track view with API (no optimistic update to avoid double counting)
     try {
       const response = await fetch(`/api/ideas/${idea.id}/view`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
-        // Only update if server returned a non-zero count (Redis is configured)
-        if (data.views > 0) {
-          setIdeas(prevIdeas => prevIdeas.map(i => 
-            i.id === idea.id ? { ...i, views: data.views } : i
-          ));
-        }
+        console.log(`View tracked: ${data.views}`);
+        // Update with actual server count
+        setIdeas(prevIdeas => prevIdeas.map(i => 
+          i.id === idea.id ? { ...i, views: data.views } : i
+        ));
       }
     } catch (error) {
       console.error('Failed to track view:', error);
