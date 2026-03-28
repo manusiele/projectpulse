@@ -630,5 +630,25 @@
     "views": 50,
     "likes": 2,
     "shares": 0
+  },
+  {
+    "id": "idea_1743148200",
+    "createdAt": "2026-03-28T07:50:00Z",
+    "domain": "Pet Care Services",
+    "projectName": "PetCareHub",
+    "description": "A comprehensive platform for pet care professionals that handles scheduling with calendar sync, pet profiles with medical records and special instructions, owner communication with automated reminders, and payment processing with invoicing. Features include emergency contact management, vaccination tracking, grooming history, behavioral notes, and photo galleries for each pet. Mobile app ensures providers can access pet information and update records from anywhere.",
+    "stack": "Next.js, Supabase, Stripe, Twilio, Tailwind CSS",
+    "deploy": "Vercel + Supabase",
+    "who": "Pet care providers including groomers, sitters, and trainers",
+    "pain": "They manually manage bookings, pet profiles, owner communications, medical records, and payments. Emergency contacts and special instructions get lost.",
+    "gap": "There's no comprehensive platform for pet care professionals that handles scheduling, pet records, owner communication, and payment processing.",
+    "impact": "They risk pet safety from lost information, lose bookings due to poor organization, struggle with payment collection, and can't scale their services.",
+    "whyNow": "Pet care industry growing rapidly with increased pet ownership post-pandemic and demand for professional services",
+    "potential": "Could capture significant market share in the $100B+ pet care industry by providing essential business tools",
+    "raw": "Project Name: PetCareHub\n\nDescription: A comprehensive platform for pet care professionals that handles scheduling, pet profiles, owner communication, and payment processing.\n\nStack: Next.js, Supabase, Stripe, Twilio, Tailwind CSS\n\nDeploy: Vercel + Supabase\n\nWhy Now: Pet care industry growing rapidly with increased pet ownership post-pandemic\n\nPotential: Could capture significant market share in the $100B+ pet care industry",
+    "difficulty": "intermediate",
+    "views": 0,
+    "likes": 0,
+    "shares": 0
   }
 ]
