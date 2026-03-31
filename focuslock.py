@@ -35,7 +35,7 @@ if os.path.exists(IDEAS_FILE):
 else:
     ideas_store = []
 
-# Universal problem domains
+# Universal problem domains - optimized for startup idea generation (2026)
 PROBLEM_DOMAINS = [
     {
         "who": "Small business owners, freelancers, and solopreneurs trying to grow their ventures",
@@ -44,148 +44,150 @@ PROBLEM_DOMAINS = [
         "impact": "They lose revenue through poor cash flow visibility, waste 10+ hours weekly on admin tasks, miss growth opportunities due to disorganization, and risk business failure from financial mismanagement."
     },
     {
-        "who": "Students, job seekers, and career switchers trying to break into tech or advance their skills",
-        "pain": "They're overwhelmed by scattered learning resources, unclear career paths, and the gap between online courses and real-world skills. Building portfolios feels impossible without guidance, and job applications disappear into black holes.",
-        "gap": "There's no personalized learning system that combines skill tracking, project guidance, portfolio building, and job matching based on actual capabilities and market demand.",
-        "impact": "They waste months learning irrelevant skills, struggle to prove competence to employers, miss job opportunities due to poor portfolio presentation, and remain stuck in low-paying roles."
+        "who": "Sales teams, marketers, and founders trying to generate and convert leads consistently",
+        "pain": "They manually track prospects across spreadsheets, struggle with follow-up timing, can't personalize outreach at scale, and have no visibility into what messaging actually converts. Lead scoring is guesswork, pipeline forecasting is inaccurate, and most leads go cold from poor nurturing.",
+        "gap": "There's no intelligent sales platform that automates personalized outreach, scores leads based on behavior, optimizes follow-up timing, and provides clear attribution from first touch to closed deal.",
+        "impact": "They waste 60% of leads through poor follow-up, spend hours on manual data entry, miss revenue targets due to inaccurate forecasting, and can't identify which marketing channels actually drive sales."
+    },
+
+    {
+        "who": "Content creators, influencers, YouTubers, and TikTokers trying to grow and monetize their audience",
+        "pain": "They struggle to maintain consistent posting schedules, analyze what content works, manage multiple platforms, and turn engagement into revenue. Content ideas dry up, analytics are confusing, brand deals are hard to find, and monetization feels like guesswork.",
+        "gap": "There's no intelligent creator platform that generates content ideas based on trends, optimizes posting schedules, tracks cross-platform performance, connects with brand partnerships, and recommends diversified monetization strategies.",
+        "impact": "They lose followers due to inconsistent posting, waste effort on low-performing content, miss viral opportunities and brand deals, and struggle to convert audience into sustainable full-time income."
     },
     {
-        "who": "Content creators, influencers, and digital entrepreneurs building online presence",
-        "pain": "They struggle to maintain consistent posting schedules, analyze what content works, manage multiple platforms, and turn engagement into revenue. Content ideas dry up, analytics are confusing, and monetization feels like guesswork.",
-        "gap": "There's no intelligent system that generates content ideas based on trends, optimizes posting schedules, tracks cross-platform performance, and recommends monetization strategies.",
-        "impact": "They lose followers due to inconsistent posting, waste effort on low-performing content, miss viral opportunities, and struggle to convert audience into sustainable income."
+        "who": "Indie developers, software engineers, and small dev teams building products and tools",
+        "pain": "They waste time on repetitive boilerplate code, struggle with deployment complexity, can't afford expensive dev tools, and have no clear path from idea to production. Code reviews are inconsistent, testing is manual, and technical debt piles up while trying to ship features.",
+        "gap": "There's no affordable, integrated development platform that automates boilerplate generation, provides intelligent code review, handles deployment complexity, and helps solo developers maintain production-quality standards.",
+        "impact": "They spend 40% of time on non-feature work, ship buggy code due to lack of review, struggle with scaling issues, and burn out trying to maintain quality while moving fast."
     },
     {
-        "who": "Remote teams, distributed startups, and async-first companies trying to stay aligned",
-        "pain": "They drown in endless Slack messages, meetings that could be emails, scattered documentation, and timezone chaos. Important decisions get lost in chat history, onboarding new members takes weeks, and project context evaporates.",
-        "gap": "There's no async-first platform that captures decisions, maintains living documentation, surfaces relevant context automatically, and keeps everyone aligned without synchronous meetings.",
-        "impact": "They waste hours in unnecessary meetings, duplicate work due to poor knowledge sharing, struggle with employee retention, and move too slowly to compete with faster teams."
+        "who": "E-commerce sellers, D2C brands, and online store owners managing inventory and orders across platforms",
+        "pain": "They manually track stock across marketplaces, respond to customer queries on multiple channels, struggle with shipping logistics, have no clear view of profitability per product, and can't predict inventory needs accurately.",
+        "gap": "There's no unified commerce dashboard that syncs inventory in real-time across all channels, centralizes customer communication, automates routine responses, provides clear profit analytics, and predicts optimal stock levels.",
+        "impact": "They oversell products causing customer complaints, waste hours on repetitive messages, lose money on unprofitable items, face cash flow issues from poor inventory planning, and can't scale without hiring expensive help."
     },
     {
-        "who": "Health-conscious individuals trying to improve fitness, nutrition, and mental wellbeing",
-        "pain": "They're lost in conflicting diet advice, can't stick to workout plans, track progress inconsistently, and ignore mental health until crisis hits. Generic apps don't adapt to their lifestyle, and personal trainers are too expensive.",
-        "gap": "There's no adaptive wellness system that combines personalized nutrition, progressive fitness plans, mental health check-ins, and habit formation based on individual goals and constraints.",
-        "impact": "They waste money on ineffective programs, yo-yo between fitness phases, develop health problems from neglect, and feel constant guilt about unmet wellness goals."
+        "who": "Students, teachers, corporate trainers, and lifelong learners trying to acquire and teach skills effectively",
+        "pain": "They're overwhelmed by scattered learning resources, can't track progress meaningfully, struggle with engagement in online learning, and have no way to verify actual skill mastery. Teachers can't personalize at scale, and learners don't know what to learn next.",
+        "gap": "There's no adaptive learning platform that personalizes content based on learning style, tracks true skill mastery (not just completion), provides AI tutoring, and recommends optimal learning paths based on career goals and market demand.",
+        "impact": "They waste months on ineffective learning methods, struggle with retention and application, can't prove competence to employers, and teachers burn out trying to personalize for every student."
     },
     {
-        "who": "Parents managing family schedules, finances, and children's development",
-        "pain": "They coordinate school activities, medical appointments, meal planning, and budgets across multiple apps while trying to track kids' academic progress and emotional wellbeing. Everything feels urgent and nothing gets the attention it deserves.",
-        "gap": "There's no family operating system that centralizes schedules, automates routine planning, tracks child development milestones, and provides gentle reminders for important tasks.",
-        "impact": "They miss important appointments, feel constantly overwhelmed, struggle with work-life balance, and worry they're failing their children due to disorganization."
+        "who": "Health-conscious individuals, fitness enthusiasts, and wellness seekers trying to improve their physical and mental wellbeing",
+        "pain": "They're lost in conflicting diet advice, can't stick to workout plans, track progress inconsistently across multiple apps, and ignore mental health until crisis hits. Generic fitness apps don't adapt to their lifestyle, injuries, or preferences, and personal trainers are too expensive.",
+        "gap": "There's no adaptive wellness system that combines personalized nutrition based on biometrics, progressive fitness plans that adjust to performance, mental health check-ins, sleep optimization, and sustainable habit formation based on individual goals and real-life constraints.",
+        "impact": "They waste money on ineffective programs and supplements, yo-yo between fitness phases, develop chronic health problems from neglect, and feel constant guilt and anxiety about unmet wellness goals."
     },
     {
-        "who": "Local service providers (plumbers, electricians, tutors, cleaners) trying to find and retain clients",
-        "pain": "They rely on word-of-mouth, struggle with online visibility, lack professional booking systems, and lose clients to more tech-savvy competitors. Marketing feels too expensive and complicated.",
-        "gap": "There's no local services platform that handles discovery, booking, payments, and review management specifically designed for service professionals without technical skills.",
-        "impact": "They remain dependent on expensive middleman platforms, struggle with irregular income, miss potential clients, and can't scale beyond their immediate network."
+        "who": "Individuals struggling with anxiety, depression, stress, and therapists managing client care",
+        "pain": "They can't afford traditional therapy, wait weeks for appointments, struggle to find the right therapist match, and have no support between sessions. Therapists juggle HIPAA-compliant notes, scheduling, billing, and client progress tracking across disconnected systems.",
+        "gap": "There's no accessible mental health platform that provides AI-powered daily check-ins, matches users with therapists based on needs and communication style, offers affordable between-session support, and helps therapists manage practice operations compliantly.",
+        "impact": "They suffer in silence due to cost and access barriers, experience crisis without support, and therapists burn out from administrative burden while serving fewer people than they could."
     },
     {
-        "who": "Researchers, writers, and knowledge workers managing information overload",
-        "pain": "They save articles, papers, and notes across browsers, apps, and devices but can never find them when needed. Connecting ideas is manual, citations are a nightmare, and synthesizing research takes forever.",
-        "gap": "There's no intelligent knowledge management system that automatically organizes sources, surfaces connections, generates summaries, and helps transform research into original writing.",
-        "impact": "They waste hours re-finding information, struggle with writer's block, miss important connections between ideas, and produce lower-quality work than their research deserves."
+        "who": "Personal finance enthusiasts, young professionals, and investors trying to build wealth and achieve financial independence",
+        "pain": "They track expenses manually across accounts, can't visualize long-term financial goals, struggle to optimize investments and tax strategies, miss savings opportunities, and feel anxious about retirement readiness. Financial advisors are expensive and generic robo-advisors lack personalization.",
+        "gap": "There's no holistic AI financial coach that aggregates all accounts, projects retirement scenarios with real-time adjustments, recommends tax optimizations, identifies wasteful spending patterns, and provides personalized wealth-building strategies based on income, goals, and risk tolerance.",
+        "impact": "They miss wealth-building opportunities, pay thousands in unnecessary taxes, make suboptimal investment decisions, feel constant anxiety about money, and risk not achieving financial independence."
     },
     {
-        "who": "E-commerce sellers managing inventory, orders, and customer service across platforms",
-        "pain": "They manually track stock across marketplaces, respond to customer queries on multiple channels, struggle with shipping logistics, and have no clear view of profitability per product.",
-        "gap": "There's no unified commerce dashboard that syncs inventory in real-time, centralizes customer communication, automates routine responses, and provides clear profit analytics.",
-        "impact": "They oversell products causing customer complaints, waste hours on repetitive messages, lose money on unprofitable items, and can't scale without hiring expensive help."
+        "who": "Green businesses, eco-conscious consumers, and companies trying to reduce environmental impact",
+        "pain": "They want to make sustainable choices but can't verify claims, struggle to measure carbon footprint accurately, find sustainable alternatives expensive or hard to source, and have no clear path to carbon neutrality. Greenwashing makes trust impossible.",
+        "gap": "There's no transparent sustainability platform that verifies environmental claims, calculates accurate carbon footprints, recommends cost-effective sustainable alternatives, connects buyers with verified green suppliers, and tracks progress toward climate goals.",
+        "impact": "They unknowingly support greenwashing, overpay for fake sustainability, can't prove environmental impact to stakeholders, miss cost savings from efficiency, and contribute to climate crisis despite good intentions."
     },
     {
-        "who": "Event organizers managing registrations, communications, and logistics for gatherings",
-        "pain": "They cobble together registration forms, email lists, payment collection, and attendee communication using disconnected tools. Last-minute changes become nightmares, and attendee engagement drops off after registration.",
-        "gap": "There's no end-to-end event platform that handles registration, automated reminders, attendee networking, real-time updates, and post-event follow-up in one place.",
-        "impact": "They lose attendees to poor communication, struggle with low engagement, waste hours on manual coordination, and can't build community beyond single events."
+        "who": "Parents, caregivers, and families managing household operations, children's development, and family wellbeing",
+        "pain": "They coordinate school activities, medical appointments, meal planning, and budgets across multiple apps while trying to track kids' academic progress, screen time, and emotional wellbeing. Everything feels urgent, nothing gets proper attention, and guilt is constant.",
+        "gap": "There's no family operating system that centralizes schedules, automates meal planning and grocery lists, tracks child development milestones, manages shared expenses, and provides age-appropriate activity recommendations based on each child's interests and development stage.",
+        "impact": "They miss important appointments and milestones, feel constantly overwhelmed and guilty, struggle with work-life balance, waste money on duplicate purchases, and worry they're failing their children due to disorganization."
     },
     {
-        "who": "Nonprofit organizations trying to manage donors, volunteers, and impact tracking",
-        "pain": "They manually track donations in spreadsheets, struggle to engage volunteers consistently, can't demonstrate impact to funders, and spend too much time on admin instead of mission work.",
-        "gap": "There's no affordable nonprofit management system that combines donor CRM, volunteer coordination, impact measurement, and automated reporting for grant applications.",
-        "impact": "They lose donors due to poor engagement, struggle to secure funding without clear impact data, burn out volunteers with disorganization, and ultimately serve fewer people."
+        "who": "Travelers, digital nomads, hotels, and tour operators trying to plan and deliver better travel experiences",
+        "pain": "They spend hours researching destinations across scattered sources, can't find authentic local experiences, struggle with language barriers and logistics, and have no personalized recommendations. Hotels and tour operators can't compete with big platforms and lose direct bookings.",
+        "gap": "There's no intelligent travel platform that provides AI-powered personalized itineraries, connects travelers with verified local guides, handles real-time translation and logistics, and helps small hospitality businesses compete with OTAs through direct booking tools.",
+        "impact": "They waste vacation time on poor planning, miss authentic experiences, overpay for tourist traps, and small hospitality businesses lose 20-30% revenue to platform commissions."
     },
     {
-        "who": "Landlords and property managers handling multiple rental properties",
-        "pain": "They manually track rent payments, maintenance requests pile up in texts and emails, tenant screening is time-consuming, and financial reporting for taxes is a mess.",
-        "gap": "There's no simple property management system that automates rent collection, centralizes maintenance tracking, screens tenants, and generates financial reports automatically.",
-        "impact": "They lose income from missed payments, face tenant complaints due to slow maintenance, make bad tenant choices, and panic during tax season with incomplete records."
+        "who": "Real estate agents, property investors, landlords, and homebuyers navigating property transactions",
+        "pain": "They juggle property listings, client communications, market analysis, document signing, and lead generation across disconnected platforms. Leads fall through cracks, market timing is guesswork, and property management is chaotic with maintenance requests in texts and emails.",
+        "gap": "There's no unified proptech platform that combines listing management, AI-powered market analysis, client CRM, digital document handling, automated rent collection, maintenance tracking, and predictive analytics for property investment decisions.",
+        "impact": "They lose deals to more organized competitors, miss optimal buying/selling windows, waste time on manual follow-ups, lose rental income from poor management, and make costly investment mistakes from incomplete market data."
     },
     {
-        "who": "Personal finance enthusiasts trying to achieve financial independence and smart investing",
-        "pain": "They track expenses manually, can't visualize long-term financial goals, struggle to optimize investments across accounts, and miss tax-saving opportunities due to complexity.",
-        "gap": "There's no holistic financial dashboard that aggregates all accounts, projects retirement scenarios, recommends optimizations, and identifies tax strategies automatically.",
-        "impact": "They miss wealth-building opportunities, pay unnecessary taxes, feel anxious about retirement readiness, and make suboptimal financial decisions from incomplete information."
+        "who": "E-commerce businesses, distributors, and small logistics companies managing supply chain and deliveries",
+        "pain": "They manually coordinate shipments across carriers, have no real-time visibility into inventory location, struggle with route optimization, face unexpected delays without proactive alerts, and can't accurately predict delivery times to customers.",
+        "gap": "There's no affordable logistics platform that provides real-time tracking across all carriers, optimizes routes using AI, predicts delays before they happen, automates carrier selection based on cost and speed, and integrates seamlessly with e-commerce platforms.",
+        "impact": "They waste 20-30% on inefficient routing, lose customers due to poor delivery experience, can't scale operations, face cash flow issues from inventory visibility gaps, and spend hours on manual coordination."
     },
     {
-        "who": "Agritech innovators, smallholder farmers, and agrotech startups trying to modernize agriculture",
-        "pain": "They wrestle with unpredictable weather, market price volatility, limited access to quality inputs, poor supply chain visibility, and lack of data to make informed planting decisions.",
-        "gap": "There's no integrated platform that combines weather forecasts, market prices, input sourcing, farm management, and direct buyer connections for small-scale farmers.",
-        "impact": "They lose entire harvests to preventable issues, sell crops below market rate, struggle with food security, and remain trapped in subsistence farming instead of profitable agribusiness."
+        "who": "Smallholder farmers, agribusinesses, and agritech startups trying to modernize agriculture and improve yields",
+        "pain": "They wrestle with unpredictable weather, market price volatility, limited access to quality inputs, poor supply chain visibility, lack of data for informed planting decisions, and can't access credit due to lack of records. Pest and disease detection happens too late.",
+        "gap": "There's no integrated agritech platform that combines AI weather forecasts, real-time market prices, input sourcing, farm management with IoT sensors, pest/disease detection via image recognition, yield prediction, and direct buyer connections for small-scale farmers.",
+        "impact": "They lose 30-40% of harvests to preventable issues, sell crops below market rate due to poor timing, struggle with food security, remain trapped in subsistence farming, and can't access growth capital."
+    },
+
+    {
+        "who": "Restaurant owners, cloud kitchens, and food service managers trying to run profitable operations",
+        "pain": "They struggle with inventory management leading to food waste, staff scheduling chaos, online orders from multiple platforms, table reservations, customer feedback scattered everywhere, and have no clear view of dish profitability. Menu pricing is guesswork.",
+        "gap": "There's no affordable, integrated restaurant management system that handles inventory with waste tracking, smart staff scheduling, unified online ordering, reservation management, customer engagement, and provides clear profitability analytics per dish.",
+        "impact": "They lose 20-30% revenue through food waste and theft, poor scheduling costs thousands monthly, miss online orders, can't compete with chain efficiency, and make menu decisions that hurt profitability."
     },
     {
-        "who": "Mental health professionals managing clients, notes, billing, and compliance",
-        "pain": "They juggle HIPAA-compliant note-taking, appointment scheduling, insurance billing, and client progress tracking across multiple systems while trying to provide quality care.",
-        "gap": "There's no affordable, compliant practice management system designed specifically for solo therapists and small mental health practices that handles all aspects of practice management.",
-        "impact": "They waste therapy time on admin work, risk compliance violations, lose revenue to billing errors, and burn out trying to manage business operations alongside clinical work."
+        "who": "Brick-and-mortar stores, retail chains, and omnichannel retailers trying to compete with e-commerce",
+        "pain": "They struggle with inventory visibility across locations, can't offer seamless online-to-offline experiences, lack customer data compared to online competitors, and have no tools for personalized in-store experiences. Foot traffic is declining but they don't know why.",
+        "gap": "There's no affordable retail platform that unifies inventory across all channels, enables buy-online-pickup-in-store, provides customer analytics comparable to e-commerce, and offers tools for personalized in-store experiences using mobile technology.",
+        "impact": "They lose customers to pure e-commerce players, waste money on poor inventory allocation, can't compete on customer experience, and risk business closure as foot traffic declines."
     },
     {
-        "who": "Podcast creators and audio content producers trying to grow their audience",
-        "pain": "They struggle with editing, transcription, show notes creation, distribution across platforms, audience analytics, and monetization. Each episode requires hours of post-production work.",
-        "gap": "There's no unified platform that automates podcast workflow from recording to distribution while providing actionable audience insights and monetization tools.",
-        "impact": "They burn out from manual editing, miss sponsorship opportunities, can't track what content resonates, and struggle to grow beyond their initial audience."
+        "who": "HR teams, recruiters, and growing companies trying to find, hire, and retain top talent",
+        "pain": "They manually screen hundreds of resumes, struggle to assess cultural fit, can't track candidate experience, lose top talent to slow hiring processes, and have no data on what makes employees stay or leave. Onboarding is chaotic and retention is guesswork.",
+        "gap": "There's no intelligent talent platform that automates resume screening with AI, assesses cultural fit through behavioral analysis, tracks candidate experience, speeds up hiring with automated scheduling, and predicts flight risk while recommending retention strategies.",
+        "impact": "They lose top candidates to faster competitors, waste thousands on bad hires, struggle with high turnover, can't scale hiring, and have no insight into why good people leave."
     },
     {
-        "who": "Independent game developers and small studios creating games",
-        "pain": "They face challenges with asset management, version control, playtesting coordination, bug tracking, and marketing. Limited resources mean wearing too many hats.",
-        "gap": "There's no affordable, integrated development environment specifically designed for indie game creators that combines project management, testing, and marketing tools.",
-        "impact": "They miss launch deadlines, ship buggy games, struggle with visibility in crowded marketplaces, and often abandon projects due to overwhelming complexity."
+        "who": "Lawyers, small law firms, and legal freelancers managing cases, clients, and compliance",
+        "pain": "They manually track case deadlines across multiple courts, client communications are scattered, billable hours go unrecorded, document versions are chaos, and missing a single deadline can mean malpractice. Legal research is time-consuming and expensive.",
+        "gap": "There's no affordable, bar-compliant case management system for solo practitioners that automates deadline tracking with court calendar integration, captures billable time automatically, manages documents with version control, and provides AI-powered legal research.",
+        "impact": "They risk malpractice and bar complaints from missed deadlines, lose 20-30% revenue from unbilled hours, waste hours on admin work, pay thousands for legal research, and can't scale their practice."
     },
     {
-        "who": "Legal professionals and small law firms managing cases and clients",
-        "pain": "They manually track case deadlines, client communications, billable hours, and document versions across disconnected systems. Missing a deadline can mean malpractice.",
-        "gap": "There's no affordable, compliant case management system for solo practitioners that automates deadline tracking, time billing, and client communication.",
-        "impact": "They risk malpractice from missed deadlines, lose revenue from unbilled hours, waste time on admin work, and struggle to scale their practice."
+        "who": "Consultants, coaches, agencies, and professional service providers delivering expertise to multiple clients",
+        "pain": "They struggle with session scheduling across timezones, client onboarding is manual and inconsistent, progress tracking is scattered, resource delivery is ad-hoc, invoicing is delayed, and they can't demonstrate clear ROI. Each client relationship requires repetitive manual management.",
+        "gap": "There's no unified platform for service-based professionals that automates the entire client lifecycle from lead to onboarding to delivery to invoicing, tracks outcomes and ROI automatically, and provides client portals for self-service.",
+        "impact": "They can't scale beyond 10-15 clients, waste 15+ hours weekly on repetitive admin tasks, struggle to demonstrate value leading to churn, lose revenue from delayed invoicing, and burn out from manual client management."
     },
     {
-        "who": "Real estate agents managing multiple property listings and clients",
-        "pain": "They juggle property showings, client follow-ups, document signing, market analysis, and lead generation across multiple platforms. Leads fall through cracks.",
-        "gap": "There's no unified CRM designed specifically for real estate that combines listing management, client communication, document handling, and market insights.",
-        "impact": "They lose deals to more organized competitors, waste time on manual follow-ups, miss market opportunities, and can't scale beyond a handful of clients."
+        "who": "Small businesses, freelancers, and individuals trying to protect themselves from cyber threats and data breaches",
+        "pain": "They don't know where their vulnerabilities are, can't afford enterprise security tools, struggle with password management, have no backup strategy, and don't understand compliance requirements. One breach could destroy their business or reputation.",
+        "gap": "There's no affordable, automated cybersecurity platform for non-technical users that continuously scans for vulnerabilities, manages passwords and 2FA, automates backups, monitors for breaches, and provides clear compliance guidance.",
+        "impact": "They lose everything to ransomware attacks, face lawsuits from data breaches, waste thousands recovering from incidents, lose customer trust permanently, and risk business closure from a single security failure."
     },
     {
-        "who": "Restaurant owners and food service managers handling operations",
-        "pain": "They struggle with inventory management, staff scheduling, online orders, table reservations, and customer feedback across multiple systems. Food waste and labor costs spiral.",
-        "gap": "There's no affordable, integrated restaurant management system that handles operations, online presence, and customer engagement in one platform.",
-        "impact": "They lose money through food waste, poor scheduling, missed online orders, and can't compete with chain restaurants' operational efficiency."
+        "who": "Photographers, videographers, designers, and creative agencies managing projects and client deliverables",
+        "pain": "They juggle client inquiries, project briefs, asset management, editing workflows, revision requests, file delivery, and invoicing across disconnected tools. Creative feedback is scattered, version control is chaos, and clients don't understand the creative process.",
+        "gap": "There's no unified creative operations platform that handles client onboarding, brief management, asset organization with AI tagging, collaborative editing with structured feedback, automated file delivery, and streamlined invoicing.",
+        "impact": "They lose bookings due to slow responses, waste hours searching for assets, struggle with endless revision cycles, miss payment follow-ups, and can't scale beyond a few simultaneous projects."
     },
     {
-        "who": "Fitness trainers and gym owners managing clients and classes",
-        "pain": "They manually schedule sessions, track client progress, handle payments, create workout plans, and manage class bookings. Client retention suffers from lack of engagement.",
-        "gap": "There's no comprehensive platform for fitness professionals that combines scheduling, progress tracking, payment processing, and client engagement tools.",
-        "impact": "They lose clients due to poor communication, waste time on admin tasks, struggle with payment collection, and can't scale beyond in-person training."
+        "who": "Seniors, family caregivers, and elder care facilities trying to ensure safety and quality of life for aging adults",
+        "pain": "They worry constantly about medication adherence, fall detection, social isolation, cognitive decline, and emergency response. Coordinating care across family members and professionals is chaotic, and seniors resist intrusive monitoring that makes them feel helpless.",
+        "gap": "There's no dignified elder care platform that monitors health passively through smart home sensors, reminds about medications gently, detects falls and emergencies, facilitates family coordination, provides cognitive exercises, and connects seniors with social activities.",
+        "impact": "They face preventable medical emergencies, medication errors cause hospitalizations, social isolation accelerates decline, family caregivers burn out from constant worry, and seniors lose independence prematurely."
     },
     {
-        "who": "Photographers and videographers managing bookings and deliverables",
-        "pain": "They juggle client inquiries, booking calendars, contracts, shoot planning, editing workflows, and file delivery. Client galleries and payments are scattered.",
-        "gap": "There's no unified platform for visual creators that handles booking, contracts, editing workflow, client galleries, and payment processing.",
-        "impact": "They lose bookings due to slow responses, waste time on manual contract handling, struggle with file delivery, and miss payment follow-ups."
+        "who": "Event organizers, corporate event planners, and community builders managing gatherings and experiences",
+        "pain": "They cobble together registration forms, email lists, payment collection, and attendee communication using disconnected tools. Last-minute changes become nightmares, attendee engagement drops off after registration, networking is left to chance, and measuring event success is guesswork.",
+        "gap": "There's no end-to-end event platform that handles registration with smart ticketing, automated reminders, AI-powered attendee matching for networking, real-time updates via mobile app, engagement tracking, and post-event follow-up with analytics.",
+        "impact": "They lose attendees to poor communication, struggle with low engagement and networking, waste hours on manual coordination, can't prove ROI to sponsors, and can't build lasting community beyond single events."
     },
     {
-        "who": "Music teachers and performing arts instructors managing students",
-        "pain": "They manually schedule lessons, track student progress, handle payments, assign practice materials, and communicate with parents. Recital planning is chaotic.",
-        "gap": "There's no affordable platform designed for music educators that combines scheduling, progress tracking, payment processing, and parent communication.",
-        "impact": "They lose students due to poor organization, waste time on admin work, struggle with payment collection, and can't grow their teaching practice."
-    },
-    {
-        "who": "Consultants and coaches delivering services to multiple clients",
-        "pain": "They struggle with session scheduling, client onboarding, progress tracking, resource delivery, and invoicing. Each client relationship requires manual management.",
-        "gap": "There's no unified platform for service-based professionals that automates client lifecycle from onboarding to invoicing while tracking outcomes.",
-        "impact": "They can't scale beyond a few clients, waste time on repetitive admin tasks, struggle to demonstrate ROI, and lose clients due to poor experience."
-    },
-    {
-        "who": "Pet care providers including groomers, sitters, and trainers",
-        "pain": "They manually manage bookings, pet profiles, owner communications, medical records, and payments. Emergency contacts and special instructions get lost.",
-        "gap": "There's no comprehensive platform for pet care professionals that handles scheduling, pet records, owner communication, and payment processing.",
-        "impact": "They risk pet safety from lost information, lose bookings due to poor organization, struggle with payment collection, and can't scale their services."
+        "who": "Pet owners, groomers, sitters, trainers, and veterinary clinics managing pet care and services",
+        "pain": "They manually manage bookings, pet profiles, medical records, owner communications, and payments. Emergency contacts and special instructions get lost, vaccination records are scattered, and finding trusted pet care is stressful for owners.",
+        "gap": "There's no comprehensive pet care ecosystem that handles service booking, complete pet health records, owner-provider communication, payment processing, and connects pet owners with verified, reviewed care providers.",
+        "impact": "They risk pet safety from lost medical information, lose bookings due to poor organization, struggle with payment collection, can't scale services, and pet owners face anxiety and poor care quality."
     }
 ]
 
@@ -563,57 +565,57 @@ def determine_domain(problem: dict) -> str:
     """Determine domain name based on problem characteristics."""
     who = problem['who'].lower()
     
-    # Map keywords to domain names
+    # Map keywords to domain names (updated for 2026 domains)
     if 'business' in who or 'freelancer' in who or 'solopreneur' in who:
-        return "Business Management"
-    elif 'student' in who or 'job seeker' in who or 'career' in who:
-        return "Career Development"
-    elif 'content creator' in who or 'influencer' in who:
-        return "Content Creation"
-    elif 'remote team' in who or 'distributed' in who or 'startup' in who:
-        return "Remote Collaboration"
+        return "Small Business Operations"
+    elif 'sales' in who or 'marketer' in who or 'founder' in who:
+        return "Sales & Marketing"
+    elif 'content creator' in who or 'influencer' in who or 'youtuber' in who or 'tiktoker' in who:
+        return "Content Creation & Creator Economy"
+    elif 'developer' in who or 'indie' in who or 'software engineer' in who or 'dev team' in who:
+        return "Software Development & Indie Hacking"
+    elif 'e-commerce' in who or 'seller' in who or 'd2c' in who or 'online store' in who:
+        return "E-commerce & D2C Brands"
+    elif 'student' in who or 'teacher' in who or 'trainer' in who or 'learner' in who:
+        return "Education & EdTech"
     elif 'health' in who or 'fitness' in who or 'wellness' in who:
         return "Health & Wellness"
-    elif 'parent' in who or 'family' in who:
-        return "Family Management"
-    elif 'service provider' in who or 'plumber' in who or 'electrician' in who or 'tutor' in who or 'cleaner' in who:
-        return "Local Services"
-    elif 'researcher' in who or 'writer' in who or 'knowledge worker' in who:
-        return "Knowledge Management"
-    elif 'e-commerce' in who or 'seller' in who:
-        return "E-commerce"
-    elif 'event organizer' in who:
-        return "Event Management"
-    elif 'nonprofit' in who:
-        return "Nonprofit Management"
-    elif 'landlord' in who or 'property manager' in who:
-        return "Property Management"
-    elif 'finance' in who or 'investing' in who:
-        return "Personal Finance"
-    elif 'farm' in who or 'agri' in who:
-        return "Agriculture Tech"
-    elif 'mental health' in who or 'therapist' in who:
-        return "Mental Health"
-    elif 'podcast' in who or 'audio' in who:
-        return "Podcast Production"
-    elif 'game' in who or 'indie' in who:
-        return "Game Development"
-    elif 'legal' in who or 'law' in who or 'attorney' in who:
-        return "Legal Services"
-    elif 'real estate' in who or 'agent' in who:
-        return "Real Estate"
-    elif 'restaurant' in who or 'food service' in who:
-        return "Restaurant Operations"
-    elif 'fitness trainer' in who or 'gym' in who:
-        return "Fitness Training"
-    elif 'photographer' in who or 'videographer' in who:
-        return "Photography & Video"
-    elif 'music teacher' in who or 'performing arts' in who:
-        return "Music Education"
-    elif 'consultant' in who or 'coach' in who:
-        return "Consulting & Coaching"
-    elif 'pet care' in who or 'groomer' in who or 'sitter' in who:
-        return "Pet Care Services"
+    elif 'mental health' in who or 'therapist' in who or 'anxiety' in who or 'depression' in who:
+        return "Mental Health & Therapy"
+    elif 'finance' in who or 'investing' in who or 'investor' in who or 'wealth' in who:
+        return "Personal Finance & Wealth Building"
+    elif 'sustainability' in who or 'green' in who or 'eco-conscious' in who or 'climate' in who or 'carbon' in who:
+        return "Sustainability & Climate Tech"
+    elif 'parent' in who or 'family' in who or 'caregiver' in who:
+        return "Family & Parenting"
+    elif 'travel' in who or 'hotel' in who or 'tour operator' in who or 'nomad' in who:
+        return "Travel & Hospitality"
+    elif 'real estate' in who or 'agent' in who or 'landlord' in who or 'property' in who:
+        return "Real Estate & PropTech"
+    elif 'logistics' in who or 'supply chain' in who or 'distributor' in who or 'delivery' in who:
+        return "Logistics & Supply Chain"
+    elif 'farm' in who or 'agri' in who or 'agritech' in who:
+        return "Agriculture & Agritech"
+    elif 'restaurant' in who or 'food service' in who or 'cloud kitchen' in who:
+        return "Food Service & Restaurants"
+    elif 'retail' in who or 'brick-and-mortar' in who or 'store' in who:
+        return "Retail (Physical + Omni-channel)"
+    elif 'hr' in who or 'recruiter' in who or 'talent' in who or 'hiring' in who:
+        return "HR, Recruiting & Talent"
+    elif 'legal' in who or 'law' in who or 'attorney' in who or 'lawyer' in who:
+        return "LegalTech"
+    elif 'consultant' in who or 'coach' in who or 'agency' in who or 'professional service' in who:
+        return "Consulting & Professional Services"
+    elif 'cybersecurity' in who or 'security' in who or 'breach' in who or 'cyber threat' in who:
+        return "Cybersecurity & Privacy"
+    elif 'photographer' in who or 'videographer' in who or 'designer' in who or 'creative' in who:
+        return "Creative Tools (Photo/Video/Design)"
+    elif 'senior' in who or 'elder' in who or 'aging' in who or 'elderly' in who:
+        return "Elder Care & Aging Tech"
+    elif 'event organizer' in who or 'event planner' in who:
+        return "Event & Experience Management"
+    elif 'pet' in who or 'groomer' in who or 'sitter' in who or 'veterinary' in who:
+        return "Pet Care"
     else:
         return "General"
 
